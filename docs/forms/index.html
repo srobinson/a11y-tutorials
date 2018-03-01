@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+	<meta charset="utf-8" />
+	<title>Tutorial: Building Accessible Forms: Getting Started | BBC Accessibility Tutorials</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+    <script src="../static/vendor/fontfaceobserver/font-face-observer.js"></script>
+    <script>
+        (function() {
+            (new FontFaceObserver('ReithSans')).load().then(function () {
+                document.body.className += ' b-reith-sans-font';
+            });
+            (new FontFaceObserver('ReithSerif')).load().then(function () {
+                document.body.className += ' b-reith-serif-font';
+            });
+        })();
+    </script>
+	
+	<link rel="stylesheet" href="../static/vendor/highlight/styles/github.css">
+    <link rel="stylesheet" href="../static/css/main.css?ver-1519928515" />
+</head>
+<body>
+
+<header role="banner" class="header">
+    <div class="a11y-tuts__banner a11y-tuts__headerbanner">
+        <div class="gel-wrap gs-u-clearfix">
+            <div class="a11y-tuts-header__brand">
+                <a class="a11y-tuts-header__brand-logo" href="http://www.bbc.co.uk/">
+                    <svg aria-label="BBC GEL Logo" width="100" height="24">
+                        <title>BBC</title>
+                        <image xlink:href="../static/images/bbc-blocks_grey.svg" src="../static/images/bbc-blocks_grey.png" width="100%" height="100%"></image>
+                    </svg>
+                </a>
+                <!--a class="button a11y-tuts__button" href="http://www.bbc.co.uk/gel">Go to BBC GEL</a-->
+            </div>
+        </div>
+    </div>
+    <div class="a11y-tuts__banner">
+        <div class="gel-wrap gs-u-clearfix">
+            <h1 class="a11y-tuts__sitetitle"><a href="../index.html">Accessibility Tutorials</a></h1>
+        </div>
+    </div>
+</header>
+
+<article class="gel-wrap gs-u-clearfix">
+    <div class="gel-layout">
+        
+        <div class="gel-layout__item gel-1/5@l gel-side-nav">
+            <h2 class="gel-pica gs-u-mb gs-u-mt0">Content</h2>
+            <nav role="navigation" id="side-nav">
+                <ol>
+                    
+                    
+                        <li class="heading-1"><a href="#building-accessible-forms-getting-started" class="gel-side-nav__link">Building Accessible Forms: Getting Started</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#our-old-workhorse-the-form" class="gel-side-nav__link">Our Old Workhorse, the Form</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#start-with-standards" class="gel-side-nav__link">Start With Standards</a></li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#be-clear-be-concise" class="gel-side-nav__link">Be Clear, Be Concise</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#dont-confuse" class="gel-side-nav__link">Don&#39;t Confuse</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#autocomplete-and-autosuggest" class="gel-side-nav__link">AutoComplete and AutoSuggest</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#custom-controls" class="gel-side-nav__link">Custom Controls</a></li>
+                    
+                    
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#validation" class="gel-side-nav__link">Validation</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#complex-and-multi-page-forms" class="gel-side-nav__link">Complex and Multi-Page Forms</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#captcha" class="gel-side-nav__link">CAPTCHA</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#notes" class="gel-side-nav__link">Notes</a></li>
+                    
+                    
+                </ol>
+            </nav>
+        </div>
+        
+    
+        <div class="a11y-tut-content gel-layout__item gel-4/5@l">      
+            
+
+<h1 id="building-accessible-forms-getting-started">Building Accessible Forms: Getting Started</h1>
+<p>Notice: This tutorial is a <em>working draft</em>, do not reference or link to this document in its current form.</p>
+<p>In this tutorial we walk through a variety of examples of forms that follow the BBC GEL and BBC Accessibility Guidelines.</p>
+<h2 id="our-old-workhorse-the-form">Our Old Workhorse, the Form</h2>
+<p>The humble web form has been quietly toiling away on our web pages for nearly as long as there has been a Web. In fact, forms are so common that we might even be forgiven for taking them for granted, but that would be a mistake. The interactive power that forms unlock: to register and respond, to question and query, can make a huge difference to our users. And for users with disabilities, forms can be even more important, opening up services and utilities that would otherwise be inaccessible.</p>
+<p>With such a long history, not to mention near-universal browser support, it should be a straightforward job to deliver accessible web forms, but it is surprisingly easy to go off track with forms. Let's look at some ways we can keep forms working for everyone.</p>
+<h2 id="start-with-standards">Start With Standards</h2>
+<p>Most accessibility problems can be avoided from the start by applying a few fundamental rules from HTML standards. First among these is that input controls must be properly labelled.</p>
+<h3 id="love-your-labels">Love Your Labels</h3>
+<p>As a form creator, you obviously want the user to provide you with complete and valid information; labels can go a long way to making that happen.</p>
+<p>The HTML <code>label</code> element should generally be your starting point when asking the user for input. This one tag will provide a wide array of built-in usability and accessibility features to your form, automatically and for free.</p>
+<blockquote>
+  <p>"All form controls, such as text inputs, check boxes, select lists, or buttons, must each have a unique label." -- <a href="http://www.bbc.co.uk/guidelines/futuremedia/accessibility/mobile/forms/labelling-form-controls">BBC MAG: Labelling form controls</a></p>
+</blockquote>
+<h3 id="a-simple-example">A Simple Example</h3>
+<figure>
+  <pre><code class="hljs language-stata">&#x3C;<span class="hljs-keyword">label</span> <span class="hljs-keyword">for</span>=<span class="hljs-string">"username"</span>>User Name&#x3C;/<span class="hljs-keyword">label</span>>
+&#x3C;<span class="hljs-keyword">input</span> <span class="hljs-keyword">type</span>=<span class="hljs-string">"text"</span> id=<span class="hljs-string">"username"</span> name=<span class="hljs-string">"username"</span>>
+</code></pre>
+  <figcaption>Use the <code>for</code> attribute to associate a label with its input control.</figcaption>
+</figure>
+<p>The <a href="https://html.spec.whatwg.org/multipage/forms.html#the-label-element">HTML Specification for labels</a> provides us with a list of all the types of elements that can have labels, the so-called "labelable elements". The most common labelable elements are shown below:</p>
+<ul>
+  <li>button</li>
+  <li>input (if type is not "hidden")</li>
+  <li>select</li>
+  <li>textarea</li>
+</ul>
+<h3 id="more-label-examples">More Label Examples</h3>
+<figure>
+  <pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"rating"</span>></span>Rating (between 1 and 5):<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"range"</span> <span class="hljs-attr">min</span>=<span class="hljs-string">"1"</span> <span class="hljs-attr">max</span>=<span class="hljs-string">"5"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"3"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"rating"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"username"</span>></span>
+</code></pre>
+  <figcaption>You can use labels for a range of input controls, including the <code>range</code> control!</figcaption>
+</figure>
+<hr>
+<figure>
+  <pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">fieldset</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">legend</span>></span>Will you be attending?<span class="hljs-tag">&#x3C;/<span class="hljs-name">legend</span>></span>
+  
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"attending"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"radio"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"attending_yes"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"yes"</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"attending_yes"</span>></span>Yes, I plan to attend<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
+  
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"attending"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"radio"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"attending_no"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"no"</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"attending_no"</span>></span>No, I will not attend<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">fieldset</span>></span>
+</code></pre>
+  <figcaption>You can group related input controls, along with their unique labels, together under a shared <code>legend</code>.<sup id="fnref-1"><a href="#fn-1" class="footnote-ref">1</a></sup></figcaption>
+</figure>
+<h3 id="invisible-labels">Invisible Labels</h3>
+<p>If labels are so useful, are there ever any cases where we might want to hide them? Consider a fairly common case where a form is made up of only a single text input box and a button labelled "Search". In this case displaying the label "Search term" before the input box would be redundant, the information being requested is already made obvious by the text shown on the button.</p>
+<figure>
+  <pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">form</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"visuallyhidden"</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"search_term"</span>></span>Search Term<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"search_term"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"search_term"</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"submit"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"Search"</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">form</span>></span>
+</code></pre>
+  <figcaption>Making the label vissually hidden makes sense in certain cases.</figcaption>
+</figure>
+<p>Be careful not to take this technique too far however. For example, it would technically be possible to omit the submit button in the example above, relying on users to type <kbd>Enter</kbd> to submit the query, but doing so would also eliminate the only indication of what is expected to be entered in the input box.</p>
+<h2 id="be-clear-be-concise">Be Clear, Be Concise</h2>
+<p>Having clear and concise labels is helpful to everyone, but it can be critical for users with reading or comprehension difficulties. Finding the most effective wording is a job that will require careful consideration as well as user testing.</p>
+<figure>
+  <pre><code class="hljs language-html">Not enough?
+<span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"username"</span>></span>Name<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
+
+Too much?
+<span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"username"</span>></span>Type your user's name from your account in the box here<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
+</code></pre>
+  <figcaption>Consider the wording of labels to maximise clarity.</figcaption>
+</figure>
+<h2 id="dont-confuse">Don't Confuse</h2>
+<h2 id="autocomplete-and-autosuggest">AutoComplete and AutoSuggest</h2>
+<h2 id="custom-controls">Custom Controls</h2>
+<h3 id="inputs-without-forms">Inputs Without Forms?</h3>
+<h2 id="validation">Validation</h2>
+<h2 id="complex-and-multi-page-forms">Complex and Multi-Page Forms</h2>
+<h2 id="captcha">CAPTCHA</h2>
+<h2 id="notes">Notes</h2>
+<div class="footnotes">
+  <hr>
+  <ol>
+    <li id="fn-1">
+      <p>See <a href="http://www.bbc.co.uk/guidelines/futuremedia/accessibility/mobile/forms/grouping-form-elements">BBC Mobile Accessibility Guidelines: Grouping form elements</a></p><a href="#fnref-1" class="footnote-backref">↩</a></li>
+  </ol>
+</div>
+
+
+        </div>
+    </div>
+</article>
+
+
+<div class="a11y-tuts__footerbanner">
+    <div class="gel-wrap">
+        <div class="gel-layout">
+            <div class="a11y-tuts__icon gel-layout__item gel-2/12@l gel-1/5@xl">
+                <image class="gel-icon gel-icon--large" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../static/images/gel-icon-help.svg" src="../static/images/gel-icon-help.svg" width="100%" height="100%" alt=""></image>
+            </div>
+            <div class="gel-layout__item gel-2/3@l gel-3/5@xl">
+                <h2 class="gel-contribution-banner__title">Could you improve this tutorial?</h2>
+                <p class="gel-contribution-banner-copy gel-great-primer">If you think you could make anything you see here a bit better then become one of <a href="../contributors/">our lovely contributors</a>!</p>
+            </div>
+            <div class="gel-layout__item gel-3/3@l gel-5/5@xl">
+            <p>
+            <small>
+                Copyright &copy; 2018 BBC. The BBC is not responsible for the content of external sites.<br>
+                <a href="http://www.bbc.co.uk/help/web/links/">Read about the BBC's approach to external linking.</a>
+            </small>
+            </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../static/vendor/highlight/highlight.pack.js"></script>
+</body>
+</html>

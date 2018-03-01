@@ -1,0 +1,58 @@
+/* utility
+ */
+.clearfix:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0}
+.js .visuallyhidden{clip-path:inset(100%);clip:rect(1px 1px 1px 1px);clip:rect(1px,1px,1px,1px);height:1px;overflow:hidden;position:absolute;white-space:nowrap;width:1px}/* see https://developer.paciellogroup.com/blog/2012/05/html5-accessibility-chops-hidden-and-aria-hidden/ */
+
+/* general page
+ */
+html {
+    font-size: 16px;
+}
+body {
+    background-color: #fff;
+    color: #404040;
+    font-family: "Helvetica Neue", Helvetica, Arial, freesans, sans-serif;
+    line-height: 1.4;
+    padding: 0.5rem;
+}
+.demo{ border-top: 1px solid #404040; }
+.img-wrapper { background:#fff;padding:12px;border:1px solid #ccc;max-width:540px}
+.img-wrapper img {width:100%}
+footer {
+    border-top: 1px solid #404040;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+}
+a.btn, button {
+    background-color: #404040;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: bold;
+    line-height: 1.5;
+    margin: 0.5rem 1rem 0.5rem 0;
+    min-width: 192px;
+    padding: 1rem;
+    text-align: center;
+    text-decoration: none;
+}
+
+button.compact {
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 0.8rem;
+    width: 100%;
+}
+
+@media screen and (max-width: 540px) {
+    html {
+        font-size: 18px;
+    }
+    footer .btn {
+        display: block;
+        padding-left: 0;
+        padding-right: 0;
+        width: 100%;
+    }
+}

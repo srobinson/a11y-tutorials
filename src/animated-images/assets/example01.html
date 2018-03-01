@@ -1,0 +1,149 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Animated Images Example: Lazy Load</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- use your favourite DOM Manipulation jLibrary here -->
+    <script src="https://cdn.jsdelivr.net/npm/cash-dom@1.3.5/dist/cash.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../../static/css/demo.css">
+    <noscript>
+        <style>
+            #enhx-switch { display: none }
+        </style>
+    </noscript>
+
+    <style type="text/css">
+        .js-only {
+            display: none;
+        }
+
+        .js .js-only {
+            display: inherit;
+        }
+        article{
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        .img-wrapper {
+            max-width: 700px;
+            width: 100%;
+            display: inline-block;
+            margin: 18px 18px 18px 0;
+        }
+        .img-wrapper img {
+            display: block;
+            width: 100%;
+        }
+
+        #weathermap {
+            max-width: 250px;
+            float: left;
+            margin-top: 0;
+        }
+
+        p.tall {
+            height: 500px;
+        }
+
+        figcaption {
+            font-size: 80%;
+        }
+    </style>
+
+</head>
+<body>
+
+<h1>Animated Images Lazy Load</h1>
+
+<p>See <a href="https://github.com/bbc/a11y-tuts/blob/master/src/animated-images/assets/example01.html">the source code for this demo</a> on github.</p>
+
+<article class="demo">
+    <h2>Click to Animate</h2>
+    <div id="weathermap" class="img-wrapper clearfix">
+        <img class="img-lazyclick" src="animated-irma-00.jpg" data-lazysrc="animated-irma.gif" alt="Satellite imagery showing path of Hurricane Irma sweeping across the southern Atlantic Ocean." />
+        <button class="lazyloader js-only compact">Play Animation</button>
+    </div>
+    <p>
+        This example uses an animated image with unlimited looping, but gives the user control to start and stop the animation via a click action.
+    </p>
+    <p>
+        This is some example text which is next to the image. Irma has been making headlines as the most powerful Atlantic storm in a decade with wind speeds of up to 295km/h (185mph). It hit the Caribbean on Wednesday as a category five hurricane, the highest possible level for such a storm, but was downgraded on Friday to a category four. As the storm hit Cuba, the large landmass slowed the storm to 215km/h (130mph) - but forecasters predict it will strengthen once again.
+    </p>
+</article>
+
+<br clear="left">
+<hr>
+
+<p class="tall">
+    Scroll down to see the next demo please...
+<p>
+<p class="tall">
+    Keep scrolling down to see the next demo please...
+<p>
+
+ <h2>Animate on Scroll Into View</h2>
+<article class="demo">
+    <div class="img-wrapper">
+        <img id="img-lazyscroll" class="img-lazyclick" src="gazump.still.jpg" data-lazysrc="gazump.animated.gif" alt="The Guzumping Ground" />
+    </div>
+    <p>
+        This example uses an animated image with no looping. To ensure that the animation is visible to the user, it waits to start only when the image element scrolls into view.
+    </p>
+    
+</article>
+
+<footer>
+    <a class="btn" href="../">Go to the Tutorial.</a>
+    <a id="enhx-switch" class="btn" href="?js">Reload with enhancement.</a>
+</footer>
+
+<script src="waypoints.min.js"></script>
+<script>
+(function() {
+    function init() {
+        $('.lazyloader').on('click', function(e) {
+            var $btn = $(this);
+            var $img = $(this).parent().find('.img-lazyclick').first();
+            var src = $img.attr('src');
+            var placeholderSrc = $img.data('placeholder');
+            var lazySrc = $img.data('lazysrc');
+            
+            if (!placeholderSrc || lazySrc !== src) {
+                $img.data('placeholder', src);
+                $img.attr('src', lazySrc);
+                $btn.text('Stop Animation');
+            } else {
+                $img.attr('src', placeholderSrc);
+                $btn.text('Play Animation');
+            }
+            e.preventDefault();
+        });
+
+        new Waypoint({
+            element: document.getElementById('img-lazyscroll'),
+            offset: 'bottom-in-view',
+            handler: function() {
+                var $this = $(this.element);
+                var lazySrc = $this.data('lazysrc');
+                $this.attr('src', lazySrc);
+            }
+        });
+    }
+
+    // should we render with or without enhancements?
+    if ( window.location.search.indexOf('nojs') === -1 ) {
+        $('body').addClass('js');
+        $('#enhx-switch').attr('href', '?nojs').html('Reload without enhancement.');
+        init();
+    }
+})();
+    
+</script>
+
+</body>
+</html>

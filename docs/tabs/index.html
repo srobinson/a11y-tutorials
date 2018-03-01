@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+	<meta charset="utf-8" />
+	<title>Tutorial: An Accessible Tabbed Interface | BBC Accessibility Tutorials</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+    <script src="../static/vendor/fontfaceobserver/font-face-observer.js"></script>
+    <script>
+        (function() {
+            (new FontFaceObserver('ReithSans')).load().then(function () {
+                document.body.className += ' b-reith-sans-font';
+            });
+            (new FontFaceObserver('ReithSerif')).load().then(function () {
+                document.body.className += ' b-reith-serif-font';
+            });
+        })();
+    </script>
+	
+	<link rel="stylesheet" href="../static/vendor/highlight/styles/github.css">
+    <link rel="stylesheet" href="../static/css/main.css?ver-1518091096" />
+</head>
+<body>
+
+<header role="banner" class="header">
+    <div class="a11y-tuts__banner a11y-tuts__headerbanner">
+        <div class="gel-wrap gs-u-clearfix">
+            <div class="a11y-tuts-header__brand">
+                <a class="a11y-tuts-header__brand-logo" href="http://www.bbc.co.uk/">
+                    <svg aria-label="BBC GEL Logo" width="100" height="24">
+                        <title>BBC</title>
+                        <image xlink:href="../static/images/bbc-blocks_grey.svg" src="../static/images/bbc-blocks_grey.png" width="100%" height="100%"></image>
+                    </svg>
+                </a>
+                <!--a class="button a11y-tuts__button" href="http://www.bbc.co.uk/gel">Go to BBC GEL</a-->
+            </div>
+        </div>
+    </div>
+    <div class="a11y-tuts__banner">
+        <div class="gel-wrap gs-u-clearfix">
+            <h1 class="a11y-tuts__sitetitle"><a href="../index.html">Accessibility Tutorials</a></h1>
+        </div>
+    </div>
+</header>
+
+<article class="gel-wrap gs-u-clearfix">
+    <div class="gel-layout">
+        
+        <div class="gel-layout__item gel-1/5@l gel-side-nav">
+            <h2 class="gel-pica gs-u-mb gs-u-mt0">Content</h2>
+            <nav role="navigation" id="side-nav">
+                <ol>
+                    
+                    
+                        <li class="heading-1"><a href="#an-accessible-tabbed-interface" class="gel-side-nav__link">An Accessible Tabbed Interface</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#semantic-foundations" class="gel-side-nav__link">Semantic Foundations</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#terminology" class="gel-side-nav__link">Terminology</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#connections" class="gel-side-nav__link">Connections</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#hiding-and-showing" class="gel-side-nav__link">Hiding and Showing</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#adding-aria" class="gel-side-nav__link">Adding ARIA</a></li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#focus-order" class="gel-side-nav__link">Focus Order</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#keyboard-interaction" class="gel-side-nav__link">Keyboard Interaction</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#working-demo" class="gel-side-nav__link">Working Demo</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#additional-refinements" class="gel-side-nav__link">Additional Refinements</a></li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#notes" class="gel-side-nav__link">Notes</a></li>
+                    
+                    
+                </ol>
+            </nav>
+        </div>
+        
+    
+        <div class="a11y-tut-content gel-layout__item gel-4/5@l">      
+            
+
+<h1 id="an-accessible-tabbed-interface">An Accessible Tabbed Interface</h1>
+<p>A tabbed interface is a good way of grouping a series of content items into a single compact and familiar widget, but getting all the accessibility details right can be tricky. In this tutorial we will use BBC <a href="http://www.bbc.co.uk/gel/guidelines/tabs">GEL</a> and Mobile Accessibility Guidelines as well as ARIA and HTML Web Standards to complete a fully working example.</p>
+<h2 id="semantic-foundations">Semantic Foundations</h2>
+<p>As always, it's crucial that we start with a sensible and appropriate document outline<sup id="fnref-1"><a href="#fn-1" class="footnote-ref">1</a></sup>. In our example, we aim to structure our content like the following outline:</p>
+<ol>
+  <li>A Heading</li>
+  <ol>
+    <li>Section One</li>
+    <li>Section Two</li>
+  </ol>
+</ol>
+<p>Aiming for the outline shown above, we can start building our HTML foundation with just a few basic tags:</p>
+<figure>
+  <pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">h1</span>></span>A Heading<span class="hljs-tag">&#x3C;/<span class="hljs-name">h1</span>></span>
+
+<span class="hljs-tag">&#x3C;<span class="hljs-name">section</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span>></span>Section One<span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+  ...
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">section</span>></span>
+
+<span class="hljs-tag">&#x3C;<span class="hljs-name">section</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span>></span>Section Two<span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+  ...
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">section</span>></span>
+</code></pre>
+  <figcaption>The HTML foundation we will use to build a tabbed interface.</figcaption>
+</figure>
+<h2 id="terminology">Terminology</h2>
+<p>Before proceeding, let's first review the Web Standards names of the various parts we will be working with. The <abbr title="World Wide Web Consortium">W3C</abbr> <abbr title="Accessible Rich Internet Applications">WAI-ARIA</abbr> documentation <a href="https://www.w3.org/TR/wai-aria-1.1/#tablist">defines a Tabbed Interface</a> with the following terms:</p>
+<dl>
+  <dt>A Tablist</dt>
+  <dd>"A list of tab elements."</dd>
+  <dt>A Tab Element</dt>
+  <dd>"A grouping label providing a mechanism for selecting the tab content that is to be rendered to the user."</dd>
+  <dt>A Tabpanel Element</dt>
+  <dd>"A container for the resources associated with a tab..."</dd>
+</dl>
+<h2 id="connections">Connections</h2>
+<p>To have a tabbed interface we need tabs, but what's the best markup to use? The <a href="http://www.bbc.co.uk/gel/guidelines/tabs#rules">BBC GEL Guidelines for Tabs</a> points out that, "you can include a list of links before the content. This clarifies the content order and allows people to jump straight to what they want." This also provides us a handy place to hang our tab elements, so let's include the mark-up for that now:</p>
+<figure>
+  <pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">article</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"tabbed"</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">h1</span>></span>A Heading<span class="hljs-tag">&#x3C;/<span class="hljs-name">h1</span>></span>
+  
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"tablist"</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"t1"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#s1"</span>></span>One<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"t2"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#s2"</span>></span>Two<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">ul</span>></span>
+
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">section</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"s1"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"tabpanel"</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span>></span>Section One<span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+    ...
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">section</span>></span>
+
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">section</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"s2"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"tabpanel"</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span>></span>Section Two<span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+    ...
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">section</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">article</span>></span>
+</code></pre>
+  <figcaption>Adding a list of in-page links to the related content sections.</figcaption>
+</figure>
+<p>Notice that we were careful to include unique <code>id</code> attributes to each of the <code>&#x3C;a></code> tab elements and to each of the <code>&#x3C;section></code> tabpanels. Doing this will allow us to connect the two elements up to each other using ARIA a bit later on.</p>
+<h2 id="hiding-and-showing">Hiding and Showing</h2>
+<p>Grouping content into tabs, versus merely displaying a series of headings and text blocks, can make that content more usable and accessible<sup id="fnref-2"><a href="#fn-2" class="footnote-ref">2</a></sup>. By definition however this pattern requires us to show and hide content in response to user actions<sup id="fnref-3"><a href="#fn-3" class="footnote-ref">3</a></sup> and for that we must rely on enhancements via JavaScript and CSS.</p>
+<p>The CSS we use will be based on the ARIA attribute that indicates hidden content, <code>aria-hidden="true"</code>. We can use that as a hook for an equivalent visual style:</p>
+<pre><code class="hljs language-css"><span class="hljs-selector-class">.tabpanel</span><span class="hljs-selector-attr">[aria-hidden="true"]</span> {
+  <span class="hljs-attribute">display</span>: none;
+}
+</code></pre>
+<p>By manipulating the combination of attribute and style rule, we can effectively hide and show tabpanels such that only one is ever shown at a time. However, it is critical that the <code>aria-hidden</code> attribute is never hard-coded directly into the source HTML. The reason for this is that we will be relying on JavaScript to show each tabpanel as the user selects its tab element and we must <em>only hide content when it is possible for the user to reveal it again</em>.</p>
+<p>The solution, to avoid a scenario where a tabpanel is hidden via ARIA and CSS but the user has not enabled the JavaScript required to show it again, is to strictly use JavaScript to both <em>add and remove</em> the <code>arria-hidden</code> attribute.</p>
+<figure>
+  <pre><code class="hljs language-javascript"><span class="hljs-keyword">var</span> href = $(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'href'</span>);
+<span class="hljs-keyword">if</span> ( <span class="hljs-keyword">this</span>.isSelected ) {
+    $(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'aria-selected'</span>, <span class="hljs-string">'true'</span>);
+    $(href).removeAttr(<span class="hljs-string">'aria-hidden'</span>);
+} <span class="hljs-keyword">else</span> {
+    $(<span class="hljs-keyword">this</span>).removeAttr(<span class="hljs-string">'aria-selected'</span>);
+    $(href).attr(<span class="hljs-string">'aria-hidden'</span>, <span class="hljs-string">'true'</span>);
+}
+</code></pre>
+  <figcaption>Using JavaScript to toggle the state of the <code>aria-selected</code> and <code>aria-hidden</code> attributes.</figcaption>
+</figure>
+<h2 id="adding-aria">Adding ARIA</h2>
+<p>The <a href="http://www.bbc.co.uk/guidelines/futuremedia/accessibility/mobile/structure/grouped-elements#HTML">BBC Mobile Accessibility Guidelines</a> show the ARIA tags used when content is being presented as tabbed, however it is important to keep in mind that only when JavaScript is functioning do the tabpanels actually become hidden or shown, so without JavaScript the tabbed interface semantics don't apply. For this reason we are only adding ARIA roles and attributes when JavaScript is functioning.</p>
+<h3 id="tablist-aria">Tablist ARIA</h3>
+<p>When our content is being presented as a tabbed interface, we are re-purposing an unordered list into a tablist. This is straightforward in ARIA: we simply add a <code>role="tablist"</code> attribute to the <code>&#x3C;ul></code>. However, once we do this, the <code>&#x3C;li></code> elements no longer make semantic sense, they belong to the <code>&#x3C;ul></code> but we just redefined the role of that element. So we now need to tell the web client that those <code>&#x3C;li></code> elements are no longer semantically list items. Again this is straightforward in ARIA: we add <code>role="presentation"</code>.</p>
+<figure>
+  <pre><code class="hljs language-javascript">$(<span class="hljs-string">'.tablist'</span>).attr(<span class="hljs-string">'role'</span>, <span class="hljs-string">'tablist'</span>);
+$(<span class="hljs-string">'.tablist > li'</span>).attr(<span class="hljs-string">'role'</span>, <span class="hljs-string">'presentation'</span>);
+</code></pre>
+  <figcaption>Using JavaScript to add ARIA roles.</figcaption>
+</figure>
+<h3 id="tab-element-and-tabpanel-aria">Tab Element and Tabpanel ARIA</h3>
+<p>We're using the <code>&#x3C;a></code> elements in the tablist as our tab element. This gives us some out-of-the-box features: for example our tab elements can receive focus natively. We signal that these <code>&#x3C;a></code> elements are functioning as tabs by adding the attribute <code>role="tab"</code>. While we're at it, we can also define the ARIA relationship between the tab element and it's corresponding tabpanel via the ARIA attributes <code>aria-controls</code> and <code>aria-controlledby</code>.</p>
+<figure>
+  <pre><code class="hljs language-javascript">$(<span class="hljs-string">'.tablist > li a'</span>).attr(<span class="hljs-string">'role'</span>, <span class="hljs-string">'tab'</span>);
+
+$.each($(<span class="hljs-string">'a[role="tab"]'</span>), <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+   <span class="hljs-keyword">var</span> href = $(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'href'</span>);
+   $(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'aria-controls'</span>, href.substr(<span class="hljs-number">1</span>));
+   $(href).attr(<span class="hljs-string">'aria-controlledby'</span>, $(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'id'</span>));
+});
+</code></pre>
+  <figcaption>Using JavaScript to add ARIA attributes.</figcaption>
+</figure>
+<h2 id="focus-order">Focus Order</h2>
+<p>The order in which elements receive focus is illustrated below.</p>
+<p>When a switch user moves focus through the Tabbed Interface without activating any of the Tab Elements, focus moves from the first Tab Element through each subsequent Tab Element to the last. If there are any focusable elements in the currently visible Tab Panel, that element should receive focus next, after the last Tab Element.</p>
+<p></p>
+<figure><img src="assets/tab-interface-focus-order-1.jpg">
+  <figcaption>Focus moves from first tab element to last tab element, then to elements within the visible tabpanel.</figcaption>
+</figure>
+<p></p>
+<h2 id="keyboard-interaction">Keyboard Interaction</h2>
+<p>The <a href="http://www.bbc.co.uk/gel/guidelines/tabs">BBC GEL Guidelines for Tabs</a> define the keyboard interactions for us:</p>
+<ul>
+  <li>Use the tab key on your keyboard to access the tab labels.</li>
+  <li>Use the return key to select the tab.</li>
+  <li>On selection, keyboard focus is pushed to the heading within the tab panel.</li>
+</ul>
+<p>Because we based our tab elements on native <code>&#x3C;a></code> elements, we get some of the above for free: for example we already have each tab element in focus order and links are "natively actionable" elements by default. The two tasks left for JavaScript are to toggle the selection state of each tab element when it receives a <code>click</code> event via mouse or keyboard<sup id="fnref-4"><a href="#fn-4" class="footnote-ref">4</a></sup>, and to push focus to the heading within the tabpanel.</p>
+<figure>
+  <pre><code class="hljs language-javascript">$(<span class="hljs-string">'a[role="tab"]'</span>)
+.on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+    setTabSelected( $(<span class="hljs-keyword">this</span>) );
+    
+    <span class="hljs-comment">// push focus to the tab panel</span>
+    <span class="hljs-keyword">var</span> thisPanelLink = $(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'href'</span>);
+    $( thisPanelLink ).attr(<span class="hljs-string">'tabindex'</span>, <span class="hljs-string">'-1'</span>)[<span class="hljs-number">0</span>].focus();
+    
+    <span class="hljs-comment">// stop page view from jumping when user clicks a tab element</span>
+    event.preventDefault();
+});
+</code></pre>
+  <figcaption>Using JavaScript to manage focus when a tab element is selected.</figcaption>
+</figure>
+<p>While there are benefits to using the native <code>&#x3C;a></code> element as our tab element, it isn't a perfect fit: tabs are not <em>exactly</em> links. One of the adaptations we have to make is to prevent the default behavior of the native <code>&#x3C;a></code> element in order to stop the browser from suddenly jumping it's view to the tabpanel content. Without this fix it could be disorienting to users of screen magnifiers to have the page unexpectedly move when they click what looks like a simple tab. So while treating a link as a tab we need to call the <code>event.preventDefault</code> method to stop the link from acting like a link. <sup id="fnref-5"><a href="#fn-5" class="footnote-ref">5</a></sup></p>
+<h2 id="working-demo">Working Demo</h2>
+<p>Try a working demonstration of the techniques described in this tutorial (pictured below).</p>
+<p></p>
+<figure><img src="assets/demo.jpg">
+  <figcaption>A demonstration of a recipe presented as a tabbed interface.</figcaption>
+</figure>
+<p></p>
+<p><a class="button" href="assets/example01.html">Go to the Demo.</a></p>
+<h2 id="additional-refinements">Additional Refinements</h2>
+<h3 id="avoiding-visual-repetition">Avoiding Visual Repetition</h3>
+<p>When we followed the guidance from BBC GEL to include a heading in each tab panel we made the outline of our content easier to understand for screen reader users and everyone without JavaScript but we may have introduced a new problem for sighted users with JavaScript: when the layout is arranged to display the tab elements along the top of the tab panels, there is a distracting repetition of the same heading text one on top of the other.</p>
+<p></p>
+<figure><img src="assets/why-hide-headers-example.jpg">
+  <figcaption>The text in the tab element is repeated in the tabpanel heading immediately below.</figcaption>
+</figure>
+<p></p>
+<p>The GEL Guidelines provide an answer when it points out that the tabpanel "heading can visually hidden." By using CSS to position the tabpanel heading offscreen<sup id="fnref-6"><a href="#fn-6" class="footnote-ref">6</a></sup> we acheive the compromise of having headings for each tab panel available to screen reader users but we don't distract sighted users by having the same text visually doubled-up at the top of the tab panel.</p>
+<figure>
+  <pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"visuallyhidden"</span>></span>Section One<span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+</code></pre>
+  <figcaption>Using a class name to indicate that a tabpanel heading should be visually hidden.</figcaption>
+</figure>
+<h3 id="should-we-move-focus">Should We Move Focus?</h3>
+<p>Recall that we <a href="#keyboard-interaction">added JavaScript to push focus to the tabpanel</a> element whenever that panel's label was selected. While this added behaviour is likely helpful to users who navigate by keyboard<sup id="fnref-7"><a href="#fn-7" class="footnote-ref">7</a></sup>, it may be unexpected and distracting for others. To best accommodate everyone we can make our "push focus to the tabpanel" feature conditional so that it is not applied for users who are navigating via mouse and pointer as opposed to those who are navigating via keyboard.</p>
+<figure>
+  <pre><code class="hljs language-javascript">$(<span class="hljs-string">'a[role="tab"]'</span>)
+.on(<span class="hljs-string">'mouseup'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+    $(<span class="hljs-keyword">this</span>).prop(<span class="hljs-string">'mouseclicked'</span>, <span class="hljs-literal">true</span>);
+})
+.on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+    <span class="hljs-keyword">if</span> ( !$(<span class="hljs-keyword">this</span>).prop(<span class="hljs-string">'mouseclicked'</span>) ) {
+        <span class="hljs-keyword">var</span> thisPanelLink = $(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'href'</span>);
+        $( thisPanelLink ).attr(<span class="hljs-string">'tabindex'</span>, <span class="hljs-string">'-1'</span>)[<span class="hljs-number">0</span>].focus();
+    }
+    $(<span class="hljs-keyword">this</span>).removeProp(<span class="hljs-string">'mouseclicked'</span>);
+
+    <span class="hljs-comment">// ... etc</span>
+});
+</code></pre>
+  <figcaption>Detecting when a tab has been selected via a mouse click versus a key press.</figcaption>
+</figure>
+<p>Note that the <code>click</code> event is fired for <em>both</em> a mouse click as well as a focus and key press (typically the <kbd>return</kbd> or <kbd>enter</kbd> key), however only the mouse click fires a <code>mouseup</code> event.<sup id="fnref-8"><a href="#fn-8" class="footnote-ref">8</a></sup></p>
+<h2 id="notes">Notes</h2>
+<div class="footnotes">
+  <hr>
+  <ol>
+    <li id="fn-1">
+      <p>The <a href="https://www.smashingmagazine.com/2011/08/html5-and-the-document-outlining-algorithm/">algorithm that calculates document outlines</a> is explained elsewhere on the web. Search for tools that can be used to display document outlines too.</p><a href="#fnref-1" class="footnote-backref">↩</a></li>
+    <li id="fn-2">
+      <p>The Tabbed Interface component fulfills the advice regarding grouping, listed on <a href="http://www.bbc.co.uk/guidelines/futuremedia/accessibility/mobile/structure/grouped-elements">the BBC Mobile Accessibility Guidelines</a>: "Grouping elements into a single overall control makes things clearer, simplifies interactions and can provide larger touch targets."</p><a href="#fnref-2" class="footnote-backref">↩</a></li>
+    <li id="fn-3">
+      <p>"Only one content panel can be shown at a time." -- <a href="http://www.bbc.co.uk/gel/guidelines/tabs#rules">GEL Guidelines: Tabs</a></p><a href="#fnref-3" class="footnote-backref">↩</a></li>
+    <li id="fn-4">
+      <p>"The default action occurs when the user clicks the element with a mouse, but it also occurs when the user focuses the element and hits enter or space, and when the element is triggered via the accessibility API." -- <a href="https://www.w3.org/TR/2016/NOTE-WCAG20-TECHS-20161007/SCR35">Techniques for WCAG 2.0, SCR35</a></p><a href="#fnref-4" class="footnote-backref">↩</a></li>
+    <li id="fn-5">
+      <p>Another option for preventing the link's default bahaviour is to <code>return false</code> from the event handler, but this will have the effect of stopping the event <em>propagation</em> as well. So, if you expect that there may be any other handlers in the DOM that might want to react to this same <code>click</code> event (trackers for example) then it is safer to use <code>preventDefault</code>. See the <a href="https://www.w3.org/TR/uievents/#event-flow-default-cancel">W3C specifications for UI Events</a> for more details.</p><a href="#fnref-5" class="footnote-backref">↩</a></li>
+    <li id="fn-6">
+      <p>See <a href="https://developer.paciellogroup.com/blog/2012/05/html5-accessibility-chops-hidden-and-aria-hidden/">HTML5 Accessibility Chops: hidden and aria-hidden</a>.</p><a href="#fnref-6" class="footnote-backref">↩</a></li>
+    <li id="fn-7">
+      <p>This could include lots of users you may not initially have considered, for example users of web browsers embedded in television interfaces who are holding a TV remote or game controller with a D-pad. For more details about accessibility and focus outline, see <a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/navigation-mechanisms-focus-visible.html">WCAG SC 2.4.7</a>.</p><a href="#fnref-7" class="footnote-backref">↩</a></li>
+    <li id="fn-8">
+      <p>"Click: Fires when a mousedown and mouseup event occur on the same element. Fires when the user activates the element that has the keyboard focus (usually by pressing Enter or the space bar)." -- <a href="https://www.quirksmode.org/dom/events/click.html">Quirksmode: click, mousedown, mouseup, dblclick</a></p><a href="#fnref-8" class="footnote-backref">↩</a></li>
+  </ol>
+</div>
+
+
+        </div>
+    </div>
+</article>
+
+
+<div class="a11y-tuts__footerbanner">
+    <div class="gel-wrap">
+        <div class="gel-layout">
+            <div class="a11y-tuts__icon gel-layout__item gel-2/12@l gel-1/5@xl">
+                <image class="gel-icon gel-icon--large" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../static/images/gel-icon-help.svg" src="../static/images/gel-icon-help.svg" width="100%" height="100%" alt=""></image>
+            </div>
+            <div class="gel-layout__item gel-2/3@l gel-3/5@xl">
+                <h2 class="gel-contribution-banner__title">Could you improve this tutorial?</h2>
+                <p class="gel-contribution-banner-copy gel-great-primer">If you think you could make anything you see here a bit better then become one of <a href="../contributors/">our lovely contributors</a>!</p>
+            </div>
+            <div class="gel-layout__item gel-3/3@l gel-5/5@xl">
+            <p>
+            <small>
+                Copyright &copy; 2018 BBC. The BBC is not responsible for the content of external sites.<br>
+                <a href="http://www.bbc.co.uk/help/web/links/">Read about the BBC's approach to external linking.</a>
+            </small>
+            </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../static/vendor/highlight/highlight.pack.js"></script>
+</body>
+</html>
