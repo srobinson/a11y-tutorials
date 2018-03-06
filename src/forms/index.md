@@ -1,6 +1,6 @@
 # Building Accessible Forms: Getting Started
 
-Notice: This tutorial is a *working draft*, do not reference or link to this document in its current form.
+**Attention**: This tutorial is a *work-in-progress draft*. We believe in developing in the open as strongly as we believe you should not reference or link to this document in its current form.
 
 In this tutorial we walk through a variety of examples of forms that follow the BBC GEL and BBC Accessibility Guidelines.
 
@@ -41,7 +41,7 @@ The [HTML Specification for labels](https://html.spec.whatwg.org/multipage/forms
 
 ```html
 <label for="rating">Rating (between 1 and 5):</label>
-<input type="range" min="1" max="5" value="3" id="rating" name="username">
+<input type="range" min="1" max="5" value="3" id="rating" name="rating">
 ```
 Fig: You can use labels for a range of input controls, including the `range` control!
 
@@ -62,7 +62,7 @@ Fig: You can group related input controls, along with their unique labels, toget
 
 ### Invisible Labels
 
-If labels are so useful, are there ever any cases where we might want to hide them? Consider a fairly common case where a form is made up of only a single text input box and a button labelled "Search". In this case displaying the label "Search term" before the input box would be redundant, the information being requested is already made obvious by the text shown on the button.
+If labels are so useful, is there ever a case where you might want to hide them? Consider a fairly common case where a form is made up of only a single text input box and a button labelled "Search". In this case displaying the label "Search term" before the input box would be redundant, the information being requested is already made obvious by the text shown on the button.
 
 ```html
 <form>
@@ -75,15 +75,56 @@ Fig: Making the label vissually hidden makes sense in certain cases.
 
 Be careful not to take this technique too far however. For example, it would technically be possible to omit the submit button in the example above, relying on users to type <kbd>Enter</kbd> to submit the query, but doing so would also eliminate the only indication of what is expected to be entered in the input box.
 
+### Non-text Labels
+
+Some designs rely heavily on images and icons instead of text to communicate meaning; this is particularly true where the available screen-space is limited. However, this presents an obvious difficulty for low-vision and blind users.
+
+## ARIA
+
+The standard `label` element should always be preferred but there are edge cases where just a simple label might not be sufficient. In cases where visually-impaired user might not get sufficient context from the label alone, adding ARIA can be helpful.
+
+
+
+### Multiple labels for input
+
+In complex layouts, there may be several peices of information visible that combine to give the user information about a form input. For example, imagine a form input that is described by both a table column heading and a table row heading. While the meaning may be clear to a sighted user
+
+```html
+<h3 id="sender">Sender</h3>
+
+<div>
+    <label id="sender-name-lbl" for="sender-name">Full Name</label>
+    <input id="sender-name" name="sender-name" type="text" aria-labelledby="sender sender-name-lbl">
+</div>
+<div>
+    <label id="sender-email-lbl" for="sender-email">Email</label>
+    <input id="sender-email" name="sender-email" type="text" aria-labelledby="sender sender-email-lbl">
+</div>
+
+<h3 id="recipient">Recipient</h3>
+
+<div>
+    <label id="recipient-name-lbl" for="recipient-name">Full Name</label>
+    <input id="recipient-name" name="recipient-name" type="text" aria-labelledby="recipient recipient-name-lbl">
+</div>
+<div>
+    <label id="recipient-email-lbl" for="recipient-email">Email</label>
+    <input id="recipient" name="recipient" type="email" aria-labelledby="recipient recipient-email-lbl">
+</div>
+```
+Fig: An exmple of using ARIA to associate multiple elements to label a single input field.
+
+Note that if a control has both an associated `<label>` and an `aria-labelledby` attribute, the referenced `aria-labelledby` text will take precedence and be read out instead of the `<label>`.
+
 ## Be Clear, Be Concise
 
 Having clear and concise labels is helpful to everyone, but it can be critical for users with reading or comprehension difficulties. Finding the most effective wording is a job that will require careful consideration as well as user testing.
 
 ```html
-Not enough?
+Not enough information?
 <label for="username">Name</label>
 
-Too much?
+Too much information?
 <label for="username">Type your user's name from your account in the box here</label>
 ```
 Fig: Consider the wording of labels to maximise clarity.
@@ -94,9 +135,15 @@ Fig: Consider the wording of labels to maximise clarity.
 
 ## Custom Controls
 
+### Hidden labels / hidden controls
+
 ### Inputs Without Forms?
 
 ## Validation
+
+### Error messages
+
+### A note about colour and error indicators
 
 ## Complex and Multi-Page Forms
 
