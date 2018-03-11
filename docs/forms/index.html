@@ -17,7 +17,7 @@
     </script>
 	
 	<link rel="stylesheet" href="../static/vendor/highlight/styles/github.css">
-    <link rel="stylesheet" href="../static/css/main.css?ver-1519928515" />
+    <link rel="stylesheet" href="../static/css/main.css?ver-1520610601" />
 </head>
 <body>
 
@@ -71,6 +71,14 @@
                     
                     
                     
+                    
+                    
+                        <li class="heading-2"><a href="#aria" class="gel-side-nav__link">ARIA</a></li>
+                    
+                    
+                    
+                    
+                    
                         <li class="heading-2"><a href="#be-clear-be-concise" class="gel-side-nav__link">Be Clear, Be Concise</a></li>
                     
                     
@@ -89,7 +97,13 @@
                     
                     
                     
+                    
+                    
                         <li class="heading-2"><a href="#validation" class="gel-side-nav__link">Validation</a></li>
+                    
+                    
+                    
+                    
                     
                     
                     
@@ -113,7 +127,7 @@
             
 
 <h1 id="building-accessible-forms-getting-started">Building Accessible Forms: Getting Started</h1>
-<p>Notice: This tutorial is a <em>working draft</em>, do not reference or link to this document in its current form.</p>
+<p><strong>Attention</strong>: This tutorial is a <em>work-in-progress draft</em>. We believe in developing in the open as strongly as we believe you should not reference or link to this document in its current form.</p>
 <p>In this tutorial we walk through a variety of examples of forms that follow the BBC GEL and BBC Accessibility Guidelines.</p>
 <h2 id="our-old-workhorse-the-form">Our Old Workhorse, the Form</h2>
 <p>The humble web form has been quietly toiling away on our web pages for nearly as long as there has been a Web. In fact, forms are so common that we might even be forgiven for taking them for granted, but that would be a mistake. The interactive power that forms unlock: to register and respond, to question and query, can make a huge difference to our users. And for users with disabilities, forms can be even more important, opening up services and utilities that would otherwise be inaccessible.</p>
@@ -128,8 +142,8 @@
 </blockquote>
 <h3 id="a-simple-example">A Simple Example</h3>
 <figure>
-  <pre><code class="hljs language-stata">&#x3C;<span class="hljs-keyword">label</span> <span class="hljs-keyword">for</span>=<span class="hljs-string">"username"</span>>User Name&#x3C;/<span class="hljs-keyword">label</span>>
-&#x3C;<span class="hljs-keyword">input</span> <span class="hljs-keyword">type</span>=<span class="hljs-string">"text"</span> id=<span class="hljs-string">"username"</span> name=<span class="hljs-string">"username"</span>>
+  <pre><code class="hljs language-stata">&#x3C;<span class="hljs-keyword">label</span> <mark><span class="hljs-keyword">for</span>=<span class="hljs-string">"username"</span></mark>>User Name&#x3C;/<span class="hljs-keyword">label</span>>
+&#x3C;<span class="hljs-keyword">input</span> <span class="hljs-keyword">type</span>=<span class="hljs-string">"text"</span> <mark>id=<span class="hljs-string">"username"</span></mark> name=<span class="hljs-string">"username"</span>>
 </code></pre>
   <figcaption>Use the <code>for</code> attribute to associate a label with its input control.</figcaption>
 </figure>
@@ -143,7 +157,7 @@
 <h3 id="more-label-examples">More Label Examples</h3>
 <figure>
   <pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"rating"</span>></span>Rating (between 1 and 5):<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
-<span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"range"</span> <span class="hljs-attr">min</span>=<span class="hljs-string">"1"</span> <span class="hljs-attr">max</span>=<span class="hljs-string">"5"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"3"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"rating"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"username"</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"range"</span> <span class="hljs-attr">min</span>=<span class="hljs-string">"1"</span> <span class="hljs-attr">max</span>=<span class="hljs-string">"5"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"3"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"rating"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"rating"</span>></span>
 </code></pre>
   <figcaption>You can use labels for a range of input controls, including the <code>range</code> control!</figcaption>
 </figure>
@@ -162,7 +176,7 @@
   <figcaption>You can group related input controls, along with their unique labels, together under a shared <code>legend</code>.<sup id="fnref-1"><a href="#fn-1" class="footnote-ref">1</a></sup></figcaption>
 </figure>
 <h3 id="invisible-labels">Invisible Labels</h3>
-<p>If labels are so useful, are there ever any cases where we might want to hide them? Consider a fairly common case where a form is made up of only a single text input box and a button labelled "Search". In this case displaying the label "Search term" before the input box would be redundant, the information being requested is already made obvious by the text shown on the button.</p>
+<p>If labels are so useful, is there ever a case where you might want to hide them? Consider a fairly common case where a form is made up of only a single text input box and a button labelled "Search". In this case displaying the label "Search term" before the input box would be redundant, the information being requested is already made obvious by the text shown on the button.</p>
 <figure>
   <pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">form</span>></span>
   <span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"visuallyhidden"</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"search_term"</span>></span>Search Term<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
@@ -173,13 +187,48 @@
   <figcaption>Making the label vissually hidden makes sense in certain cases.</figcaption>
 </figure>
 <p>Be careful not to take this technique too far however. For example, it would technically be possible to omit the submit button in the example above, relying on users to type <kbd>Enter</kbd> to submit the query, but doing so would also eliminate the only indication of what is expected to be entered in the input box.</p>
+<h3 id="non-text-labels">Non-text Labels</h3>
+<p>Some designs rely heavily on images and icons instead of text to communicate meaning; this is particularly true where the available screen-space is limited. However, this presents an obvious difficulty for low-vision and blind users.</p>
+<h2 id="aria">ARIA</h2>
+<p>The standard <code>label</code> element should always be preferred but there are edge cases where just a simple label might not be sufficient. In cases where visually-impaired user might not get sufficient context from the label alone, adding ARIA can be helpful.</p>
+<h3 id="multiple-labels-for-input">Multiple labels for input</h3>
+<p>In complex layouts, there may be several peices of information visible that combine to give the user information about a form input. For example, imagine a form input that is described by both a table column heading and a table row heading. While the meaning may be clear to a sighted user</p>
+<figure>
+  <pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">h3</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"sender"</span>></span>Sender<span class="hljs-tag">&#x3C;/<span class="hljs-name">h3</span>></span>
+
+<span class="hljs-tag">&#x3C;<span class="hljs-name">div</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"sender-name-lbl"</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"sender-name"</span>></span>Full Name<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"sender-name"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"sender-name"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <mark><span class="hljs-attr">aria-labelledby</span>=<span class="hljs-string">"sender sender-name-lbl"</span></mark>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">div</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"sender-email-lbl"</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"sender-email"</span>></span>Email<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"sender-email"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"sender-email"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">aria-labelledby</span>=<span class="hljs-string">"sender sender-email-lbl"</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+
+<span class="hljs-tag">&#x3C;<span class="hljs-name">h3</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"recipient"</span>></span>Recipient<span class="hljs-tag">&#x3C;/<span class="hljs-name">h3</span>></span>
+
+<span class="hljs-tag">&#x3C;<span class="hljs-name">div</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"recipient-name-lbl"</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"recipient-name"</span>></span>Full Name<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"recipient-name"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"recipient-name"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <mark><span class="hljs-attr">aria-labelledby</span>=<span class="hljs-string">"recipient recipient-name-lbl"</span></mark>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">div</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"recipient-email-lbl"</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"recipient-email"</span>></span>Email<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"recipient"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"recipient"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"email"</span> <span class="hljs-attr">aria-labelledby</span>=<span class="hljs-string">"recipient recipient-email-lbl"</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+</code></pre>
+  <figcaption>An exmple of using ARIA to associate multiple elements to label a single input field.</figcaption>
+</figure>
+<p>Note that if a control has both an associated <code>&#x3C;label></code> and an <code>aria-labelledby</code> attribute, the referenced <code>aria-labelledby</code> text will take precedence and be read out instead of the <code>&#x3C;label></code>.</p>
 <h2 id="be-clear-be-concise">Be Clear, Be Concise</h2>
+<blockquote>
+  <p>"[keep] labels and legends succinct to minimise verbosity."<sup id="fnref-1"><a href="#fn-1" class="footnote-ref">1</a></sup></p>
+</blockquote>
 <p>Having clear and concise labels is helpful to everyone, but it can be critical for users with reading or comprehension difficulties. Finding the most effective wording is a job that will require careful consideration as well as user testing.</p>
 <figure>
-  <pre><code class="hljs language-html">Not enough?
+  <pre><code class="hljs language-html">Not enough information?
 <span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"username"</span>></span>Name<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
 
-Too much?
+Too much information?
 <span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"username"</span>></span>Type your user's name from your account in the box here<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
 </code></pre>
   <figcaption>Consider the wording of labels to maximise clarity.</figcaption>
@@ -187,8 +236,11 @@ Too much?
 <h2 id="dont-confuse">Don't Confuse</h2>
 <h2 id="autocomplete-and-autosuggest">AutoComplete and AutoSuggest</h2>
 <h2 id="custom-controls">Custom Controls</h2>
+<h3 id="hidden-labels--hidden-controls">Hidden labels / hidden controls</h3>
 <h3 id="inputs-without-forms">Inputs Without Forms?</h3>
 <h2 id="validation">Validation</h2>
+<h3 id="error-messages">Error messages</h3>
+<h3 id="a-note-about-colour-and-error-indicators">A note about colour and error indicators</h3>
 <h2 id="complex-and-multi-page-forms">Complex and Multi-Page Forms</h2>
 <h2 id="captcha">CAPTCHA</h2>
 <h2 id="notes">Notes</h2>

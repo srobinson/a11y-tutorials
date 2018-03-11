@@ -25,8 +25,8 @@ The HTML `label` element should generally be your starting point when asking the
 ### A Simple Example
  
 ```
-<label for="username">User Name</label>
-<input type="text" id="username" name="username">
+<label \!for="username"\!>User Name</label>
+<input type="text" \!id="username"\! name="username">
 ```
 Fig: Use the `for` attribute to associate a label with its input control.
 
@@ -94,7 +94,7 @@ In complex layouts, there may be several peices of information visible that comb
 
 <div>
     <label id="sender-name-lbl" for="sender-name">Full Name</label>
-    <input id="sender-name" name="sender-name" type="text" aria-labelledby="sender sender-name-lbl">
+    <input id="sender-name" name="sender-name" type="text" \!aria-labelledby="sender sender-name-lbl"\!>
 </div>
 <div>
     <label id="sender-email-lbl" for="sender-email">Email</label>
@@ -105,7 +105,7 @@ In complex layouts, there may be several peices of information visible that comb
 
 <div>
     <label id="recipient-name-lbl" for="recipient-name">Full Name</label>
-    <input id="recipient-name" name="recipient-name" type="text" aria-labelledby="recipient recipient-name-lbl">
+    <input id="recipient-name" name="recipient-name" type="text" \!aria-labelledby="recipient recipient-name-lbl"\!>
 </div>
 <div>
     <label id="recipient-email-lbl" for="recipient-email">Email</label>
@@ -118,7 +118,9 @@ Note that if a control has both an associated `<label>` and an `aria-labelledby`
 
 ## Be Clear, Be Concise
 
-Having clear and concise labels is helpful to everyone, but it can be critical for users with reading or comprehension difficulties. Finding the most effective wording is a job that will require careful consideration as well as user testing.
+> "Keep labels and legends succinct to minimise verbosity." -- [BBC Mobile Accessibility Guidelines: Grouping form elements](http://www.bbc.co.uk/guidelines/futuremedia/accessibility/mobile/forms/grouping-form-elements)
+
+Having clear and concise labels is helpful to everyone but it can be especially helpful to users with reading or comprehension difficulties. Finding the most effective wording is a job that can require careful consideration as well as user testing.
 
 ```html
 Not enough information?
@@ -129,9 +131,15 @@ Too much information?
 ```
 Fig: Consider the wording of labels to maximise clarity.
 
-## Don't Confuse
+## Don't Surprise
+
+You won't get famous for avant-garde page layouts by using the familiar and expected arrangement of label and input control, but you will lighten your user's cognitive-decoding work considerably by being a bit boring. The [research into the subject of form readability](https://research.googleblog.com/2014/07/simple-is-better-making-your-web-forms.html) suggests that simple top-down scanning should be encouraged: Keep the label immediately adjacent to, and preferrably just above, its related input control.
+
+You want the user to complete your form fully and accurately, so make it easy for them to understand.
 
 ## AutoComplete and AutoSuggest
+
+To the extent that enhancements like autoComplete and autoSuggest can be helpful to most users, it's important that these features don't add an unwelcome obstacle to users with disabilities.
 
 ## Custom Controls
 
