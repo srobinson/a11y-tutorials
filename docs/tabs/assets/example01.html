@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Tabs Example: Basic</title>
+	<title>Tabbed Interface Demo</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	
 	<!-- use your favourite DOM Manipulation jLibrary here -->
@@ -100,7 +100,7 @@
 
 <h1>Tabbed Interface Demo</h1>
 
-<p>See <a href="https://github.com/bbc/a11y-tuts/blob/master/src/tabs/assets/example01.html">the source code for this demo</a> on github.</p>
+<p>See <a href="https://github.com/bbc/a11y-tutorials/blob/master/src/tabs/assets/example01.html">the source code for this demo</a> on github.</p>
 
 <article class="tabbed">
     <h2>Victoria Sponge Cake</h2>
@@ -179,22 +179,13 @@
 
         // handle tab element selection event
         $('a[role="tab"]')
-        .on('mouseup', function(event) {
-            $(this).prop('mouseclicked', true);
+        .on('focus', function(event) {
+            setTabSelected( $(this) );
         })
         .on('click', function(event) {
-            setTabSelected( $(this) );
-            
-            // push focus to the tab panel
-            if ( !$(this).prop('mouseclicked') ) {
-                var thisPanelLink = $(this).attr('href');
-                $( thisPanelLink ).attr('tabindex', '-1')[0].focus();
-            }
-            $(this).removeProp('mouseclicked');
-            
-            // stop page view from jumping when user clicks a tab element
+            $( thisPanelLink ).attr('tabindex', '-1')[0].focus();
             event.preventDefault();
-        });
+        });;
     };
 
     function setTabSelected($selectedTab) {

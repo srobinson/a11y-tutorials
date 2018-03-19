@@ -17,7 +17,7 @@
     </script>
 	
 	<link rel="stylesheet" href="../static/vendor/highlight/styles/github.css">
-    <link rel="stylesheet" href="../static/css/main.css?ver-1520610601" />
+    <link rel="stylesheet" href="../static/css/main.css?ver-1521495203" />
 </head>
 <body>
 
@@ -83,7 +83,7 @@
                     
                     
                     
-                        <li class="heading-2"><a href="#dont-confuse" class="gel-side-nav__link">Don&#39;t Confuse</a></li>
+                        <li class="heading-2"><a href="#dont-surprise" class="gel-side-nav__link">Don&#39;t Surprise</a></li>
                     
                     
                     
@@ -221,9 +221,9 @@
 <p>Note that if a control has both an associated <code>&#x3C;label></code> and an <code>aria-labelledby</code> attribute, the referenced <code>aria-labelledby</code> text will take precedence and be read out instead of the <code>&#x3C;label></code>.</p>
 <h2 id="be-clear-be-concise">Be Clear, Be Concise</h2>
 <blockquote>
-  <p>"[keep] labels and legends succinct to minimise verbosity."<sup id="fnref-1"><a href="#fn-1" class="footnote-ref">1</a></sup></p>
+  <p>"Keep labels and legends succinct to minimise verbosity." -- <a href="http://www.bbc.co.uk/guidelines/futuremedia/accessibility/mobile/forms/grouping-form-elements">BBC Mobile Accessibility Guidelines: Grouping form elements</a></p>
 </blockquote>
-<p>Having clear and concise labels is helpful to everyone, but it can be critical for users with reading or comprehension difficulties. Finding the most effective wording is a job that will require careful consideration as well as user testing.</p>
+<p>Having clear and concise labels is helpful to everyone but it can be especially helpful to users with reading or comprehension difficulties. Finding the most effective wording is a job that can require careful consideration as well as user testing.</p>
 <figure>
   <pre><code class="hljs language-html">Not enough information?
 <span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"username"</span>></span>Name<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
@@ -233,8 +233,11 @@ Too much information?
 </code></pre>
   <figcaption>Consider the wording of labels to maximise clarity.</figcaption>
 </figure>
-<h2 id="dont-confuse">Don't Confuse</h2>
+<h2 id="dont-surprise">Don't Surprise</h2>
+<p>You won't get famous for avant-garde page layouts by using the familiar and expected arrangement of label and input control, but you will lighten your user's cognitive-decoding work considerably by being a bit boring. The <a href="https://research.googleblog.com/2014/07/simple-is-better-making-your-web-forms.html">research into the subject of form readability</a> suggests that simple top-down scanning should be encouraged: Keep the label immediately adjacent to, and preferrably just above, its related input control.</p>
+<p>You want the user to complete your form fully and accurately, so make it easy for them to understand.</p>
 <h2 id="autocomplete-and-autosuggest">AutoComplete and AutoSuggest</h2>
+<p>To the extent that enhancements like autoComplete and autoSuggest can be helpful to most users, it's important that these features don't add an unwelcome obstacle to users with disabilities.</p>
 <h2 id="custom-controls">Custom Controls</h2>
 <h3 id="hidden-labels--hidden-controls">Hidden labels / hidden controls</h3>
 <h3 id="inputs-without-forms">Inputs Without Forms?</h3>
