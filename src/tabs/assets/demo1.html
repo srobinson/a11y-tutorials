@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Tabs Demo</title>
+    <style>
+      /* Just styles for the document */
+      html { font-family: sans-serif; line-height: 1.5; } * { box-sizing: border-box; } body { max-width: 40rem; margin: 3rem auto; }
+    </style>
+    <style>
+      /* Demo specific styles */
+      .tab-interface > ul {
+        padding: 1rem;
+        margin: 0;
+        list-style: none;
+        background: #ccc;
+      }
+
+      .tab-interface [role="tablist"] {
+        padding: 0;
+        margin: 0;
+        display: flex;
+        background: transparent;
+      }
+
+      .tab-interface [role="tablist"] li + li {
+        margin-left: 0.75rem;
+      }
+
+      .tab-interface [role="tabpanel"] {
+        background: #ccc;
+        padding: 1rem;
+      }
+
+      .tab-interface [role="tablist"] a {
+        background: #aaa;
+        text-decoration: none;
+        display: inline-block;
+        padding: 1rem 2rem;
+      }
+
+      .tab-interface [role="tablist"] a:focus {
+        outline: none;
+        box-shadow: inset 0 0 0 0.25rem #666;
+      }
+
+      .tab-interface [role="tablist"] [aria-selected] {
+        background: #ccc;
+      }
+
+      /* just for this pen */
+
+      html {
+        font-family: sans-serif;
+        line-height: 1.5;
+      }
+
+      * {
+        box-sizing: border-box;
+        color: inherit;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- demo HTML -->
+    <div id="tabbed">
+      <ul>
+        <li>
+          <a href="#section1" id="tab1">Section 1</a>
+        </li>
+        <li>
+          <a href="#section2" id="tab2">Section 2</a>
+        </li>
+        <li>
+          <a href="#section3" id="tab3">Section 3</a>
+        </li>
+      </ul>
+      <section id="section1">
+        <h2>Section 1</h2>
+        <p>Lorem ipsum.</p>
+      </section>
+      <section id="section2">
+        <h2>Section 2</h2>
+        <p>Maecenas sit amet tellus nec mi gravida posuere non pretium magna. Suspendisse potenti H<sub>2</sub>0. Suspendisse <del>potenti</del>. Suspendisse <em>potenti</em>. Duis sagittis, est sit amet <strong>gravida tristique</strong>, purus lectus venenatis urna, id <code>#FFFFFF</code> risus ut nunc. </p>
+<p>Nulla lobortis tempus commodo? Aliquam tincidunt velit sit amet ante hendrerit tempus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras molestie risus a enim Convallis; vitae luctus libero lacinia. Donec a congue leo. Nunc <a href='#'>iaculis risus</a> vel orci ornare dignissim sed vitae nulla. </p>
+<p>Fusce ac sodales <abbr title='Cascading Style Sheets'>CSS</abbr> magna. Nunc <a href='#'>iaculis risus</a> vel orci ornare dignissim sed vitae nulla. Nulla lobortis tempus commodo? Aliquam tincidunt velit sit amet ante hendrerit tempus. Duis sagittis, est sit amet gravida tristique, purus lectus venenatis urna, id &#8216;molestie&#8217; magna risus ut nunc. Aliquam nisl enim, tristique tempus placerat at, posuere in lectus. Lorem ipsum dolor sit amet, consectetur <em>adipiscing elit</em>. Nulla lobortis tempus commodo. </p>
+<p>Aliquam tincidunt velit sit amet <a href='#'>ante hendrerit</a> tempus. Sed dapibus, lectus sit amet adipiscing egestas, mauris est viverra nibh, iaculis pretium sem orci aliquet mauris. Duis sagittis, est sit amet gravida tristique, purus lectus venenatis urna, id molestie magna risus ut nunc. Lorem ipsum dolor sit amet, consectetur <em>adipiscing elit</em>. Nunc iaculis risus vel &#8216;Orci Ornare&#8217; dignissim sed vitae nulla. Nulla auctor eleifend turpis consequat pharetra. </p>
+<p>Nulla vel magna sit amet dui lobortis commodo vitae vel nulla sit amet ante hendrerit tempus. Sed dapibus, lectus sit amet adipiscing egestas, mauris est viverra nibh, iaculis pretium sem orci aliquet mauris. Suspendisse potenti cras molestie, risus a enim convallis vitae luctus libero lacinia. Sed dapibus, lectus sit amet adipiscing egestas, mauris est viverra nibh, <a href='#'>iaculis pretium</a> sem orci aliquet mauris. Donec a congue leo. </p>
+<p>Duis sagittis, est sit amet gravida tristique, purus lectus venenatis urna, id &#8216;molestie&#8217; magna risus ut nunc. Aliquam nisl enim, tristique tempus placerat at, posuere in lectus. Suspendisse potenti. Vestibulum sit amet ipsum lacus&hellip; Donec a congue leo. Vestibulum <code>text-align : justify</code> lacus. </p>
+<p>Maecenas sit <q cite='http://www.heydonworks.com'>amet tellus nec mi gravida posuere</q> non pretium magna. Lorem ipsum dolor sit amet, consectetur <em>adipiscing elit</em>. Vestibulum sit amet ipsum lacus&hellip; Donec tempus tempus tellus, ac lacinia turpis mattis ac! Donec tempus tempus tellus, ac <abbr title='Hypertext Markup Language'>HTML</abbr> lacinia turpis mattis ac. Donec tempus tempus tellus, ac lacinia turpis mattis ac. Sed dapibus, lectus sit amet adipiscing egestas, mauris est viverra nibh, iaculis pretium sem orci aliquet mauris. </p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc iaculis risus vel orci ornare dignissim sed vitae nulla. Lorem ipsum dolor sit amet, &mdash; consectetur adipiscing &mdash; elit. Aliquam tincidunt velit sit (amet ante hendrerit tempus). Donec tempus tempus tellus, ac lacinia turpis mattis ac! Nulla vel magna sit &mdash; amet dui lobortis commodo &mdash; vitae vel nulla. Donec et nisi dictum <a href='#'>felis sollicitudin</a> congue. Duis sagittis, est sit amet gravida tristique, purus lectus venenatis urna, id &#8216;molestie&#8217; magna risus ut nunc. Nulla lobortis tempus commodo? Cras molestie risus a <q cite='http://www.heydonworks.com'>enim convallis vitae</q> luctus libero lacinia. </p>
+<p>Nulla lobortis tempus <strong>commodo</strong>. Suspendisse potenti. Sed dapibus, lectus sit amet adipiscing egestas, mauris est viverra nibh, iaculis pretium sem orci aliquet mauris. Aliquam nisl enim, tristique tempus placerat at, posuere in lectus. Duis sagittis, est sit amet gravida tristique, purus lectus venenatis urna, id &#8216;molestie&#8217; magna risus ut nunc. Sed mauris arcu, aliquet ultrices malesuada sed, pretium id <kbd>CTRL</kbd> + <kbd>V</kbd> massa. Sed dapibus, lectus sit amet adipiscing egestas, mauris est viverra nibh, <a href='#'>iaculis pretium</a> sem orci aliquet mauris. Duis sagittis, est sit amet gravida tristique, purus lectus venenatis urna, id molestie magna risus ut nunc. </p>
+      </section>
+      <section id="section3">
+        <h2>Section 3</h2>
+        <p>Donec et nisi dictum felis sollicitudin congue. Nulla auctor eleifend 23<sup>rd</sup> of May turpis consequat pharetra. Suspendisse <del>potenti</del>. Potenti et eros sed justo commodo bibendum non at nunc. Vestibulum sit amet ipsum lacus. Sed dapibus, lectus sit amet adipiscing egestas, mauris est viverra nibh, iaculis pretium sem orci aliquet mauris. Nulla vel magna sit amet dui lobortis commodo vitae vel nulla sit amet ante hendrerit tempus. Fusce ac sodales magna. Nulla vel magna sit amet dui <a href='#'>lobortis</a> commodo vitae vel nulla. </p>
+<p>Donec tempus tempus tellus, ac lacinia turpis mattis ac. Nunc iaculis risus vel &#8216;Orci Ornare&#8217; dignissim sed vitae nulla. Suspendisse potenti. Donec et nisi dictum felis, sollicitudin, congue Heydon&#8482;. Suspendisse <em>potenti</em>. Nunc <a href='#'>iaculis risus</a> vel orci ornare dignissim sed vitae nulla. </p>
+<p>Nulla auctor eleifend turpis consequat pharetra: Vestibulum <code>text-align : justify</code> lacus. Curabitur consectetur; faucibus nisl ac varius. Sed dapibus, lectus sit amet adipiscing egestas, mauris est viverra nibh (iaculis pretium sem orci aliquet mauris). Potenti et eros sed justo commodo bibendum non at nunc. Vestibulum sit amet ipsum lacus&hellip; Cras molestie risus a <q cite='http://www.heydonworks.com'>enim convallis vitae</q> luctus libero lacinia. </p>
+<p>Maecenas sit amet tellus nec mi gravida posuere non pretium magna. Aliquam nisl enim&hellip; tristique tempus placerat at, posuere in lectus. Nulla lobortis tempus <strong>commodo</strong>. Cras molestie risus a enim &#8216;convallis vitae&#8217; luctus libero lacinia. Nunc <a href='#'>iaculis risus</a> vel orci ornare dignissim sed vitae nulla. Maecenas sit <q cite='http://www.heydonworks.com'>amet tellus nec mi gravida posuere</q> non pretium magna. Duis sagittis, est sit amet gravida tristique, purus lectus venenatis urna, id molestie magna risus ut nunc. Aliquam tincidunt velit sit amet <a href='#'>ante hendrerit</a> tempus. </p>
+<p>Nulla lobortis tempus commodo. Donec a congue leo? Aliquam nisl enim, tristique tempus placerat at, posuere in lectus. Vestibulum <code>text-align : justify</code> lacus. Duis sagittis, est sit amet gravida tristique, purus lectus venenatis urna, id molestie magna risus ut nunc. Fusce ac sodales magna. Donec tempus tempus tellus, ac lacinia turpis mattis ac. Fusce ac sodales <abbr title='Cascading Style Sheets'>CSS</abbr> magna. </p>
+<p>Suspendisse <em>potenti</em>. Fusce ac sodales <code>.generate()</code> magna. Suspendisse <del>potenti</del>. Nulla vel magna sit &mdash; amet dui lobortis commodo &mdash; vitae vel nulla. Potenti et eros sed justo commodo bibendum non at nunc. </p>
+<p>Aliquam tincidunt velit sit amet ante hendrerit tempus. Vestibulum sit amet ipsum lacus. Suspendisse potenti cras molestie, risus a enim convallis vitae luctus libero lacinia. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nisl enim, tristique tempus placerat at, posuere in lectus. </p>
+<p>Nunc iaculis risus vel orci ornare dignissim sed vitae nulla. Donec a congue leo. Vestibulum sit amet ipsum lacus. </p>
+<p>Suspendisse potenti H<sub>2</sub>0. Donec a congue leo? Nunc iaculis risus vel orci ornare dignissim sed vitae nulla. Fusce ac sodales magna &hellip; Fusce ac sodales magna. Duis sagittis, est sit amet gravida tristique, purus lectus venenatis urna, id &#8216;molestie&#8217; magna risus ut nunc. Vestibulum sit amet ipsum lacus. </p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras molestie risus a enim Convallis; vitae luctus libero lacinia. Maecenas sit amet tellus nec mi gravida posuere non pretium magna. </p>
+      </section>
+    </div>
+    <!-- end demo HTML -->
+
+    <script>
+      // The tabs constructor
+      function Tabbed(elem, breakpoint) {
+        // Define the container element
+        this.container = elem;
+        this.container.classList.add('tab-interface');
+
+        // Test for matchMedia support
+        if (typeof window.matchMedia !== "undefined") {
+          // Check to see we are above the breakpoint threshold
+          if (window.matchMedia('(min-width: '+breakpoint+')').matches) {
+            // Get key elements
+            var tablist = this.container.querySelector('ul');
+            var tabs = tablist.querySelectorAll('a');
+            var panels = this.container.querySelectorAll('section[id]');
+
+            // Convert nodes into id arrays for convenience
+            var tabIDs = Array.prototype.map.call(tabs, function(tab) {
+              return '#' + tab.id;
+            });
+            var panelIDs = Array.prototype.map.call(panels, function(panel) {
+              return '#' + panel.id;
+            });
+
+            // Set up ARIA semantics
+            tablist.setAttribute('role', 'tablist');
+            Array.prototype.forEach.call(tabs, function(tab) {
+              tab.setAttribute('role', 'tab');
+              tab.setAttribute('tabindex', '-1');
+              tab.parentElement.setAttribute('role', 'presentation');
+            });
+            Array.prototype.forEach.call(panels, function(panel, i) {
+              panel.setAttribute('role', 'tabpanel');
+              panel.setAttribute('aria-labelledby', tabs[i].id);
+              panel.setAttribute('tabindex', '-1');
+              panel.hidden = true;
+            });
+
+            // The tab switching function
+            var switchTab = function(oldTab, newTab, updateHash) {
+              // Change the semantics and focus capability
+              newTab.setAttribute('aria-selected', 'true');
+              newTab.removeAttribute('tabindex');
+              if (oldTab) {
+                oldTab.setAttribute('tabindex', '-1');
+                oldTab.removeAttribute('aria-selected');
+              }
+
+              // Show/hide the relevant panel
+              var index = Array.prototype.indexOf.call(tabs, newTab);
+              panels[index].hidden = false;
+              if (oldTab) {
+                var oldIndex = Array.prototype.indexOf.call(tabs, oldTab);
+                panels[oldIndex].hidden = true;
+              }
+
+              // Update hash unless no matching hash
+              if (updateHash) {
+                history.pushState(null, null, '#' + panels[index].id);
+              }
+            };
+
+            // Set up mouse and keyboard events
+            Array.prototype.forEach.call(tabs, function(tab) {
+              // Mouse interaction
+              tab.addEventListener('click', function(e) {
+                e.preventDefault();
+                var currentTab = tablist.querySelector('[aria-selected]');
+                if (e.currentTarget !== currentTab) {
+                  switchTab(currentTab, e.currentTarget, true);
+                }
+              });
+
+              // Keyboard interaction
+              tab.addEventListener('keydown', function(e) {
+                // Get index of focused tab
+                var index = Array.prototype.indexOf.call(tabs, e.currentTarget);
+
+                // Determine key pressed
+                var dir = e.which === 37 ? index - 1 : e.which === 39 ? index + 1 : null;
+
+                // Switch to the new tab if it exists
+                if (dir !== null && tabs[dir]) {
+                  e.preventDefault();
+                  switchTab(e.currentTarget, tabs[dir], true);
+                  tabs[dir].focus();
+                }
+              });
+            });
+
+            // Initial tab selection based on hash
+            window.addEventListener('load', function() {
+              var hash = window.location.hash;
+              var indexOfHash = panelIDs.indexOf(hash);
+              var newIndex = indexOfHash > -1 ? indexOfHash : 0;
+              switchTab(null, tabs[newIndex], indexOfHash > -1);
+              if (indexOfHash > -1) {
+                panels[newIndex].focus();
+              }
+            });
+          }
+        }
+      }
+
+      // Initialize
+      var tabsElem = document.getElementById('tabbed');
+      var tabInterface = new Tabbed(tabsElem, '400px');
+    </script>
+  </body>
+</html>
