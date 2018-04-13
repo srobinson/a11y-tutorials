@@ -5,6 +5,7 @@ The following is intended to be read alongside the [GEL Tabs page](http://www.bb
 The implementation to come is:
 
 * Written with plain CSS and ES5 Javascript (_no build process assumed_)
+* Lacking any dependencies (_for maximum portability and minimum payload_)
 * Based on progressive enhancement (_the HTML is fine without the Javascript or the CSS_)
 * Is editor friendly (_can be easily dropped into HTML and/or markdown files_)
 
