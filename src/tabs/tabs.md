@@ -205,6 +205,28 @@ This means we can use tab panels like standard document fragments, as before, wi
     * **Yes**: Select that tab and reveal its corresponding panel, then _focus_ that panel as if it were a simple document fragment, bringing it into view.
     * **No**: Reveal the first of the tab interface's tab panels, and _do not_ update the `hash`. Document fragments not corresponding to tabs should still function as expected.
 
+To support links pointing to panels, and using the back and forward browser buttons, we also listen to the `hashchange` event.
+
+```js
+window.addEventListener('hashchange', function(e) {
+  // Get the index of the panel id (or `-1` if it doesn't exist)
+  var newHashIndex = panelIDs.indexOf(window.location.hash);
+  // Is there a tab to activate?
+  var newTab = newHashIndex > -1 ? tabs[newHashIndex] : false;
+
+  // Get previous URL's hash, if it exists
+  var oldHash = e.oldURL && e.oldURL.indexOf('#') > -1 ? e.oldURL.substring(e.oldURL.indexOf('#')) : null;
+  // Get previous tab, if the previous hash exists
+  var oldTab = oldHash ? tabs[panelIDs.indexOf(oldHash)] : null;
+
+  if (newTab) {
+    switchTab(oldTab, newTab, false);
+    // Focus the new panel, so it behaves similar to a document fragment
+    panels[newHashIndex].focus();
+  }
+});
+```
+
 ### Keyboard behavior
 
 In keeping with conventions set in longstanding native application design, tab interfaces should adopt a specific set of behaviors for keyboard interaction. These are outlined in the [WAI ARIA practices guide for tabs](https://www.w3.org/TR/wai-aria-practices-1.1/#tabpanel).

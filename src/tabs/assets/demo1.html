@@ -47,7 +47,7 @@
         box-shadow: inset 0 0 0 0.25rem #666;
       }
 
-      .tab-inderface [role="tabpanel"]:focus {
+      .tab-interface [role="tabpanel"]:focus {
         outline: none;
       }
 
@@ -68,6 +68,9 @@
     </style>
   </head>
   <body>
+    <h1>Tabs demonstration</h1>
+    <p><a href="#section1">Link to first section/panel</a></p>
+    <p><a href="#section-2-subsection">Link to subsection inside panel</a></p>
     <!-- demo HTML -->
     <div class="tabs">
       <ul>
@@ -87,6 +90,8 @@
       </section>
       <section id="section2">
         <h2>Section 2</h2>
+        <p>Aliquam erat volutpat. Pellentesque efficitur quam eget arcu scelerisque, id rutrum velit accumsan. Phasellus posuere lacus eu sagittis viverra. Aliquam nec sapien nec lectus sagittis luctus vel luctus magna. Nullam aliquam justo at justo dictum tempus. Suspendisse tempor ligula ligula, a convallis turpis pharetra eget. Fusce in ante urna. In volutpat euismod felis, vel scelerisque enim pellentesque sit amet. Phasellus elit neque, iaculis quis sollicitudin eget, tincidunt et lorem.</p>
+        <h3 id="section-2-subsection">A subsection in Section 2</h3>
         <p>Etc.</p>
       </section>
       <section id="section3">
@@ -95,43 +100,41 @@
       </section>
     </div>
     <!-- end demo HTML -->
-
     <script>
       // The tabs constructor
       function Tabbed(elem, breakpoint) {
-        // Define the container element
-        this.container = elem;
-        this.container.classList.add('tab-interface');
+        // Give the outer elem a class for styling
+        elem.classList.add('tab-interface');
 
         // Test for matchMedia support
         if (typeof window.matchMedia !== "undefined") {
           // Check to see we are above the breakpoint threshold
           if (window.matchMedia('(min-width: '+breakpoint+')').matches) {
             // Get key elements
-            var tablist = this.container.querySelector('ul');
-            var tabs = this.container.querySelectorAll('ul:first-child a');
-            var panels = this.container.querySelectorAll('ul:first-child ~ section');
+            var tablist = elem.querySelector('ul');
+            var tabs = tablist.querySelectorAll('a');
+            var panels = elem.querySelectorAll('ul:first-child ~ section');
 
             // Set random id string to avoid duplicate ids
             var ident = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
 
             // Convert nodes into id arrays for convenience
-            var tabIDs = Array.prototype.map.call(tabs, function(tab) {
+            var tabIDs = Array.prototype.map.call(tabs, function (tab) {
               return '#' + tab.id;
             });
-            var panelIDs = Array.prototype.map.call(panels, function(panel) {
+            var panelIDs = Array.prototype.map.call(panels, function (panel) {
               return '#' + panel.id;
             });
 
             // Set up ARIA semantics
             tablist.setAttribute('role', 'tablist');
-            Array.prototype.forEach.call(tabs, function(tab, i) {
+            Array.prototype.forEach.call(tabs, function (tab, i) {
               tab.setAttribute('role', 'tab');
               tab.setAttribute('tabindex', '-1');
               tab.setAttribute('id', 'tab-' + ident + '-' + (i + 1));
               tab.parentElement.setAttribute('role', 'presentation');
             });
-            Array.prototype.forEach.call(panels, function(panel, i) {
+            Array.prototype.forEach.call(panels, function (panel, i) {
               panel.setAttribute('role', 'tabpanel');
               panel.setAttribute('aria-labelledby', tabs[i].id);
               panel.setAttribute('tabindex', '-1');
@@ -139,42 +142,46 @@
             });
 
             // The tab switching function
-            var switchTab = function(oldTab, newTab, updateHash) {
-              // Change the semantics and focus capability
-              newTab.setAttribute('aria-selected', 'true');
-              newTab.removeAttribute('tabindex');
+            var switchTab = function (newTab, updateHash) {
+              // Handle old tab
+              var oldTab = tablist.querySelector('[aria-selected]');
               if (oldTab) {
                 oldTab.setAttribute('tabindex', '-1');
                 oldTab.removeAttribute('aria-selected');
               }
 
-              // Show/hide the relevant panel
-              var index = Array.prototype.indexOf.call(tabs, newTab);
-              panels[index].hidden = false;
+              // Handle new tab
+              newTab.setAttribute('aria-selected', 'true');
+              newTab.removeAttribute('tabindex');
+
+              // Show/hide the relevant panels
               if (oldTab) {
                 var oldIndex = Array.prototype.indexOf.call(tabs, oldTab);
                 panels[oldIndex].hidden = true;
               }
+              var index = Array.prototype.indexOf.call(tabs, newTab);
+              panels[index].hidden = false;
 
               // Update hash unless no matching hash
               if (updateHash) {
                 history.pushState(null, null, '#' + panels[index].id);
+                document.querySelector(window.location.hash).focus();
               }
             };
 
             // Set up mouse and keyboard events
-            Array.prototype.forEach.call(tabs, function(tab) {
+            Array.prototype.forEach.call(tabs, function (tab) {
               // Mouse interaction
-              tab.addEventListener('click', function(e) {
+              tab.addEventListener('click', function (e) {
                 e.preventDefault();
                 var currentTab = tablist.querySelector('[aria-selected]');
                 if (e.currentTarget !== currentTab) {
-                  switchTab(currentTab, e.currentTarget, true);
+                  switchTab(e.currentTarget, true);
                 }
               });
 
               // Keyboard interaction
-              tab.addEventListener('keydown', function(e) {
+              tab.addEventListener('keydown', function (e) {
                 // Get index of focused tab
                 var index = Array.prototype.indexOf.call(tabs, e.currentTarget);
 
@@ -193,37 +200,48 @@
                     // Loop around if adjacent tab doesn't exist
                     tabToFocus = dir === index - 1 ? tabs[tabs.length - 1] : tabs[0];
                   }
-                  switchTab(e.currentTarget, tabToFocus, true);
+                  switchTab(tabToFocus, true);
                   tabToFocus.focus();
                 }
               });
             });
 
-            // Support back button
-            window.addEventListener('hashchange', function(e) {
-              var newHash = window.location.hash;
-              var newHashIndex = panelIDs.indexOf(newHash);
-              var newTab = panelIDs.indexOf(newHash) > -1 ? tabs[newHashIndex] : false;
+            function panelWithHash (hash) {
+              var index = -1;
+              if (hash) {
+                panelIDs.forEach(function (id) {
+                  if (document.querySelector(id) && document.querySelector(id).contains(document.querySelector(hash))) {
+                    index = panelIDs.indexOf(id);
+                  }
+                });
+              }
+              return index;
+            }
 
-              // Get previous URL's hash, if it exists
-              var oldHash = e.oldURL && e.oldURL.indexOf('#') > -1 ? e.oldURL.substring(e.oldURL.indexOf('#')) : null;
-              // Get previous tab, if the previous hash exists
-              var oldTab = oldHash ? tabs[panelIDs.indexOf(oldHash)] : null;
+            // Support back button
+            window.addEventListener('hashchange', function (e) {
+              // Get the index of the panel id (or `-1` if it doesn't exist)
+              var indexOfHash = panelWithHash(window.location.hash);
+              // Is there a tab to activate?
+              var newTab = indexOfHash > -1 ? tabs[indexOfHash] : false;
 
               if (newTab) {
-                switchTab(oldTab, newTab, false);
-                panels[newHashIndex].focus();
+                switchTab(newTab, false);
+                // Focus the new panel, so it behaves similar to a document fragment
+                panels[indexOfHash].focus();
               }
             });
 
             // Initial tab selection based on hash
-            window.addEventListener('DOMContentLoaded', function() {
-              var indexOfHash = panelIDs.indexOf(window.location.hash);
-              var newIndex = indexOfHash > -1 ? indexOfHash : 0;
-              switchTab(null, tabs[newIndex], indexOfHash > -1);
+            window.addEventListener('DOMContentLoaded', function () {
+              // Get the index of the panel id (or `-1` if it doesn't exist)
+              var indexOfHash = panelWithHash(window.location.hash);
+              // Is there a tab to activate?
+              var newTab = indexOfHash > -1 ? tabs[indexOfHash] : tabs[0];
+              switchTab(newTab, indexOfHash > -1);
 
               if (indexOfHash > -1) {
-                panels[newIndex].focus();
+                panels[indexOfHash].focus();
               }
             });
           }
@@ -232,7 +250,7 @@
 
       // Initialize
       var tabsElems = document.querySelectorAll('.tabs');
-      Array.prototype.forEach.call(tabsElems, function(tabsElem) {
+      Array.prototype.forEach.call(tabsElems, function (tabsElem) {
         var tabInterface = new Tabbed(tabsElem, '400px');
       });
     </script>
