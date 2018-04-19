@@ -191,7 +191,7 @@ Use of duplicate `id` values is one of the most common failings under WCAG's [4.
 
 For mouse and touch users the interface is intuitive: As you press a tab, the previously selected tab panel is hidden and the newly selected tab panel appears.
 
-It is important that, although our tabs will adopt certain behaviors peculiar to tab interfaces, we do not _remove_ desirable browser behaviors afforded by the initial structure (outlined in the [semantics][#semantics] section).
+It is important that, although our tabs will adopt certain behaviors peculiar to tab interfaces, we do not _remove_ desirable browser behaviors afforded by the initial structure (outlined in the [semantics](#semantics) section).
 
 Therefore, as each new tab is chosen, the script updates the document `hash` (`window.location.hash`) using the history API.
 
