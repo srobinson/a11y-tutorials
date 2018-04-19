@@ -202,23 +202,18 @@ history.pushState(null, null, '#' + panels[index].id);
 This means we can use tab panels like standard document fragments, as before, with some additional logic to run on page load:
 
 * When the page loads, does the URL's `hash` correspond to a tab panel's `id`?
-    * **Yes**: Select that tab and reveal its corresponding panel, then _focus_ that panel as if it were a simple document fragment, bringing it into view.
+    * **Yes**: Select that tab and reveal its corresponding panel
     * **No**: Reveal the first of the tab interface's tab panels, and _do not_ update the `hash`. Document fragments not corresponding to tabs should still function as expected.
 
-To support links pointing to panels, as well as use of the back and forward browser buttons, we also listen to the `hashchange` event.
+Note that, because the newly revealed panel has `tabindex="-1"`, we have ensured its contents are placed next in focus order. That is, if the panel contains a link, pressing <kbd>Tab</kbd> once the panel has been revealed will focus that link.
+
+To support links pointing to panels, as well as use of the back and forward browser buttons, we also listen to the `hashchange` event:
 
 ```js
-// Support back button
 window.addEventListener('hashchange', function (e) {
-  // Get the index of the panel id (or `-1` if it doesn't exist)
-  var indexOfHash = panelWithHash(window.location.hash);
-  // Is there a tab to activate?
-  var newTab = indexOfHash > -1 ? tabs[indexOfHash] : false;
-
-  if (newTab) {
-    switchTab(newTab, false);
-    // Focus the new panel, so it behaves similar to a document fragment
-    panels[indexOfHash].focus();
+  var index = panelWithHash(window.location.hash);
+  if (index > -1) {
+    switchTab(index, false);
   }
 });
 ```
@@ -232,11 +227,12 @@ This way, we can reveal the panel for document fragments linked within it. It us
 
 ```js
 function panelWithHash (hash) {
+  var target = document.querySelector(hash);
   var index = -1;
   if (hash) {
-    panelIDs.forEach(function (id) {
-      if (document.querySelector(id) && document.querySelector(id).contains(document.querySelector(hash))) {
-        index = panelIDs.indexOf(id);
+    panels.forEach(function (panel) {
+      if (panel && panel.contains(target)) {
+        index = Array.prototype.indexOf.call(panels, panel);
       }
     });
   }
@@ -347,10 +343,11 @@ A focus style for the tab panel that is focused on page load is optional since s
 
 A [working demonstration](assets/demo1.html) of the discussed implementation is available for you to explore.
 
-Note the initialization which accepts two arguments:
+Note the initialization which accepts three arguments:
 
-* The node you wish to transform into a tab interface
-* The (minimum) breakpoint at which the tab interface structure should be adopted
+* The node you wish to transform into a tab interface (*DOM node*)
+* The (minimum) breakpoint at which the tab interface structure should be adopted (*string*)
+* The ability to turn off `hash` tracking (*Boolean*, default: `true`)
 
 ```js
 var tabsElem = document.querySelector('.tabs');
