@@ -205,7 +205,7 @@ This means we can use tab panels like standard document fragments, as before, wi
     * **Yes**: Select that tab and reveal its corresponding panel, then _focus_ that panel as if it were a simple document fragment, bringing it into view.
     * **No**: Reveal the first of the tab interface's tab panels, and _do not_ update the `hash`. Document fragments not corresponding to tabs should still function as expected.
 
-To support links pointing to panels, and using the back and forward browser buttons, we also listen to the `hashchange` event.
+To support links pointing to panels, as well as use of the back and forward browser buttons, we also listen to the `hashchange` event.
 
 ```js
 // Support back button
@@ -225,10 +225,10 @@ window.addEventListener('hashchange', function (e) {
 
 Note the `panelWithHash` function that determines if there is either
 
-* A panel `id` that corresponds directly to the hash
+* A panel `id` that corresponds directly to the hash;
 * A panel that _contains_ an element that corresponds directly to the hash
 
-This way, we can reveal the panel for document fragments contained within it. It uses the `contains` method, which returns `true` for either of the above conditions (it considers elements to 'contain' themselves).
+This way, we can reveal the panel for document fragments linked within it. It uses the `contains` method, which returns `true` for either of the above conditions (it considers elements to 'contain' themselves).
 
 ```js
 function panelWithHash (hash) {
