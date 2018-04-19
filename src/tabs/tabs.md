@@ -228,7 +228,7 @@ Note the `panelWithHash` function that determines if there is either
 * A panel `id` that corresponds directly to the hash
 * A panel that _contains_ an element that corresponds directly to the hash
 
-This uses the `contains` method, which returns `true` for either of the above conditions (it considers elements to 'contain' themselves).
+This way, we can reveal the panel for document fragments contained within it. It uses the `contains` method, which returns `true` for either of the above conditions (it considers elements to 'contain' themselves).
 
 ```js
 function panelWithHash (hash) {
