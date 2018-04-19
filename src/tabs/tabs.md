@@ -208,23 +208,40 @@ This means we can use tab panels like standard document fragments, as before, wi
 To support links pointing to panels, and using the back and forward browser buttons, we also listen to the `hashchange` event.
 
 ```js
-window.addEventListener('hashchange', function(e) {
+// Support back button
+window.addEventListener('hashchange', function (e) {
   // Get the index of the panel id (or `-1` if it doesn't exist)
-  var newHashIndex = panelIDs.indexOf(window.location.hash);
+  var indexOfHash = panelWithHash(window.location.hash);
   // Is there a tab to activate?
-  var newTab = newHashIndex > -1 ? tabs[newHashIndex] : false;
-
-  // Get previous URL's hash, if it exists
-  var oldHash = e.oldURL && e.oldURL.indexOf('#') > -1 ? e.oldURL.substring(e.oldURL.indexOf('#')) : null;
-  // Get previous tab, if the previous hash exists
-  var oldTab = oldHash ? tabs[panelIDs.indexOf(oldHash)] : null;
+  var newTab = indexOfHash > -1 ? tabs[indexOfHash] : false;
 
   if (newTab) {
-    switchTab(oldTab, newTab, false);
+    switchTab(newTab, false);
     // Focus the new panel, so it behaves similar to a document fragment
-    panels[newHashIndex].focus();
+    panels[indexOfHash].focus();
   }
 });
+```
+
+Note the `panelWithHash` function that determines if there is either
+
+* A panel `id` that corresponds directly to the hash
+* A panel that _contains_ an element that corresponds directly to the hash
+
+This uses the `contains` method, which returns `true` for either of the above conditions (it considers elements to 'contain' themselves).
+
+```js
+function panelWithHash (hash) {
+  var index = -1;
+  if (hash) {
+    panelIDs.forEach(function (id) {
+      if (document.querySelector(id) && document.querySelector(id).contains(document.querySelector(hash))) {
+        index = panelIDs.indexOf(id);
+      }
+    });
+  }
+  return index;
+}
 ```
 
 ### Keyboard behavior
