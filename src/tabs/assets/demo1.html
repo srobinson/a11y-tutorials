@@ -87,12 +87,11 @@
       </section>
       <section id="section2">
         <h2>Section 2</h2>
-        <p>Maecenas semper at elit at vestibulum. Sed rhoncus bibendum arcu non vehicula. Praesent rhoncus ut nulla in condimentum. Suspendisse nisi lorem, posuere sit amet elit sed, finibus bibendum eros. Vivamus tristique risus quis imperdiet pharetra. Vivamus vestibulum venenatis venenatis. Proin pharetra tincidunt augue et maximus. Suspendisse potenti. Quisque vel scelerisque metus, nec porttitor eros. Fusce suscipit pharetra massa et consectetur. Nulla vestibulum, mauris in tincidunt semper, ipsum ipsum suscipit velit, vitae malesuada dolor velit vitae ligula. Nunc lobortis lacinia purus vel tincidunt. Quisque maximus bibendum turpis, et malesuada massa elementum ac.</p>
+        <p>Etc.</p>
       </section>
       <section id="section3">
         <h2>Section 3</h2>
         <p>Sed rutrum ultricies ullamcorper. Aliquam et malesuada felis, sed semper orci. Aliquam erat volutpat. Pellentesque efficitur quam eget arcu scelerisque, id rutrum velit accumsan. Phasellus posuere lacus eu sagittis viverra. Aliquam nec sapien nec lectus sagittis luctus vel luctus magna. Nullam aliquam justo at justo dictum tempus. Suspendisse tempor ligula ligula, a convallis turpis pharetra eget. Fusce in ante urna. In volutpat euismod felis, vel scelerisque enim pellentesque sit amet. Phasellus elit neque, iaculis quis sollicitudin eget, tincidunt et lorem.</p>
-        <p>Curabitur massa mi, bibendum nec libero quis, luctus porta neque. Etiam a ornare velit. Nulla mattis vehicula leo vel lacinia. Nullam cursus non diam ut auctor. Maecenas vestibulum purus sed elementum sagittis. Nullam volutpat blandit sagittis. Morbi dictum eu ex nec finibus. Donec a orci dui. Etiam sed turpis turpis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras nec magna a eros sollicitudin feugiat.</p>
       </section>
     </div>
     <!-- end demo HTML -->
@@ -110,8 +109,8 @@
           if (window.matchMedia('(min-width: '+breakpoint+')').matches) {
             // Get key elements
             var tablist = this.container.querySelector('ul');
-            var tabs = tablist.querySelectorAll('a');
-            var panels = this.container.querySelectorAll('section');
+            var tabs = this.container.querySelectorAll('ul:first-child a');
+            var panels = this.container.querySelectorAll('ul:first-child ~ section');
 
             // Set random id string to avoid duplicate ids
             var ident = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
@@ -200,11 +199,29 @@
               });
             });
 
+            // Support back button
+            window.addEventListener('hashchange', function(e) {
+              var newHash = window.location.hash;
+              var newHashIndex = panelIDs.indexOf(newHash);
+              var newTab = panelIDs.indexOf(newHash) > -1 ? tabs[newHashIndex] : false;
+
+              // Get previous URL's hash, if it exists
+              var oldHash = e.oldURL && e.oldURL.indexOf('#') > -1 ? e.oldURL.substring(e.oldURL.indexOf('#')) : null;
+              // Get previous tab, if the previous hash exists
+              var oldTab = oldHash ? tabs[panelIDs.indexOf(oldHash)] : null;
+
+              if (newTab) {
+                switchTab(oldTab, newTab, false);
+                panels[newHashIndex].focus();
+              }
+            });
+
             // Initial tab selection based on hash
-            window.addEventListener('load', function() {
+            window.addEventListener('DOMContentLoaded', function() {
               var indexOfHash = panelIDs.indexOf(window.location.hash);
               var newIndex = indexOfHash > -1 ? indexOfHash : 0;
               switchTab(null, tabs[newIndex], indexOfHash > -1);
+
               if (indexOfHash > -1) {
                 panels[newIndex].focus();
               }
@@ -214,8 +231,10 @@
       }
 
       // Initialize
-      var tabsElem = document.querySelector('.tabs');
-      var tabInterface = new Tabbed(tabsElem, '400px');
+      var tabsElems = document.querySelectorAll('.tabs');
+      Array.prototype.forEach.call(tabsElems, function(tabsElem) {
+        var tabInterface = new Tabbed(tabsElem, '400px');
+      });
     </script>
   </body>
 </html>

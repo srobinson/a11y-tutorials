@@ -321,7 +321,7 @@ var tabInterface = new Tabbed(tabsElem, '400px');
 To initialize multiple tab interfaces you can do something like this:
 
 ```js
-var tabsElems = document.querySelector('.tabs');
+var tabsElems = document.querySelectorAll('.tabs');
 Array.prototype.forEach.call(tabsElems, function(tabsElem) {
   var tabInterface = new Tabbed(tabsElem, '400px');
 });
