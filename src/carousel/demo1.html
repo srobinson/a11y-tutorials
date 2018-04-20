@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Carousel demo</title>
+    <style>
+      /* Just styles for the document */
+      html { font-family: sans-serif; line-height: 1.5; } * { box-sizing: border-box; } body { max-width: 60rem; margin: 3rem auto; }
+    </style>
+    <style>
+      .carousel-interface {
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+      }
+
+      .carousel-interface:focus {
+        outline: 0.125rem solid #999;
+        outline-offset: 0.125rem;
+      }
+
+      .carousel-interface::-webkit-scrollbar {
+        height: 0.5rem;
+      }
+
+      .carousel-interface::-webkit-scrollbar-track {
+        background-color: #ccc;
+      }
+
+      .carousel-interface::-webkit-scrollbar-thumb {
+        background-color: #777;
+      }
+
+      .carousel-interface-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+      }
+
+      .carousel-interface-list > li {
+        flex: 0 0 auto;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid;
+        width: 25%;
+        cursor: pointer;
+      }
+
+      .carousel-interface-list > li + li {
+        margin-left: 1rem;
+      }
+
+      .carousel-interface-list img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .carousel-text {
+        padding: 1rem;
+      }
+
+      .carousel-image {
+        position: relative;
+      }
+
+      .carousel-image a {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        text-decoration: none;
+        color: #222;
+        line-height: 1;
+        padding: 0.5rem;
+        background-color: rgba(255,255,255,0.5);
+      }
+
+      .carousel-image a:focus {
+        outline: none;
+        border: 0.25rem solid #999;
+      }
+
+      .carousel-interface-list > li:focus-within,
+      .carousel-interface-list > li:hover {
+        border-width: 0.25rem;
+      }
+
+      .carousel-interface-list > li:focus-within a:focus {
+        border: none;
+      }
+
+      .carousel-text * {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Carousel demonstration</h1>
+    <!-- start demo HTML -->
+    <div class="carousel">
+      <ul>
+        <li>
+          <div class="carousel-image">
+            <img src="http://via.placeholder.com/350x150" alt="">
+            <a href="#" aria-label="play">▶</a>
+          </div>
+          <div class="carousel-text">
+            <h2>Headline 1</h2>
+            <p>Description</p>
+            <small>Attribution</small>
+          </div>
+        </li>
+        <li>
+          <div class="carousel-image">
+            <img src="http://via.placeholder.com/350x150" alt="">
+            <a href="#" aria-label="play">▶</a>
+          </div>
+          <div class="carousel-text">
+            <h2>Headline 2</h2>
+            <p>Description</p>
+            <small>Attribution</small>
+          </div>
+        </li>
+        <li>
+          <div class="carousel-image">
+            <img src="http://via.placeholder.com/350x150" alt="">
+            <a href="#" aria-label="play">▶</a>
+          </div>
+          <div class="carousel-text">
+            <h2>Headline 3</h2>
+            <p>Description</p>
+            <small>Attribution</small>
+          </div>
+        </li>
+        <li>
+          <div class="carousel-image">
+            <img src="http://via.placeholder.com/350x150" alt="">
+            <a href="#" aria-label="play">▶</a>
+          </div>
+          <div class="carousel-text">
+            <h2>Headline That is Very Long</h2>
+            <p>Description</p>
+            <small>Attribution</small>
+          </div>
+        </li>
+        <li>
+          <div class="carousel-image">
+            <img src="http://via.placeholder.com/350x150" alt="">
+            <a href="#" aria-label="play">▶</a>
+          </div>
+          <div class="carousel-text">
+            <h2>Headline 5</h2>
+            <p>Description</p>
+            <small>Attribution</small>
+          </div>
+        </li>
+        <li>
+          <div class="carousel-image">
+            <img src="http://via.placeholder.com/350x150" alt="">
+            <a href="#" aria-label="play">▶</a>
+          </div>
+          <div class="carousel-text">
+            <h2>Headline 6</h2>
+            <p>Description</p>
+            <small>Attribution</small>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!-- end demo HTML -->
+    <script src="Carousel.js"></script>
+    <script>
+      // Initialize
+      var carouselElem = document.querySelector('.carousel');
+      var carousel = new Carousel(carouselElem, 'Upcoming programmes', '33%');
+    </script>
+  </body>
+</html>
