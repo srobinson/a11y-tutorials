@@ -1,7 +1,18 @@
 // The tabs constructor
-function Tabbed(elem, breakpoint, trackHash) {
-  // Track the hash identifier by default
-  trackHash = trackHash !== undefined ? trackHash : true;
+function Tabbed(elem, options) {
+  // The default settings for the tab interface
+  var settings = {
+    breakPoint: '400px',
+    trackHash: true,
+    tabsFocusable: false
+  }
+
+  // Overwrite defaults where they are provided in options
+  for (var setting in options) {
+    if (options.hasOwnProperty(setting)) {
+      settings[setting] = options[setting];
+    }
+  }
 
   // Give the outer elem a class for styling
   elem.classList.add('tab-interface');
@@ -9,7 +20,7 @@ function Tabbed(elem, breakpoint, trackHash) {
   // Test for matchMedia support
   if (typeof window.matchMedia !== "undefined") {
     // Check to see we are above the breakpoint threshold
-    if (window.matchMedia('(min-width: '+breakpoint+')').matches) {
+    if (window.matchMedia('(min-width: '+settings.breakPoint+')').matches) {
       // Get key elements
       var tablist = elem.querySelector('ul');
       var tabs = tablist.querySelectorAll('a');
@@ -22,7 +33,10 @@ function Tabbed(elem, breakpoint, trackHash) {
       tablist.setAttribute('role', 'tablist');
       Array.prototype.forEach.call(tabs, function (tab, i) {
         tab.setAttribute('role', 'tab');
-        tab.setAttribute('tabindex', '-1');
+        if(!settings.tabsFocusable) {
+          tab.setAttribute('tabindex', '-1');
+        }
+        tab.setAttribute('aria-selected', 'false');
         tab.setAttribute('id', 'tab-' + ident + '-' + (i + 1));
         tab.parentElement.setAttribute('role', 'presentation');
       });
@@ -36,10 +50,12 @@ function Tabbed(elem, breakpoint, trackHash) {
       // The tab switching function
       var switchTab = function (index, updateHash) {
         // Handle old tab
-        var oldTab = tablist.querySelector('[aria-selected]');
+        var oldTab = tablist.querySelector('[aria-selected="true"]');
         if (oldTab) {
-          oldTab.setAttribute('tabindex', '-1');
-          oldTab.removeAttribute('aria-selected');
+          if(!settings.tabsFocusable) {
+            oldTab.setAttribute('tabindex', '-1');
+          }
+          oldTab.setAttribute('aria-selected', 'false');
         }
 
         var newTab = tabs[index];
@@ -55,7 +71,7 @@ function Tabbed(elem, breakpoint, trackHash) {
         panels[index].hidden = false;
 
         // Update hash unless no matching hash
-        if (trackHash && updateHash) {
+        if (settings.trackHash && updateHash) {
           history.pushState(null, null, '#' + panels[index].id);
         }
       };
@@ -65,7 +81,7 @@ function Tabbed(elem, breakpoint, trackHash) {
         // Mouse interaction
         tab.addEventListener('click', function (e) {
           e.preventDefault();
-          var currentTab = tablist.querySelector('[aria-selected]');
+          var currentTab = tablist.querySelector('[aria-selected="true"]');
           if (e.currentTarget !== currentTab) {
             switchTab(Array.prototype.indexOf.call(tabs, e.currentTarget), true);
           }
@@ -99,9 +115,9 @@ function Tabbed(elem, breakpoint, trackHash) {
 
       // Find out if a hash corresponds to a panel element
       function panelWithHash (hash) {
-        var target = document.querySelector(hash);
         var index = -1;
-        if (hash) {
+        if (hash !== '') {
+          var target = document.querySelector(hash);
           panels.forEach(function (panel) {
             if (panel && panel.contains(target)) {
               index = Array.prototype.indexOf.call(panels, panel);
@@ -111,7 +127,7 @@ function Tabbed(elem, breakpoint, trackHash) {
         return index;
       }
 
-      if (trackHash) {
+      if (settings.trackHash) {
         // Support back button and panel linking
         window.addEventListener('hashchange', function (e) {
           // Get the index of the panel id (or `-1` if it doesn't exist)
@@ -127,7 +143,12 @@ function Tabbed(elem, breakpoint, trackHash) {
       window.addEventListener('DOMContentLoaded', function () {
         // Get the index of the panel id (or `-1` if it doesn't exist)
         var index = panelWithHash(window.location.hash);
-        switchTab(index, true);
+        if (index > -1) {
+          switchTab(index, true);
+        } else {
+          // Open the first tab if no panel matches
+          switchTab(0, false);
+        }
       });
     }
   }
