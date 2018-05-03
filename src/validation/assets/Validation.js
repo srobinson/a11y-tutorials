@@ -6,7 +6,9 @@ function Validation(formElem, rules, options) {
 
 	var settings = {
 		warning: 'Oops! Your form has some errors that need fixing',
-		debounce: 500
+		required: 'This field is required',
+		debounce: 500,
+		prefix: '<strong>Error:</strong>'
 	};
 
 	// Overwrite defaults where they are provided in options
@@ -31,7 +33,7 @@ function Validation(formElem, rules, options) {
 	// Initialize errors array for tracking
 	var allErrors = [];
 
-	// Function to add errors if they don;t already exists
+	// Function to add errors if they don't already exist
 	function saveError(name) {
 		if (allErrors.indexOf(name) < 0) {
 			allErrors.push(name);
@@ -45,16 +47,16 @@ function Validation(formElem, rules, options) {
 		});
 	}
 
+	// Function to show or hide warning live region
+	function showHideWarn() {
+		var message = allErrors.length > 0 ? settings.prefix + ' ' + settings.warning : '';
+		warn.innerHTML = message;
+	}
+
 	// Get all elements defined in rules object
 	var fields = rules.map(function(rule) {
 		return document.querySelector('[name="'+rule.name+'"]');
 	});
-
-	// Function to show or hide warning live region
-	function showHideWarn() {
-		var message = allErrors.length > 0 ? settings.warning : '';
-		warn.textContent = message;
-	}
 
 	// Field validation function
 	function validate(field) {
@@ -64,12 +66,12 @@ function Validation(formElem, rules, options) {
 		// Validate for required first
 		if (field.getAttribute('aria-required')) {
 			if (field.value.trim() === '') {
-				errorElem.textContent = 'This field is required';
+				errorElem.innerHTML = settings.prefix + ' ' + settings.required;
 				field.setAttribute('aria-invalid', 'true');
 				saveError(field.name);
 				return;
 			} else {
-				errorElem.textContent = '';
+				errorElem.innerHTML = '';
 				field.removeAttribute('aria-invalid');
 				deleteError(field.name);
 				showHideWarn();
@@ -90,10 +92,10 @@ function Validation(formElem, rules, options) {
 			// Set aria-invalid="true"
 			field.setAttribute('aria-invalid', 'true');
 			// Populate error message
-			errorElem.textContent = errored.message;
+			errorElem.innerHTML = settings.prefix + ' ' + errored.message;
 			saveError(field.name);
 		} else {
-			errorElem.textContent = '';
+			errorElem.innerHTML = '';
 			field.removeAttribute('aria-invalid');
 			deleteError(field.name);
 			showHideWarn();
@@ -103,7 +105,7 @@ function Validation(formElem, rules, options) {
 	// Initialize error markup and bindings
 	fields.forEach(function(field) {
 		// Set aria-describedby
-		field.setAttribute('aria-decribedby', field.name + '-error');
+		field.setAttribute('aria-describedby', field.name + '-error');
 
 		// If `required`, set `aria-required`
 		if (field.getAttribute('required') !== null) {
@@ -118,11 +120,15 @@ function Validation(formElem, rules, options) {
 
 		// Bind to keyup event
 		var debounced;
-		field.addEventListener('keyup', function() {
-			window.clearTimeout(debounced);
-			debounced = setTimeout(function() {
-				validate(field);
-			}, settings.debounce);
+		field.addEventListener('keyup', function(e) {
+			var key = e.which || e.keyCode;
+			// Don't run on the Tab and Shift keys
+			if (key !== 9 && key !== 16) {
+				window.clearTimeout(debounced);
+				debounced = setTimeout(function() {
+					validate(field);
+				}, settings.debounce);
+			}
 		});
 	});
 
