@@ -281,3 +281,23 @@ The `visually-hidden` class uses a specific set of properties to ensure the span
   width: 1px;
 }
 ```
+
+## Demonstration
+
+The [demo script](assets/Validation.js) integrates everything discussed by enhancing the initial HTML, and managing validation for individual inputs and the form as a whole.
+
+Note the initialization which accepts three arguments:
+
+* The (`<form>`) element for which you wish to provide validation (*DOM node*)
+* The rules object, which must be in the form shown above in the **Enhanced HTML** section (*object*)
+* An options object with these properties:
+    * `warning`: the text for the general warning message (*string*, default: `'Oops! Your form has some errors that need fixing'`)
+    * `required`: the error message for required fields (*string*, default: `'This field is required'`)
+    * `deboune`: the delay in milliseconds for the debouncing of "as you type" validation, which may need adjusting based on usability testing (*integer*, default: `500`)
+    * `prefix`: The text/imagery prefixed to errors, which may include HTML (*string*, default: `'<strong>Error:</strong>'`)
+
+## Variants and caveats
+
+* Some implementations disable the submit button until the subject form is free of errors. This is not recommended since it can be confusing and frustrating to some users — especially those who are colorblind and cannot, therefore, discern the grey disabled state usually employed. Better to allow submission and be explicit with a warning.
+* Some implementations disable fields that have been correctly completed, in an effort to make it clearer which fields need addressing. It is recommended that all fields remain enabled, so users can adjust their input at any time. In some cases, correcting one input's value may mean having to adjust another's, even if it is superficially correct in terms of format.
+* You may wish to employ 'positive validation', wherein inputs that are successfully completed display a green style and 'tick'. The difficulty here is in discerning between a correct format, and correct information. Showing a tick next to a correctly formatted bank card number, for example, is misleading: the user may believe you're aware it is the correct number for their specific card.
