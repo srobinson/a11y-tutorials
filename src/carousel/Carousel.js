@@ -1,4 +1,4 @@
-// The tabs constructor
+// The Carousel constructor
 function Carousel(elem, label, itemWidth) {
   // Give the outer elem a class for styling
   elem.classList.add('carousel-interface');

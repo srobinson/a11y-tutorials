@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Tabs Demo</title>
+    <style>
+      /* Just styles for the document */
+      html { font-family: sans-serif; line-height: 1.5; } * { box-sizing: border-box; } body { max-width: 40rem; margin: 3rem auto; }
+    </style>
+    <style>
+      /* Demo specific styles */
+      .tab-interface > ul {
+        padding: 2rem;
+        margin: 0;
+        list-style: none;
+        background: #ccc;
+      }
+
+      .tab-interface [role="tablist"] {
+        padding: 0;
+        margin: 0;
+        display: flex;
+        background: transparent;
+      }
+
+      .tab-interface [role="tablist"] li + li {
+        margin-left: 0.75rem;
+      }
+
+      .tab-interface [role="tabpanel"] {
+        background: #ccc;
+        padding: 2rem;
+      }
+
+      .tab-interface [role="tab"] {
+        font-weight: bold;
+        background: #aaa;
+        text-decoration: none;
+        display: inline-block;
+        padding: 1rem 2rem;
+      }
+
+      .tab-interface [role="tab"]:focus {
+        outline: none;
+        box-shadow: inset 0 0 0 0.25rem #666;
+      }
+
+      .tab-interface [role="tabpanel"]:focus {
+        outline: none;
+      }
+
+      .tab-interface [role="tablist"] [aria-selected] {
+        background: #ccc;
+      }
+
+      /* just for this demo file */
+      html {
+        font-family: sans-serif;
+        line-height: 1.5;
+      }
+
+      * {
+        box-sizing: border-box;
+        color: inherit;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Tabs demonstration</h1>
+    <ul>
+      <li>
+        <a href="#section1">Link to a first section/panel</a>
+      </li>
+      <li>
+        <a href="#section-2-subsection">Link to a subsection inside panel 2</a>
+      </li>
+      <li>
+        <a href="#blabla">Link to a non-existant document fragment</a>
+      </li>
+    </ul>
+    <!-- demo HTML -->
+    <div class="tabs">
+      <ul>
+        <li>
+          <a href="#section1">Section 1</a>
+        </li>
+        <li>
+          <a href="#section2">Section 2</a>
+        </li>
+        <li>
+          <a href="#section3">Section 3</a>
+        </li>
+      </ul>
+      <section id="section1">
+        <h2>Section 1</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In porttitor <a href="#section3">link to panel 3</a> mi eu enim tristique dapibus. Fusce nibh mauris, rhoncus dictum libero sit amet, malesuada porta eros. Proin interdum leo nec turpis vehicula, nec interdum ipsum dictum. Praesent molestie mattis ex, non cursus massa venenatis et. In et tortor diam. Aenean ut felis mattis, lacinia eros ac, venenatis elit. Phasellus dolor magna, sollicitudin in urna elementum, mollis feugiat elit. Nullam consectetur, nisl sed finibus mattis, sapien nisi ultricies odio, eleifend ullamcorper diam ante a risus. Quisque ac metus varius, pretium metus sed, mollis mi.</p>
+      </section>
+      <section id="section2">
+        <h2>Section 2</h2>
+        <p>Aliquam erat volutpat. Pellentesque efficitur quam <a href="#section3">link to panel 3</a>, id rutrum velit accumsan. Phasellus posuere lacus eu sagittis viverra. Aliquam nec sapien nec lectus sagittis luctus vel luctus magna. Nullam aliquam justo at justo dictum tempus. Suspendisse tempor ligula ligula, a convallis turpis pharetra eget. Fusce in ante urna. In volutpat euismod felis, vel scelerisque enim pellentesque sit amet. Phasellus elit neque, iaculis quis sollicitudin eget, tincidunt et lorem.</p>
+        <h3 id="section-2-subsection" tabindex="-1">A subsection in Section 2</h3>
+        <p><a href="#section3">link to panel 3</a></p>
+      </section>
+      <section id="section3">
+        <h2>Section 3</h2>
+        <p>Sed rutrum ultricies ullamcorper. Aliquam <a href="#section1">link to panel 1</a>, sed semper orci. Aliquam erat volutpat. Pellentesque efficitur quam eget arcu scelerisque, id rutrum velit accumsan. Phasellus posuere lacus eu sagittis viverra. Aliquam nec sapien nec lectus sagittis luctus vel luctus magna. Nullam aliquam justo at justo dictum tempus. Suspendisse tempor ligula ligula, a convallis turpis pharetra eget. Fusce in ante urna. In volutpat euismod felis, vel scelerisque enim pellentesque sit amet. Phasellus elit neque, iaculis quis sollicitudin eget, tincidunt et lorem.</p>
+      </section>
+    </div>
+    <!-- end demo HTML -->
+    <script src="Tabbed.js"></script>
+    <script>
+      // Initialize
+      var tabsElems = document.querySelectorAll('.tabs');
+      Array.prototype.forEach.call(tabsElems, function (tabsElem) {
+        var tabInterface = new Tabbed(tabsElem, '400px');
+      });
+    </script>
+  </body>
+</html>
