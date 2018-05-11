@@ -8,13 +8,13 @@ function Accordion(elem, listARIA) {
     elem.setAttribute('role', 'list');
   }
 
-  // Get all children to turn into headers/panels
+  // Get all children to turn into headers/drawers
   var sections = elem.children;
 
-  function toggle(button, panel) {
+  function toggle(button, drawer) {
     var expanded = button.getAttribute('aria-expanded') === 'true' || false;
     button.setAttribute('aria-expanded', !expanded);
-    panel.hidden = !panel.hidden;
+    drawer.hidden = !drawer.hidden;
   }
 
   // Adapt markup and add events for each section
@@ -43,20 +43,20 @@ function Accordion(elem, listARIA) {
     // Insert the handle
     section.insertBefore(header, section.firstChild);
 
-    // Build panel HTML
-    var panel = document.createElement('div');
-    panel.classList.add('accordion-interface-panel');
-    panel.hidden = true;
+    // Build drawer HTML
+    var drawer = document.createElement('div');
+    drawer.classList.add('accordion-interface-drawer');
+    drawer.hidden = true;
     contents.forEach(function(node) {
-      panel.appendChild(node);
+      drawer.appendChild(node);
     });
 
-    // Insert the panel
-    section.appendChild(panel);
+    // Insert the drawer
+    section.appendChild(drawer);
 
     // Add toggle handler
     button.addEventListener('click', function() {
-      toggle(button, panel);
+      toggle(button, drawer);
     });
 
     // Add listener to header

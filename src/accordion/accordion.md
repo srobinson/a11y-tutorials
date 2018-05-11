@@ -79,7 +79,7 @@ Assuming `<section>` are used in the initial HTML, and list semantics are reques
         <span class="visually-hidden">Open Section 1</span>
       </button>
     </div>
-    <div class="accordion-interface-panel" hidden>
+    <div class="accordion-interface-drawer" hidden>
       <p>Lorem ipsum dolor sit amet...</p>
     </div>
   </section>
@@ -91,7 +91,7 @@ Assuming `<section>` are used in the initial HTML, and list semantics are reques
         <span class="visually-hidden">Open Section 2</span>
       </button>
     </div>
-    <div class="accordion-interface-panel" hidden>
+    <div class="accordion-interface-drawer" hidden>
       <p>Pellentesque facilisis...</p>
     </div>
   </section>
@@ -103,7 +103,7 @@ Assuming `<section>` are used in the initial HTML, and list semantics are reques
         <span class="visually-hidden">Open Section 3</span>
       </button>
     </div>
-    <div class="accordion-interface-panel" hidden>
+    <div class="accordion-interface-drawer" hidden>
       <p>Nam condimentum lobortis est eu maximus...</p>
     </div>
   </section>
@@ -115,7 +115,7 @@ Assuming `<section>` are used in the initial HTML, and list semantics are reques
         <span class="visually-hidden">Open Section 4</span>
       </button>
     </div>
-    <div class="accordion-interface-panel" hidden>
+    <div class="accordion-interface-drawer" hidden>
       <p>Suspendisse pharetra nec neque...</p>
     </div>
   </section>
@@ -144,10 +144,10 @@ Let's unpack that new structure, piece by piece.
   </tr>
   <tr>
     <th scope="row">
-      <code>accordion-interface-header</code> and <code>accordion-interface-panel</code>
+      <code>accordion-interface-header</code> and <code>accordion-interface-drawer</code>
     </th>
     <td>
-      Each item is divided into two: a header and body ('panel'). At the outset, the panel is hidden using the <code>hidden</code> property. To support older user agents ensure you include <code>[hidden] { display: none }</code> in your CSS. This property behaves like <code>display: none</code> by hiding the subject DOM tree from assistive technologies and remove its contents from tab order. Keyboard users are therefore able to jump directly between header buttons.
+      Each item is divided into two: a header and body ('drawer'). At the outset, the drawer is hidden using the <code>hidden</code> property. To support older user agents ensure you include <code>[hidden] { display: none }</code> in your CSS. This property behaves like <code>display: none</code> by hiding the subject DOM tree from assistive technologies and remove its contents from tab order. Keyboard users are therefore able to jump directly between header buttons.
     </td>
   </tr>
   <tr>
@@ -155,9 +155,9 @@ Let's unpack that new structure, piece by piece.
       The button
     </th>
     <td>
-      A button is supplied for toggling the display of the panel, with the following faetures:
+      A button is supplied for toggling the display of the drawer, with the following faetures:
       <ul>
-        <li><code>aria-expanded</code>: This ARIA attribute communicates whether the subject panel is in an expanded (<code>true</code>) or collapsed (<code>false</code>) state</li>
+        <li><code>aria-expanded</code>: This ARIA attribute communicates whether the subject drawer is in an expanded (<code>true</code>) or collapsed (<code>false</code>) state</li>
         <li><strong>Visually hidden text:</strong> Because the state is being toggled, the label must persist. Screen reader users will hear something similar to _"open [section name], toggle button, expanded"_ and _"open [section name], toggle button, collapsed"_. A visually hidden <code>&lt;span></code> is prefered over an <code>aria-label</code> because <a href="http://www.heydonworks.com/article/aria-label-is-a-xenophobe"><code>aria-label</code> is not translated</a>. The <code>visually-hidden</code> (but available to assistive technologies) class is available in the <a href="assets/demo1.html">demo</a>.</li>
         <li><strong>The SVG:</strong> A small inline SVG is provided for performance. It uses <code>currentColor</code> to ensure it respects schemes chosen in  Windows High Contrast Mode.</li>
       </ul>
@@ -171,7 +171,7 @@ Let's unpack that new structure, piece by piece.
 
 The enhancement in experience offered by an accordion is that the user is afforded an overview of the sections available to read. An accordion is its own table of contents. Accordions also reduce the amount of scrolling required, and make it less easy to get 'lost' amount longform content.
 
-When a user clicks or taps anywhere on a header, the item's 'draw' is opened to show the panel content. The SVG arrow upends to indicate that the next action will close the draw.
+When a user clicks or taps anywhere on a header, the item's 'draw' is opened to show the drawer content. The SVG arrow upends to indicate that the next action will close the draw.
 
 ### Keyboard behavior
 
