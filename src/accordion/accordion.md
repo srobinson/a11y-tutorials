@@ -61,7 +61,7 @@ Alternatively, and depending on the context, you might consider a list a better 
 </ul>
 ```
 
-Lists also provide navigation shortcuts in screen reader software. For example, NVDA provides <kbd>L</kbd> for switching between lists and <kbd>I</kbd> for switching between list items. The added advantage of a list is that, upon being first identified, it will enumerate the items available. This gives assistive software users an idea of how much content is present before they embark on reading any of it.
+Lists also provide navigation shortcuts in screen reader software. For example, NVDA provides <kbd>L</kbd> for switching between lists and <kbd>I</kbd> for switching between list items. The added advantage of a list is that, upon being first identified, it will enumerate the items available. This gives assistive software users an idea of how much content is present before they embark on traversing it.
 
 The accordion constructor of the [demonstration](#demonstation) to follow gives the option — as the second argument — of forcing list semantics with ARIA. This allows you to use simple `<section>`s or just `<div>`s at the outset and before enhancement.
 
@@ -169,9 +169,19 @@ Let's unpack that new structure, piece by piece.
 
 ### General behavior
 
-The enhancement in experience offered by an accordion is that the user is afforded an overview of the sections available to read. An accordion is its own table of contents. Accordions also reduce the amount of scrolling required, and make it less easy to get 'lost' amount longform content.
+The enhancement in experience offered by an accordion is that the user is afforded an overview of the sections available to read. An accordion is its own table of contents. Accordions also reduce the amount of scrolling required, and make it less easy to get 'lost' among longform content.
 
-When a user clicks or taps anywhere on a header, the item's 'draw' is opened to show the drawer content. The SVG arrow upends to indicate that the next action will close the draw.
+The toggle function at the heart of the [demonstration script](assets/Accordion.js) is quite simple:
+
+```js
+function toggle(button, drawer) {
+  var expanded = button.getAttribute('aria-expanded') === 'true' || false;
+  button.setAttribute('aria-expanded', !expanded);
+  drawer.hidden = !drawer.hidden;
+}
+```
+
+When a user clicks or taps anywhere on a header, the item's 'drawer' is opened to show the drawer content. The SVG arrow upends to indicate that the next action will close the drawer.
 
 ### Keyboard behavior
 
