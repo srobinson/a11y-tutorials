@@ -59,7 +59,7 @@ function Accordion(elem, listARIA) {
       toggle(button, panel);
     });
 
-    // Add redundant handle to header
+    // Add listener to header
     header.addEventListener('click', function(e) {
       if (e.target !== button) {
         button.click();

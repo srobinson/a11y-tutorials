@@ -1,6 +1,6 @@
-# Accessible Tabs
+# Accessible Accordion
 
-The following is intended to be read alongside the [GEL Tabs page](http://www.bbc.co.uk/gel/guidelines/tabs#orb-footer). In fact, you should probably read that one first. Here, we'll just cover the technical requirements to make tab interfaces as accessible as possible.
+The following is intended to be read alongside the [GEL Accordion page](https://www.bbc.co.uk/gel/guidelines/accordion). In fact, you should probably read that one first. Here, we'll just cover the technical requirements to make tab interfaces as accessible as possible.
 
 The implementation to come is:
 
@@ -13,359 +13,243 @@ The implementation to come is:
 
 ### Initial HTML
 
-The foundation of any performant and accessible component is semantic markup. This markup should make sense and be usable in the absence of Javascript. Hence, we begin by using a simple list structure including same-page links.
+There are a couple of different ways you can mark up the basic content to be enhanced into an accordion interface. One way is to write a succession of sections, introduced by headings each of an equal level.
 
 ```html
-<div class="tabs">
-  <ul>
-    <li>
-      <a href="#section1">Section 1</a>
-    </li>
-    <li>
-      <a href="#section2">Section 2</a>
-    </li>
-    <li>
-      <a href="#section3">Section 3</a>
-    </li>
-  </ul>
-  <section id="section1">
+<div class="accordion">
+  <section>
     <h2>Section 1</h2>
+    <p>Lorem ipsum dolor sit amet...</p>
   </section>
-  <section id="section2">
+  <section>
     <h2>Section 2</h2>
+    <p>Pellentesque facilisis...</p>
   </section>
-  <section id="section3">
+  <section>
     <h2>Section 3</h2>
+    <p>Nam condimentum lobortis...</p>
+  </section>
+  <section>
+    <h2>Section 4</h2>
+    <p>Suspendisse pharetra nec...</p>
   </section>
 </div>
 ```
 
-As you can see, each 'tab panel' starts out as a simple section. In the absence of JavaScript, the user can navigate to a section by pressing a corresponding link.
+Both the heading elements and `<section>`s provide structure and navigation cues in screen reader software. For example, the <kbd>R</kbd> key in JAWS lets one move between regions (`<section>` elements implicitly have region roles).
 
-Sections are introduced by headings, and should be of the same level (whichever is appropriate to the tab interface's position in the document structure). You would, of course, be providing some content under each section's heading!
+Alternatively, and depending on the context, you might consider a list a better choice:
 
-Here's the same structure with the help of markdown for terseness:
-
-```md
-<div class="tabs">
-  * [Section 1](#section1)
-  * [Section 2](#section2)
-  * [Section 3](#section3)
-  <section id="section1">
-    ## Section 1
-  </section>
-  <section id="section2">
-    ## Section 2
-  </section>
-  <section id="section3">
-    ## Section 3
-  </section>
-</div>
+```html
+<ul class="accordion">
+  <li>
+    <h2>Section 1</h2>
+    <p>Lorem ipsum dolor sit amet...</p>
+  </li>
+  <li>
+    <h2>Section 2</h2>
+    <p>Pellentesque facilisis...</p>
+  </li>
+  <li>
+    <h2>Section 3</h2>
+    <p>Nam condimentum lobortis...</p>
+  </li>
+  <li>
+    <h2>Section 4</h2>
+    <p>Suspendisse pharetra nec...</p>
+  </li>
+</ul>
 ```
 
-Since tabs are laid out side-by-side, there's little room for them in narrow viewports. That's why we'll only be 'enhancing' to a tab interface at a given breakpoint. This actually has two advantages:
+Lists also provide navigation shortcuts in screen reader software. For example, NVDA provides <kbd>L</kbd> for switching between lists and <kbd>I</kbd> for switching between list items. The added advantage of a list is that, upon being first identified, it will enumerate the items available. This gives assistive software users an idea of how much content is present before they embark on reading any of it.
 
-* The interface remains a 'one column' structure which fits better into a portrait orientation
-* Reduced Javascript (including DOM manipulation) is run on low-powered devices
-
-In the [demonstration](#demonstration) at the end of this document, you'll find `matchMedia` is used for this logic.
-
-```js
-if (window.matchMedia('(min-width: '+breakpoint+')').matches) {
-  // Enhance to a tab interface here
-}
-```
+The accordion constructor of the [demonstration](#demonstation) to follow gives the option — as the second argument — of forcing list semantics with ARIA. This allows you to use simple `<section>`s or just `<div>`s at the outset and before enhancement.
 
 ### Enhanced HTML
 
-Where a tab interface pattern is adopted, certain semantics and behaviors should accompany the change in visual design. Otherwise, assistive technology and keyboard users will have trouble interacting with it. Blind screen reader users may not even be aware it _is_ a set of tabs.
-
-First let's deal with the change of semantics.
+Assuming `<section>` are used in the initial HTML, and list semantics are requested, this is what the augmented HTML would look like after initialization:
 
 ```html
-<div class="tabs">
-  <ul role="tablist">
-    <li role="presentation">
-      <a href="#section1" role="tab" id="tab1" aria-selected="true">Section 1</a>
-    </li>
-    <li role="presentation">
-      <a href="#section2" role="tab" id="tab2">Section 2</a>
-    </li>
-    <li role="presentation">
-      <a href="#section3" role="tab" id="tab3">Section 3</a>
-    </li>
-  </ul>
-  <section role="tabpanel" id="section1" aria-labelledby="tab1">
-    <h2>Section 1</h2>
+<div class="accordion accordion-interface" role="list">
+  <section role="listitem">
+    <div class="accordion-interface-header">
+      <h2>Section 1</h2>
+      <button aria-expanded="false">
+        <svg height="20" viewbox="0 0 20 20" width="20"><polyline points="4 4, 10 16, 16 4"></polyline></svg>
+        <span class="visually-hidden">Open Section 1</span>
+      </button>
+    </div>
+    <div class="accordion-interface-panel" hidden>
+      <p>Lorem ipsum dolor sit amet...</p>
+    </div>
   </section>
-  <section role="tabpanel" id="section2" aria-labelledby="tab2">
-    <h2>Section 2</h2>
+  <section role="listitem">
+    <div class="accordion-interface-header">
+      <h2 id="section2">Section 2</h2>
+      <button aria-expanded="false">
+        <svg height="20" viewbox="0 0 20 20" width="20"><polyline points="4 4, 10 16, 16 4"></polyline></svg>
+        <span class="visually-hidden">Open Section 2</span>
+      </button>
+    </div>
+    <div class="accordion-interface-panel" hidden>
+      <p>Pellentesque facilisis...</p>
+    </div>
   </section>
-  <section role="tabpanel" id="section3" aria-labelledby="tab3">
-    <h2>Section 3</h2>
+  <section role="listitem">
+    <div class="accordion-interface-header">
+      <h2>Section 3</h2>
+      <button aria-expanded="false">
+        <svg height="20" viewbox="0 0 20 20" width="20"><polyline points="4 4, 10 16, 16 4"></polyline></svg>
+        <span class="visually-hidden">Open Section 3</span>
+      </button>
+    </div>
+    <div class="accordion-interface-panel" hidden>
+      <p>Nam condimentum lobortis est eu maximus...</p>
+    </div>
+  </section>
+  <section role="listitem">
+    <div class="accordion-interface-header">
+      <h2>Section 4</h2>
+      <button aria-expanded="false">
+        <svg height="20" viewbox="0 0 20 20" width="20"><polyline points="4 4, 10 16, 16 4"></polyline></svg>
+        <span class="visually-hidden">Open Section 4</span>
+      </button>
+    </div>
+    <div class="accordion-interface-panel" hidden>
+      <p>Suspendisse pharetra nec neque...</p>
+    </div>
   </section>
 </div>
 ```
 
-There's a lot to unpack here, so lets look at each addition in turn.
+Let's unpack that new structure, piece by piece.
 
 <table>
-  <caption>Semantic attribution</caption>
+  <caption>Restructured HTML</caption>
   <tr>
     <th scope="row">
-      <code>role="tablist"</code>
+      <code>role="list"</code>
     </th>
     <td>
-      The tablist role tells assistive software that the list is, in fact, a set of tabs.
+      The parent element take <code>role="list"</code>, making it a <code>&lt;ul></code> in the accessibility tree.
     </td>
   </tr>
   <tr>
     <th scope="row">
-      <code>role="tab"</code>
+      <code>role="listitem"</code>
     </th>
     <td>
-      Each link in the tablist must take an explicit tab role, otherwise assistive software has trouble enumerating the tabs.
+      Accordingly, each accordion item must have <code>role="listitem"</code>. Note that this will override the region role of <code>&lt;section></code> here.
     </td>
   </tr>
   <tr>
     <th scope="row">
-      <code>role="presentation"</code>
+      <code>accordion-interface-header</code> and <code>accordion-interface-panel</code>
     </th>
     <td>
-      Now that our links are enumerable tabs, there's no need for the list semantics. The presentation role effectively hides list information form assistive software.
+      Each item is divided into two: a header and body ('panel'). At the outset, the panel is hidden using the <code>hidden</code> property. To support older user agents ensure you include <code>[hidden] { display: none }</code> in your CSS. This property behaves like <code>display: none</code> by hiding the subject DOM tree from assistive technologies and remove its contents from tab order. Keyboard users are therefore able to jump directly between header buttons.
     </td>
   </tr>
   <tr>
     <th scope="row">
-      <code>role="presentation"</code>
+      The button
     </th>
     <td>
-      Now that our links are enumerable tabs, there's no need for the list semantics. The presentation role effectively hides list information from assistive software.
-    </td>  
-  </tr>
-  <tr>
-    <th scope="row">
-      <code>aria-selected="true"</code>
-    </th>
-    <td>
-      This state attribute tells assistive software which tab is the selected (or 'current') tab.
-    </td>
-  </tr>
-  <tr>
-    <th scope="row">
-      <code>role="tabpanel"</code>
-    </th>
-    <td>
-      Each section is defined as a tab panel within the tab interface.
-    </td>
-  </tr>
-  <tr>
-    <th scope="row">
-      <code>aria-labelledby="[tab ID]"</code>
-    </th>
-    <td>
-      The <code>aria-labelledby</code> attribute labels the tab panel by its corresponding tab. In practice, this means a screen reader user will be told they are entering _"tab panel [label]"_ as they move their focus or virtual cursor into it. This is good for context.
+      A button is supplied for toggling the display of the panel, with the following faetures:
+      <ul>
+        <li><code>aria-expanded</code>: This ARIA attribute communicates whether the subject panel is in an expanded (<code>true</code>) or collapsed (<code>false</code>) state</li>
+        <li><strong>Visually hidden text:</strong> Because the state is being toggled, the label must persist. Screen reader users will hear something similar to _"open [section name], toggle button, expanded"_ and _"open [section name], toggle button, collapsed"_. A visually hidden <code>&lt;span></code> is prefered over an <code>aria-label</code> because <a href="http://www.heydonworks.com/article/aria-label-is-a-xenophobe"><code>aria-label</code> is not translated</a>. The <code>visually-hidden</code> (but available to assistive technologies) class is available in the <a href="assets/demo1.html">demo</a>.</li>
+        <li><strong>The SVG:</strong> A small inline SVG is provided for performance. It uses <code>currentColor</code> to ensure it respects schemes chosen in  Windows High Contrast Mode.</li>
+      </ul>
     </td>
   </tr>
 </table>
-
-#### A note on unique IDs
-
-You may have noticed that tab `id` attributes have magically appeared to support the `aria-labelledby` relationships. It is important that each `id` is unique, otherwise such relationships break down. In case there are two tab interfaces on the page, the [demonstration](#demonstration) script generates unique `id` strings.
-
-The code looks like this:
-
-```js
-// Set random id string
-var ident = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
-
-// Set a tab's id (where `i` is the index of the tab)
-tab.setAttribute('id', 'tab-' + ident + '-' + (i + 1));
-```
-
-Use of duplicate `id` values is one of the most common failings under WCAG's [4.1.1 Parsing](https://www.w3.org/TR/WCAG20/#ensure-compat) criterion.
 
 ## Interaction
 
 ### General behavior
 
-For mouse and touch users the interface is intuitive: As you press a tab, the previously selected tab panel is hidden and the newly selected tab panel appears.
+The enhancement in experience offered by an accordion is that the user is afforded an overview of the sections available to read. An accordion is its own table of contents. Accordions also reduce the amount of scrolling required, and make it less easy to get 'lost' amount longform content.
 
-It is important that, although our tabs will adopt certain behaviors peculiar to tab interfaces, we do not _remove_ desirable browser behaviors afforded by the initial structure (outlined in the [semantics](#semantics) section).
+When a user clicks or taps anywhere on a header, the item's 'draw' is opened to show the panel content. The SVG arrow upends to indicate that the next action will close the draw.
 
-Therefore, as each new tab is chosen, the script updates the document `hash` (`window.location.hash`) using the history API.
+### Keyboard behavior
 
-```js
-history.pushState(null, null, '#' + panels[index].id);
-```
+Accordions have an added advantage for keyboard users. By removing the contents of closed accordion items from focus order, it's faster and easier to switch between the different sections, bringing only requested content into focus order.
 
-This means we can use tab panels like standard document fragments, as before, with some additional logic to run on page load:
-
-* When the page loads, does the URL's `hash` correspond to a tab panel's `id`?
-    * **Yes**: Select that tab and reveal its corresponding panel
-    * **No**: Reveal the first of the tab interface's tab panels, and _do not_ update the `hash`. Document fragments not corresponding to tabs should still function as expected.
-
-Note that, because the newly revealed panel has `tabindex="-1"`, we have ensured its contents are placed next in focus order. That is, if the panel contains a link, pressing <kbd>Tab</kbd> once the panel has been revealed will focus that link.
-
-To support links pointing to panels, as well as use of the back and forward browser buttons, we also listen to the `hashchange` event:
+Keyboard users operate the provided toggle `<button>` directly by focusing and activating it with either the <kbd>Space</kbd> or <kbd>Enter</kbd> keys. Note that the only reason mouse and touch users can click _anywhere_ on the bar is because the action is delegated to the button:
 
 ```js
-window.addEventListener('hashchange', function (e) {
-  var index = panelWithHash(window.location.hash);
-  if (index > -1) {
-    switchTab(index, false);
+// Add listener to header
+header.addEventListener('click', function(e) {
+  if (e.target !== button) {
+    button.click();
   }
 });
 ```
 
-Note the `panelWithHash` function that determines if there is either
+### Screen reader behavior
 
-* A panel `id` that corresponds directly to the hash;
-* A panel that _contains_ an element that corresponds directly to the hash
+As covered, where list semantics are present, the list is identified and its items enumerated. For example, if I navigate to the accordion list in VoiceOver for OSX using <kbd>Ctrl</kbd> + <kbd>Option</kbd> + <code>→</code>, I will hear _"list, four items"_.
 
-This way, we can reveal the panel for document fragments linked within it. It uses the `contains` method, which returns `true` for either of the above conditions (it considers elements to 'contain' themselves).
-
-```js
-function panelWithHash (hash) {
-  var target = document.querySelector(hash);
-  var index = -1;
-  if (hash) {
-    panels.forEach(function (panel) {
-      if (panel && panel.contains(target)) {
-        index = Array.prototype.indexOf.call(panels, panel);
-      }
-    });
-  }
-  return index;
-}
-```
-
-### Keyboard behavior
-
-In keeping with conventions set in longstanding native application design, tab interfaces should adopt a specific set of behaviors for keyboard interaction. These are outlined in the [WAI ARIA practices guide for tabs](https://www.w3.org/TR/wai-aria-practices-1.1/#tabpanel).
-
-The full set of expected behaviors are detailed here:
-
-<table>
-  <caption>Tab interface keyboard behaviors</caption>
-  <tr>
-    <th scope="row">
-      Entering the tablist by <kbd>Tab</kbd>
-    </th>
-    <td>
-      Focus the selected tab (the one with <code>aria-selected</code>)
-    </td>
-  </tr>
-  <tr>
-    <th scope="row">
-      Focused tab: <kbd>Tab</kbd>
-    </th>
-    <td>
-      Focus the first interactive element inside the open tab panel or, if one does not exist, the next interactive element past the tab interface.
-    </td>
-  </tr>
-  <tr>
-    <th scope="row">
-      Focused tab: <kbd>Shift</kbd> + <kbd>Tab</kbd>
-    </th>
-    <td>
-      Focus the closest interactive element outside (above) the tab interface.
-    </td>
-  </tr>
-  <tr>
-    <th scope="row">
-      Focused tab: <kbd>→</kbd> (right arrow key)
-    </th>
-    <td>
-      Select and focus the adjacent tab to the right or, if none exists, the first tab in the tablist.
-    </td>
-  </tr>
-  <tr>
-    <th scope="row">
-      Focused tab: <kbd>←</kbd> (left arrow key)
-    </th>
-    <td>
-      Select and focus the adjacent tab to the left or, if none exists, the last tab in the tablist.
-    </td>
-  </tr>
-</table>
-
-#### Focus management
-
-In order to support arrow navigation (and suppress tab navigation) for unselected tabs, we need to programmatically manage focus.
-
-* Each unselected tab must take `tabindex="-1"`, removing it from user focus by <kbd>Tab</kbd>
-* On pressing a left or right arrow key:
-    * The standard key behavior must be suppressed (`e.preventDefault()`)
-    * The corresponding (left or right) tab must be focused and selected
-    * The newly selected tab must have `tabindex="-1"` removed, making it focusable by <kbd>Tab</kbd> again
-
-With the `tabindex` attribution included, the tablist should look something like this (assuming the second tab is currently selected):
-
-```html
-<ul role="tablist">
-  <li role="presentation">
-    <a href="#section1" role="tab" id="tab1" tabindex="-1">Section 1</a>
-  </li>
-  <li role="presentation">
-    <a href="#section2" role="tab" id="tab2" aria-selected="true">Section 2</a>
-  </li>
-  <li role="presentation">
-    <a href="#section3" role="tab" id="tab3" tabindex="-1">Section 3</a>
-  </li>
-</ul>
-```
+If, instead, I am navigating by <kbd>Tab</kbd> and I focus the first `<button>`, I will hear _"open section 1, collapsed button, list, four items"_. When I activate the button, VoiceOver immediately feeds back by saying _"Open Section 1, expanded button"_. The opened content is easy to find because it is next in source order.
 
 ## Visual design requirements
 
-### Initial design
+The visual design of the demo follows [advice provided in the GEL Accordion page](https://www.bbc.co.uk/gel/guidelines/accordion).
 
-It should be clear the list acts as a 'table of contents' for the upcoming sections. User agent styles take care of most of this for us, by providing bullets for the list items, and underlines for the links. If you override these styles, be sure to make it clear — by other means — that the interface given is a list of links.
-
-### Enhanced design
-
-As described in the [GEL Tabs page](http://www.bbc.co.uk/gel/guidelines/tabs#orb-footer), the relationship of the tabs to the panels should be clear — as well as which tab is the selected one.
-
-In addition, be sure to include strong focus styles for keyboard users in accordance with WCAG [2.4.7 Focus Visible](https://www.w3.org/TR/WCAG20/#navigation-mechanisms-focus-visible). It is recommended the faint, dotted outline afforded by some user agents is replaced with an inset box-shadow.
+In addition, the recommended hover style is also mapped to `:focus-within`. That is, where `:focus-within` is supported, the whole header appears focused rather than just the focused button. Note that the focus style for the button is only removed _if_ `:focus-within` is supported. This means older user agents still get a basic focus style.
 
 ```css
-.tab-interface [role="tab"]:focus {
+.accordion-interface-header:hover,
+.accordion-interface-header:focus-within {
+  background-color: #c8c8c8;
+}
+
+.accordion-interface-header:focus-within button:focus {
   outline: none;
-  box-shadow: inset 0 0 0 0.25rem #666;
 }
 ```
-
-**Note:** The script used in the [demonstration](#demonstration) applies the class `tab-interface` to the container element as a styling context.
-
-A focus style for the tab panel that is focused on page load is optional since standard document fragments do not receive focus styles as part of sequential navigation. The `outline` is suppressed in the [demonstration](#demonstration).
 
 ## Demonstration
 
 A [working demonstration](assets/demo1.html) of the discussed implementation is available for you to explore.
 
-Note the initialization which accepts three arguments:
+Note the initialization which accepts two arguments:
 
-* The node you wish to transform into a tab interface (*DOM node*)
-* The (minimum) breakpoint at which the tab interface structure should be adopted (*string*)
-* The ability to turn off `hash` tracking (*Boolean*, default: `true`)
+* The node you wish to transform into an accordion interface (*DOM node*)
+* Whether to enforce list semantics, which is not necessary if a list is used for the initial HTML (*Boolean*, default: `false`)
+
+### Initialization
 
 ```js
-var tabsElem = document.querySelector('.tabs');
-var tabInterface = new Tabbed(tabsElem, '400px');
+// Initialize
+var accordionElem = document.querySelector('.accordion');
+var accordion = new Accordion(accordionElem);
 ```
 
-To initialize multiple tab interfaces you can do something like this:
+To enforce list semantics, just add `true` as the second argument to the constructor:
 
 ```js
-var tabsElems = document.querySelectorAll('.tabs');
-Array.prototype.forEach.call(tabsElems, function(tabsElem) {
-  var tabInterface = new Tabbed(tabsElem, '400px');
-});
+var accordion = new Accordion(accordionElem, true);
 ```
 
 ## Variants and caveats
 
-* Inside a form interface, a set of radio buttons would be more appropriate than a tablist for choosing between panels of input options. Generally, only form elements are expected by users inside forms.
-* Where there are only two tabs to choose from, allowing both tabs to be focusable by the user may be preferable since it is a more common interaction behavior and there is less need to give a 'bypass' ability to reduce tab stops.
-* Do not use tab interfaces for your site's page navigation and, accordingly, do not make your site's page navigation _look_ like a set of tabs. ARIA tab interfaces are for choosing content _within_ a page. The focus behavior is — for one thing — quite different for loading whole pages.
-* Testing may reveal that the arrow navigation paradigm is not obvious to some users. It may be beneficial to provide a hint in the form of a description, or the reveal of arrow icons as the selected tab is focused.
+One variant would be to make the toggle button the child of the heading, like so:
+
+```html
+<h2>
+  <button aria-expanded="false">Section 1</button>
+</h2>
+```
+
+Arguably this provides a better experience to screen reader users because they can effectively navigate to the button _as_ they navigate to the heading and vice versa. That is, they would hear something similar to _"Heading level 2, Section 1, button, collapsed"_. However, at least in some screen readers, navigating to the heading does not focus the button therein. A second navigation step is still necessary and label inherited by the button omits the explicit "Open..." prefix, so may be unclear on account of repetition.
+
+If this structure is adopted, one would have to carefully reset the button styles so that they inherited each from the parent heading. The `all: inherit` declaration is the least verbose solution, but it is not supported in Internet Explorer.
+
+```css
+h2 button {
+  all: inherit
+}
+```
