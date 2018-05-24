@@ -241,6 +241,16 @@ item.addEventListener('click', function() {
 });
 ```
 
+**Note:** Clicking the link itself will cause two events to be emitted due to [bubbling](https://javascript.info/bubbling-and-capturing). This is unlikely to have ill effects in this case, but can be be suppressed with the following if necessary:
+
+```js
+item.addEventListener('click', function(e) {
+  if (e.target !== link) {
+    link.click();
+  }
+});
+```
+
 ### Keyboard behavior
 
 Let's go over keyboard behavior chronologically, from the user first focusing the the carousel
@@ -348,7 +358,7 @@ The `:last-child` selector ensures that _any_ element in this position takes the
 
 ### The images
 
-The images container (`.carousel-interface-image`) uses a combination of Flexbox and `object-fit: cover` to make sure any arbitrary image takes up the height and width available while keeping its aspect ratio. The `imageHeight` is adjustable in the options object. The default (in pixels) is `150`.
+The image uses `object-fit: cover` to make sure any arbitrary image takes up the height and width available while keeping its aspect ratio. The `imageHeight` is adjustable in the options object. The default (in pixels) is `150`.
 
 ```js
 var carouselElem = document.querySelector('.carousel');
