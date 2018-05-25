@@ -142,7 +142,70 @@ This allows the author to adjust the height of the card's image without fear of 
 
 ### Consistent height
 
-When the cards are rendered in a grid, they should share a height.
+When the cards are rendered side-by-side, they should share the same height. This can be achieved automatically by making the parent (container) element a FlexBox context.
+
+```css
+.cards {
+  display: flex;
+}
+```
+
+To distribute the card's contents vertically, the card is also made a FlexBox container, with `flex-direction: column`. The last element in the card is given `margin-top: auto` so that it is aligned with the bottom of the card's height. Other implementations try to achieve this with `position: absolute`, but this would mean knowing the height of the last element ahead of time and compensating for it with padding.
+
+[See the demo for multiple cards in a FlexBox list.](assets/demo1.html#cards-as-a-list)
+
+### Card width
+
+The card width is determined by the author, in the CSS. In the [demo](assets/demo1.html#cards-as-a-list) it is set at `300px`. For a responsive solution, it may be optimal to set the width on the container using CSS grid, where supported. 
+
+In the following example, cards are between `300px` and `1fr` in width, depending on the available space. The upshot here is that no 'gaps' become visible as the cards wrap. Because we are using `object-fit: cover` for the image, the variable width does not break the image layout.
+
+```css
+@supports (display: grid) {
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-column-gap: 1.5rem;
+    grid-row-gap:1.5rem;
+  }
+}
+```
+
+**Note:** It is suggested that fallback CSS is used for where CSS grid is not supported. In the [demo](assets/demo1.html#cards-as-a-list) a fixed width, floats, and margins are used, then undone where CSS Grid is supported.
+
+```css
+/* group styles */
+.card-interface-group .card-interface {
+  width: 300px;
+  float: left;
+  margin-right: 1.5rem;
+}
+
+@supports (display: grid) {
+  .card-interface-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-column-gap: 1.5rem;
+    grid-row-gap:1.5rem;
+  }
+
+  .card-interface-group .card-interface {
+    width: auto;
+    float: none;
+    margin-right: 0;
+  }
+}
+```
+
+### The icon
+
+The default icon is a small inline SVG, using `currentColor` to ensure that Windows High Contrast mode is respected and the fill changes color in line with the surrounding text. The `focusable="false"` attribution is also included, because Internet Explorer and early versions of Edge make SVGs focusable by default.
+
+```html
+<svg fill="currentColor" viewBox="0 0 20 20" width="20" height="20" focusable="false">
+  <polyline points="2 2, 18 10, 2 18"></polyline>
+</svg>
+```
 
 ## Demonstration
 
@@ -152,6 +215,17 @@ Note the initialization which accepts two arguments:
 
 1. The node you wish to transform into a card
 2. An options object
-    * 
+    * `imgHeight`: the height of the image area of the card in pixels (integer; default is `200`)
+    * `icon`: the code for the icon, recommended as inline SVG (string, default is a small SVG using `currentColor` to support Windows High Contrast Mode)
 
 ## Variants and caveats
+
+Where cards have a variable width, it's possible that — in some configurations — they may become quite wide. This may cause a wider-than-optimal [measure](https://en.wikipedia.org/wiki/Line_length) for the description and diminish readability. You can cap the measure (line length) using `max-width`. The optimal measure is between 45 and 75 characters. 
+
+In the following example, the `ch` unit is used to cap the measure to approximately 60 characters (1 `ch` is equal to the width of one `0` character).
+
+```css
+.card-interface p {
+  max-width: 60ch;
+}
+```

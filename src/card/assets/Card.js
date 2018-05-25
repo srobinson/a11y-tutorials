@@ -2,9 +2,8 @@
 function Card(elem, options) {
   // The default settings for the carousel.
   var settings = {
-    width: 300,
     imgHeight: 200,
-    icon: '<svg viewBox="0 0 20 20" width="20" height="20" focusable="false"><polyline points="2 2, 18 10, 2 18"></polyline></svg>'
+    icon: '<svg fill="currentColor" viewBox="0 0 20 20" width="20" height="20" focusable="false"><polyline points="2 2, 18 10, 2 18"></polyline></svg>'
   }
 
   // Overwrite defaults where they are provided in options
@@ -15,11 +14,7 @@ function Card(elem, options) {
   }
 
   // Add class to card container in case it doesn't exist
-  console.log(elem);
   elem.classList.add('card-interface');
-
-  // Set card width
-  elem.style.width = settings.width + 'px';
 
   // Get image container
   var imgBox = elem.querySelector('.card-interface-img');
