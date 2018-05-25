@@ -9,6 +9,7 @@
       /* Just styles for the document */
       html { font-family: sans-serif; line-height: 1.5; background-color: #f3f3ee } * { box-sizing: border-box; } body { max-width: 60rem; margin: 3rem auto; padding: 2rem; }
     </style>
+    <link rel="stylesheet" href="../../card/assets/card.css">
     <style>
       .carousel-interface {
         position: relative;
@@ -44,87 +45,8 @@
         display: flex;
       }
 
-      .carousel-interface-list > li {
-        flex: 0 0 auto;
-        display: flex;
-        flex-direction: column;
-        cursor: pointer;
-        background-color: #fff;
-        scroll-snap-align: start;
-      }
-
-      .carousel-interface-list > li * {
-        margin: 0;
-      }
-
-      .carousel-interface-list > li + li {
-        margin-left: 1rem;
-      }
-
-      .carousel-interface-text {
-        padding: 1rem;
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-      }
-
-      .carousel-interface-text > :last-child {
-        display: block;
-        color: #767676;
-        text-transform: uppercase;
-        margin-top: auto;
-      }
-
-      .carousel-interface-image {
-        position: relative;
-        height: 100px;
-        overflow: hidden;
-      }
-
-      .carousel-interface-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      .carousel-interface-icon {
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        text-decoration: none;
-        padding: 0.5rem;
-        background-color: rgba(255,255,255,0.5);
-        line-height: 1;
-      }
-
-      .carousel-interface-list a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      .carousel-interface-list a:focus {
-        outline: none;
-        text-decoration: underline;
-      }
-
-      .carousel-interface-list > li:focus-within,
-      .carousel-interface-list > li:hover {
-        box-shadow: inset 0 0 0 0.25rem #404040;
-      }
-
-      .carousel-interface-list > li:focus-within .carousel-interface-image,
-      .carousel-interface-list > li:hover .carousel-interface-image {
-        border-style: solid;
-        border-color: #404040;
-        border-width: 0.25rem 0.25rem 0;
-      }
-
-      .carousel-interface-list > li:focus-within a:focus {
-        text-decoration: none;
-      }
-
-      .carousel-interface-text * {
-        margin: 0;
+      .carousel-interface-list > * {
+        flex-shrink: 0;
       }
 
       .carousel-interface-buttons {
@@ -170,73 +92,110 @@
     <div class="carousel">
       <ul>
         <li>
-          <div>
+          <div class="card-interface-img">
             <img src="images/1.jpeg" alt="">
           </div>
-          <div>
-            <h2><a href="#">Headline 1</a></h2>
-            <p>Description</p>
+          <div class="card-interface-text">
+            <h2 class="card-interface-title"><a href="[url]">Title Of Card</a></h2>
+            <p>Description of the card</p>
             <small>Attribution</small>
           </div>
+          <ul class="card-interface-toolbar">
+            <li><button>Love</button></li>
+            <li><button>Add</button></li>
+            <li><button>Share</button></li>
+          </ul>
         </li>
         <li>
-          <div>
+          <div class="card-interface-img">
             <img src="images/2.jpeg" alt="">
           </div>
-          <div>
-            <h2><a href="#">Headline 2</a></h2>
-            <p>Description</p>
+          <div class="card-interface-text">
+            <h2 class="card-interface-title"><a href="[url]">Title Of Second Card</a></h2>
+            <p>Description of the card that is longer than other descriptions in the set of cards.</p>
             <small>Attribution</small>
           </div>
+          <ul class="card-interface-toolbar">
+            <li><button>Love</button></li>
+            <li><button>Add</button></li>
+            <li><button>Share</button></li>
+          </ul>
         </li>
         <li>
-          <div>
+          <div class="card-interface-img">
             <img src="images/3.jpeg" alt="">
           </div>
-          <div>
-            <h2><a href="#">Headline 3</a></h2>
-            <p>Description</p>
+          <div class="card-interface-text">
+            <h2 class="card-interface-title"><a href="[url]">The Third Card's Title</a></h2>
+            <p>Short description of the card</p>
             <small>Attribution</small>
           </div>
+          <ul class="card-interface-toolbar">
+            <li><button>Love</button></li>
+            <li><button>Add</button></li>
+            <li><button>Share</button></li>
+          </ul>
         </li>
         <li>
-          <div>
+          <div class="card-interface-img">
             <img src="images/4.jpeg" alt="">
           </div>
-          <div>
-            <h2><a href="#">Headline That is Very Long</a></h2>
-            <p>Description</p>
+          <div class="card-interface-text">
+            <h2 class="card-interface-title"><a href="[url]">The Fourth Card</a></h2>
+            <p>Long description of the card because that adds variety in terms of vertical space.</p>
             <small>Attribution</small>
           </div>
+          <ul class="card-interface-toolbar">
+            <li><button>Love</button></li>
+            <li><button>Add</button></li>
+            <li><button>Share</button></li>
+          </ul>
         </li>
         <li>
-          <div>
+          <div class="card-interface-img">
             <img src="images/5.jpeg" alt="">
           </div>
-          <div>
-            <h2><a href="#">Headline 5</a></h2>
-            <p>Description</p>
+          <div class="card-interface-text">
+            <h2 class="card-interface-title"><a href="[url]">The Fifth Card Is Here</a></h2>
+            <p>Short description here.</p>
             <small>Attribution</small>
           </div>
+          <ul class="card-interface-toolbar">
+            <li><button>Love</button></li>
+            <li><button>Add</button></li>
+            <li><button>Share</button></li>
+          </ul>
         </li>
         <li>
-          <div>
+          <div class="card-interface-img">
             <img src="images/6.jpeg" alt="">
           </div>
-          <div>
-            <h2><a href="#">Headline 6</a></h2>
-            <p>Description</p>
+          <div class="card-interface-text">
+            <h2 class="card-interface-title"><a href="[url]">The Sixth Card For You</a></h2>
+            <p>Short description here.</p>
             <small>Attribution</small>
           </div>
+          <ul class="card-interface-toolbar">
+            <li><button>Love</button></li>
+            <li><button>Add</button></li>
+            <li><button>Share</button></li>
+          </ul>
         </li>
       </ul>
     </div>
     <!-- end demo HTML -->
+    <script src="../../card/assets/Card.js"></script>
     <script src="Carousel.js"></script>
     <script>
-      // Initialize
+      // Initialize cards
+      var cards = document.querySelectorAll('.carousel > ul > li');
+      Array.prototype.forEach.call(cards, function(c) {
+        var card = new Card(c);
+      });
+
+      // Initialize carousel
       var carouselElem = document.querySelector('.carousel');
-      var carousel = new Carousel(carouselElem, {imageHeight: 200});
+      var carousel = new Carousel(carouselElem, {imageHeight: 150});
     </script>
   </body>
 </html>
