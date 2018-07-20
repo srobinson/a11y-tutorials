@@ -51,7 +51,7 @@
         outline: none;
       }
 
-      .tab-interface [role="tablist"] [aria-selected] {
+      .tab-interface [role="tablist"] [aria-selected="true"] {
         background: #ccc;
       }
 
@@ -69,9 +69,12 @@
   </head>
   <body>
     <h1>Tabs demonstration</h1>
+    <h2>Standard tabs demo</h2>
+    <p>Default settings with support for document fragment tracking and only arrow key navigation between tabs.</p>
+    <!-- standard demo HTML -->
     <ul>
       <li>
-        <a href="#section1">Link to a first section/panel</a>
+        <a href="#section1">Link to first section/panel</a>
       </li>
       <li>
         <a href="#section-2-subsection">Link to a subsection inside panel 2</a>
@@ -80,8 +83,7 @@
         <a href="#blabla">Link to a non-existant document fragment</a>
       </li>
     </ul>
-    <!-- demo HTML -->
-    <div class="tabs">
+    <div class="tabs-standard">
       <ul>
         <li>
           <a href="#section1">Section 1</a>
@@ -94,27 +96,73 @@
         </li>
       </ul>
       <section id="section1">
-        <h2>Section 1</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In porttitor <a href="#section3">link to panel 3</a> mi eu enim tristique dapibus. Fusce nibh mauris, rhoncus dictum libero sit amet, malesuada porta eros. Proin interdum leo nec turpis vehicula, nec interdum ipsum dictum. Praesent molestie mattis ex, non cursus massa venenatis et. In et tortor diam. Aenean ut felis mattis, lacinia eros ac, venenatis elit. Phasellus dolor magna, sollicitudin in urna elementum, mollis feugiat elit. Nullam consectetur, nisl sed finibus mattis, sapien nisi ultricies odio, eleifend ullamcorper diam ante a risus. Quisque ac metus varius, pretium metus sed, mollis mi.</p>
+        <h3>Section 1</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In porttitor <a href="#section3">link to section 3</a> mi eu enim tristique dapibus. Fusce nibh mauris, rhoncus dictum libero sit amet, malesuada porta eros. Proin interdum leo nec turpis vehicula, nec interdum ipsum dictum. Praesent molestie mattis ex, non cursus massa venenatis et. In et tortor diam. Aenean ut felis mattis, lacinia eros ac, venenatis elit. Phasellus dolor magna, sollicitudin in urna elementum, mollis feugiat elit. Nullam consectetur, nisl sed finibus mattis, sapien nisi ultricies odio, eleifend ullamcorper diam ante a risus. Quisque ac metus varius, pretium metus sed, mollis mi.</p>
       </section>
       <section id="section2">
-        <h2>Section 2</h2>
-        <p>Aliquam erat volutpat. Pellentesque efficitur quam <a href="#section3">link to panel 3</a>, id rutrum velit accumsan. Phasellus posuere lacus eu sagittis viverra. Aliquam nec sapien nec lectus sagittis luctus vel luctus magna. Nullam aliquam justo at justo dictum tempus. Suspendisse tempor ligula ligula, a convallis turpis pharetra eget. Fusce in ante urna. In volutpat euismod felis, vel scelerisque enim pellentesque sit amet. Phasellus elit neque, iaculis quis sollicitudin eget, tincidunt et lorem.</p>
+        <h3>Section 2</h3>
+        <p>Aliquam erat volutpat. Pellentesque efficitur quam <a href="#section3">link to section 3</a>, id rutrum velit accumsan. Phasellus posuere lacus eu sagittis viverra. Aliquam nec sapien nec lectus sagittis luctus vel luctus magna. Nullam aliquam justo at justo dictum tempus. Suspendisse tempor ligula ligula, a convallis turpis pharetra eget. Fusce in ante urna. In volutpat euismod felis, vel scelerisque enim pellentesque sit amet. Phasellus elit neque, iaculis quis sollicitudin eget, tincidunt et lorem.</p>
         <h3 id="section-2-subsection" tabindex="-1">A subsection in Section 2</h3>
-        <p><a href="#section3">link to panel 3</a></p>
+        <p><a href="#section3">link to section 3</a></p>
       </section>
       <section id="section3">
-        <h2>Section 3</h2>
-        <p>Sed rutrum ultricies ullamcorper. Aliquam <a href="#section1">link to panel 1</a>, sed semper orci. Aliquam erat volutpat. Pellentesque efficitur quam eget arcu scelerisque, id rutrum velit accumsan. Phasellus posuere lacus eu sagittis viverra. Aliquam nec sapien nec lectus sagittis luctus vel luctus magna. Nullam aliquam justo at justo dictum tempus. Suspendisse tempor ligula ligula, a convallis turpis pharetra eget. Fusce in ante urna. In volutpat euismod felis, vel scelerisque enim pellentesque sit amet. Phasellus elit neque, iaculis quis sollicitudin eget, tincidunt et lorem.</p>
+        <h3>Section 3</h3>
+        <p>Sed rutrum ultricies ullamcorper. Aliquam <a href="#section1">link to section 1</a>, sed semper orci. Aliquam erat volutpat. Pellentesque efficitur quam eget arcu scelerisque, id rutrum velit accumsan. Phasellus posuere lacus eu sagittis viverra. Aliquam nec sapien nec lectus sagittis luctus vel luctus magna. Nullam aliquam justo at justo dictum tempus. Suspendisse tempor ligula ligula, a convallis turpis pharetra eget. Fusce in ante urna. In volutpat euismod felis, vel scelerisque enim pellentesque sit amet. Phasellus elit neque, iaculis quis sollicitudin eget, tincidunt et lorem.</p>
       </section>
     </div>
-    <!-- end demo HTML -->
+    <!-- standard demo HTML -->
+    <h2>Focusable tabs demo</h2>
+    <p>Alternate version, where tabs are focusable using the <kbd>Tab</kbd> key.</p>
+    <!-- focusable tabs demo HTML -->
+    <ul>
+      <li>
+        <a href="#section4">Link to first section</a>
+      </li>
+      <li>
+        <a href="#section-5-subsection">Link to a subsection inside section 5</a>
+      </li>
+      <li>
+        <a href="#blabla">Link to a non-existant document fragment</a>
+      </li>
+    </ul>
+    <div class="tabs-focusable-tabs">
+      <ul>
+        <li>
+          <a href="#section4">Section 4</a>
+        </li>
+        <li>
+          <a href="#section5">Section 5</a>
+        </li>
+        <li>
+          <a href="#section6">Section 6</a>
+        </li>
+      </ul>
+      <section id="section4">
+        <h3>Section 1</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In porttitor <a href="#section6">link to section 3</a> mi eu enim tristique dapibus. Fusce nibh mauris, rhoncus dictum libero sit amet, malesuada porta eros. Proin interdum leo nec turpis vehicula, nec interdum ipsum dictum. Praesent molestie mattis ex, non cursus massa venenatis et. In et tortor diam. Aenean ut felis mattis, lacinia eros ac, venenatis elit. Phasellus dolor magna, sollicitudin in urna elementum, mollis feugiat elit. Nullam consectetur, nisl sed finibus mattis, sapien nisi ultricies odio, eleifend ullamcorper diam ante a risus. Quisque ac metus varius, pretium metus sed, mollis mi.</p>
+      </section>
+      <section id="section5">
+        <h3>Section 2</h3>
+        <p>Aliquam erat volutpat. Pellentesque efficitur quam <a href="#section6">link to section 6</a>, id rutrum velit accumsan. Phasellus posuere lacus eu sagittis viverra. Aliquam nec sapien nec lectus sagittis luctus vel luctus magna. Nullam aliquam justo at justo dictum tempus. Suspendisse tempor ligula ligula, a convallis turpis pharetra eget. Fusce in ante urna. In volutpat euismod felis, vel scelerisque enim pellentesque sit amet. Phasellus elit neque, iaculis quis sollicitudin eget, tincidunt et lorem.</p>
+        <h3 id="section-5-subsection" tabindex="-1">A subsection in Section 5</h3>
+        <p><a href="#section6">link to panel 6</a></p>
+      </section>
+      <section id="section6">
+        <h3>Section 3</h3>
+        <p>Sed rutrum ultricies ullamcorper. Aliquam <a href="#section4">link to section 4</a>, sed semper orci. Aliquam erat volutpat. Pellentesque efficitur quam eget arcu scelerisque, id rutrum velit accumsan. Phasellus posuere lacus eu sagittis viverra. Aliquam nec sapien nec lectus sagittis luctus vel luctus magna. Nullam aliquam justo at justo dictum tempus. Suspendisse tempor ligula ligula, a convallis turpis pharetra eget. Fusce in ante urna. In volutpat euismod felis, vel scelerisque enim pellentesque sit amet. Phasellus elit neque, iaculis quis sollicitudin eget, tincidunt et lorem.</p>
+      </section>
+    </div>
+    <!-- focusable tabs demo HTML -->
     <script src="Tabbed.js"></script>
     <script>
-      // Initialize
-      var tabsElems = document.querySelectorAll('.tabs');
-      Array.prototype.forEach.call(tabsElems, function (tabsElem) {
-        var tabInterface = new Tabbed(tabsElem, '400px');
+      // Initialize standard tabs (defaults)
+      var standard = document.querySelector('.tabs-standard');
+      var tabsStandard = new Tabbed(standard);
+
+      // Initialize focusable tabs (defaults)
+      var focusableTabs = document.querySelector('.tabs-focusable-tabs');
+      var tabsStandard = new Tabbed(focusableTabs, {
+        tabsFocusable: true
       });
     </script>
   </body>

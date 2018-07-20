@@ -17,7 +17,7 @@
     </script>
 	
 	<link rel="stylesheet" href="../static/vendor/highlight/styles/github.css">
-    <link rel="stylesheet" href="../static/css/main.css?ver-1524149142" />
+    <link rel="stylesheet" href="../static/css/main.css?ver-1532096215" />
 </head>
 <body>
 
@@ -102,14 +102,14 @@
 <p>The following is intended to be read alongside the <a href="http://www.bbc.co.uk/gel/guidelines/tabs#orb-footer">GEL Tabs page</a>. In fact, you should probably read that one first. Here, we'll just cover the technical requirements to make tab interfaces as accessible as possible.</p>
 <p>The implementation to come is:</p>
 <ul>
-  <li>Written with plain CSS and ES5 Javascript (<em>no build process assumed</em>)</li>
+  <li>Written with plain CSS and ES5 JavaScript (<em>no build process assumed</em>)</li>
   <li>Lacking any dependencies (<em>for maximum portability and minimum payload</em>)</li>
-  <li>Based on progressive enhancement (<em>the HTML is fine without the Javascript or the CSS</em>)</li>
+  <li>Based on progressive enhancement (<em>the HTML is fine without the JavaScript or the CSS</em>)</li>
   <li>Is editor friendly (<em>can be easily dropped into HTML and/or markdown files</em>)</li>
 </ul>
 <h2 id="semantics">Semantics</h2>
 <h3 id="initial-html">Initial HTML</h3>
-<p>The foundation of any performant and accessible component is semantic markup. This markup should make sense and be usable in the absence of Javascript. Hence, we begin by using a simple list structure including same-page links.</p>
+<p>The foundation of any performant and accessible component is semantic markup. This markup should make sense and be usable in the absence of JavaScript. Hence, we begin by using a simple list structure including same-page links. Note the wrapping <code>&#x3C;div></code> with <code>class="tab"</code>. This simply <a href="https://github.com/BulbEnergy/design/pull/177">groups the content together</a> and can act as a hook for the JavaScript that will run to transform the content into a true tab interface (see the <a href="#demonstration">demonstration</a>).</p>
 <pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"tabs"</span>></span>
   <span class="hljs-tag">&#x3C;<span class="hljs-name">ul</span>></span>
     <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span>
@@ -135,26 +135,10 @@
 </code></pre>
 <p>As you can see, each 'tab panel' starts out as a simple section. In the absence of JavaScript, the user can navigate to a section by pressing a corresponding link.</p>
 <p>Sections are introduced by headings, and should be of the same level (whichever is appropriate to the tab interface's position in the document structure). You would, of course, be providing some content under each section's heading!</p>
-<p>Here's the same structure with the help of markdown for terseness:</p>
-<pre><code class="hljs language-md"><span class="xml"><span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"tabs"</span>></span></span>
-  * [<span class="hljs-string">Section 1</span>](<span class="hljs-link">#section1</span>)
-  * [<span class="hljs-string">Section 2</span>](<span class="hljs-link">#section2</span>)
-  * [<span class="hljs-string">Section 3</span>](<span class="hljs-link">#section3</span>)
-  <span class="xml"><span class="hljs-tag">&#x3C;<span class="hljs-name">section</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"section1"</span>></span></span>
-<span class="hljs-code">    ## Section 1</span>
-  <span class="xml"><span class="hljs-tag">&#x3C;/<span class="hljs-name">section</span>></span></span>
-  <span class="xml"><span class="hljs-tag">&#x3C;<span class="hljs-name">section</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"section2"</span>></span></span>
-<span class="hljs-code">    ## Section 2</span>
-  <span class="xml"><span class="hljs-tag">&#x3C;/<span class="hljs-name">section</span>></span></span>
-  <span class="xml"><span class="hljs-tag">&#x3C;<span class="hljs-name">section</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"section3"</span>></span></span>
-<span class="hljs-code">    ## Section 3</span>
-  <span class="xml"><span class="hljs-tag">&#x3C;/<span class="hljs-name">section</span>></span></span>
-<span class="xml"><span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span></span>
-</code></pre>
-<p>Since tabs are laid out side-by-side, there's little room for them in narrow viewports. That's why we'll only be 'enhancing' to a tab interface at a given breakpoint. This actually has two advantages:</p>
+<p>Since tabs are laid out side-by-side, there's little room for them in narrow viewports. That's why we'll only be enhancing to a tab interface at a given breakpoint. This actually has two advantages:</p>
 <ul>
   <li>The interface remains a 'one column' structure which fits better into a portrait orientation</li>
-  <li>Reduced Javascript (including DOM manipulation) is run on low-powered devices</li>
+  <li>Reduced JavaScript (including DOM manipulation) is run on smaller, typically lower-powered devices</li>
 </ul>
 <p>In the <a href="#demonstration">demonstration</a> at the end of this document, you'll find <code>matchMedia</code> is used for this logic.</p>
 <pre><code class="hljs language-js"><span class="hljs-keyword">if</span> (<span class="hljs-built_in">window</span>.matchMedia(<span class="hljs-string">'(min-width: '</span>+breakpoint+<span class="hljs-string">')'</span>).matches) {
@@ -162,7 +146,7 @@
 }
 </code></pre>
 <h3 id="enhanced-html">Enhanced HTML</h3>
-<p>Where a tab interface pattern is adopted, certain semantics and behaviors should accompany the change in visual design. Otherwise, assistive technology and keyboard users will have trouble interacting with it. Blind screen reader users may not even be aware it <em>is</em> a set of tabs.</p>
+<p>Where a tab interface pattern is adopted, certain semantics and behaviors should accompany the change in visual design. Otherwise, assistive technology and keyboard users will have trouble interacting with it. The semantics tell the user what kind of interface they are encountering, and how it should be used (see <a href="#interaction">Interaction</a>).</p>
 <p>First let's deal with the change of semantics.</p>
 <pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"tabs"</span>></span>
   <span class="hljs-tag">&#x3C;<span class="hljs-name">ul</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"tablist"</span>></span>
@@ -170,10 +154,10 @@
       <span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#section1"</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"tab"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"tab1"</span> <span class="hljs-attr">aria-selected</span>=<span class="hljs-string">"true"</span>></span>Section 1<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
     <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
     <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"presentation"</span>></span>
-      <span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#section2"</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"tab"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"tab2"</span>></span>Section 2<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#section2"</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"tab"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"tab2"</span> <span class="hljs-attr">aria-selected</span>=<span class="hljs-string">"false"</span>></span>Section 2<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
     <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
     <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"presentation"</span>></span>
-      <span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#section3"</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"tab"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"tab3"</span>></span>Section 3<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#section3"</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"tab"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"tab3"</span> <span class="hljs-attr">aria-selected</span>=<span class="hljs-string">"false"</span>></span>Section 3<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
     <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
   <span class="hljs-tag">&#x3C;/<span class="hljs-name">ul</span>></span>
   <span class="hljs-tag">&#x3C;<span class="hljs-name">section</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"tabpanel"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"section1"</span> <span class="hljs-attr">aria-labelledby</span>=<span class="hljs-string">"tab1"</span>></span>
@@ -208,7 +192,7 @@
       <td>Now that our links are enumerable tabs, there's no need for the list semantics. The presentation role effectively hides list information from assistive software.</td>
     </tr>
     <tr>
-      <th scope="row"><code>aria-selected="true"</code></th>
+      <th scope="row"><code>aria-selected="true|false"</code></th>
       <td>This state attribute tells assistive software which tab is the selected (or 'current') tab.</td>
     </tr>
     <tr>
@@ -217,7 +201,7 @@
     </tr>
     <tr>
       <th scope="row"><code>aria-labelledby="[tab ID]"</code></th>
-      <td>The <code>aria-labelledby</code> attribute labels the tab panel by its corresponding tab. In practice, this means a screen reader user will be told they are entering _"tab panel [label]"_ as they move their focus or virtual cursor into it. This is good for context.</td>
+      <td>The <code>aria-labelledby</code> attribute labels the tab panel by its corresponding tab. In practice, this means a screen reader user will be told they are entering <em>"tab panel [label]"</em> as they move their focus or virtual cursor into it. This is good for context.</td>
     </tr>
   </tbody>
 </table>
@@ -234,7 +218,7 @@ tab.setAttribute(<span class="hljs-string">'id'</span>, <span class="hljs-string
 <h2 id="interaction">Interaction</h2>
 <h3 id="general-behavior">General behavior</h3>
 <p>For mouse and touch users the interface is intuitive: As you press a tab, the previously selected tab panel is hidden and the newly selected tab panel appears.</p>
-<p>It is important that, although our tabs will adopt certain behaviors peculiar to tab interfaces, we do not <em>remove</em> desirable browser behaviors afforded by the initial structure (outlined in the <a href="">semantics</a> section).</p>
+<p>It is important that, although our tabs will adopt certain behaviors peculiar to tab interfaces, we do not <em>remove</em> desirable browser behaviors afforded by the initial structure (outlined in the <a href="#semantics">Semantics</a> section).</p>
 <p>Therefore, as each new tab is chosen, the script updates the document <code>hash</code> (<code>window.location.hash</code>) using the history API.</p>
 <pre><code class="hljs language-js">history.pushState(<span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-string">'#'</span> + panels[index].id);
 </code></pre>
@@ -243,23 +227,17 @@ tab.setAttribute(<span class="hljs-string">'id'</span>, <span class="hljs-string
   <li>
     <p>When the page loads, does the URL's <code>hash</code> correspond to a tab panel's <code>id</code>?</p>
     <ul>
-      <li><strong>Yes</strong>: Select that tab and reveal its corresponding panel, then <em>focus</em> that panel as if it were a simple document fragment, bringing it into view.</li>
+      <li><strong>Yes</strong>: Select that tab and reveal its corresponding panel</li>
       <li><strong>No</strong>: Reveal the first of the tab interface's tab panels, and <em>do not</em> update the <code>hash</code>. Document fragments not corresponding to tabs should still function as expected.</li>
     </ul>
   </li>
 </ul>
-<p>To support links pointing to panels, as well as use of the back and forward browser buttons, we also listen to the <code>hashchange</code> event.</p>
-<pre><code class="hljs language-js"><span class="hljs-comment">// Support back button</span>
-<span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">'hashchange'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
-  <span class="hljs-comment">// Get the index of the panel id (or `-1` if it doesn't exist)</span>
-  <span class="hljs-keyword">var</span> indexOfHash = panelWithHash(<span class="hljs-built_in">window</span>.location.hash);
-  <span class="hljs-comment">// Is there a tab to activate?</span>
-  <span class="hljs-keyword">var</span> newTab = indexOfHash > <span class="hljs-number">-1</span> ? tabs[indexOfHash] : <span class="hljs-literal">false</span>;
-
-  <span class="hljs-keyword">if</span> (newTab) {
-    switchTab(newTab, <span class="hljs-literal">false</span>);
-    <span class="hljs-comment">// Focus the new panel, so it behaves similar to a document fragment</span>
-    panels[indexOfHash].focus();
+<p>Note that, because the newly revealed panel has <code>tabindex="-1"</code>, we have ensured its contents are placed next in focus order. That is, if the panel contains a link, pressing <kbd>Tab</kbd> once the panel has been revealed will focus that link.</p>
+<p>To support links pointing to panels, as well as use of the back and forward browser buttons, we also listen to the <code>hashchange</code> event:</p>
+<pre><code class="hljs language-js"><span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">'hashchange'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
+  <span class="hljs-keyword">var</span> index = panelWithHash(<span class="hljs-built_in">window</span>.location.hash);
+  <span class="hljs-keyword">if</span> (index > <span class="hljs-number">-1</span>) {
+    switchTab(index, <span class="hljs-literal">false</span>);
   }
 });
 </code></pre>
@@ -270,11 +248,12 @@ tab.setAttribute(<span class="hljs-string">'id'</span>, <span class="hljs-string
 </ul>
 <p>This way, we can reveal the panel for document fragments linked within it. It uses the <code>contains</code> method, which returns <code>true</code> for either of the above conditions (it considers elements to 'contain' themselves).</p>
 <pre><code class="hljs language-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">panelWithHash</span> (<span class="hljs-params">hash</span>) </span>{
+  <span class="hljs-keyword">var</span> target = <span class="hljs-built_in">document</span>.querySelector(hash);
   <span class="hljs-keyword">var</span> index = <span class="hljs-number">-1</span>;
   <span class="hljs-keyword">if</span> (hash) {
-    panelIDs.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">id</span>) </span>{
-      <span class="hljs-keyword">if</span> (<span class="hljs-built_in">document</span>.querySelector(id) &#x26;&#x26; <span class="hljs-built_in">document</span>.querySelector(id).contains(<span class="hljs-built_in">document</span>.querySelector(hash))) {
-        index = panelIDs.indexOf(id);
+    panels.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">panel</span>) </span>{
+      <span class="hljs-keyword">if</span> (panel &#x26;&#x26; panel.contains(target)) {
+        index = <span class="hljs-built_in">Array</span>.prototype.indexOf.call(panels, panel);
       }
     });
   }
@@ -282,7 +261,7 @@ tab.setAttribute(<span class="hljs-string">'id'</span>, <span class="hljs-string
 }
 </code></pre>
 <h3 id="keyboard-behavior">Keyboard behavior</h3>
-<p>In keeping with conventions set in longstanding native application design, tab interfaces should adopt a specific set of behaviors for keyboard interaction. These are outlined in the <a href="https://www.w3.org/TR/wai-aria-practices-1.1/#tabpanel">WAI ARIA practices guide for tabs</a>.</p>
+<p>In keeping with conventions set in longstanding native application design, tab interfaces have a prescribed set of behaviors for keyboard interaction. These are outlined in the <a href="https://www.w3.org/TR/wai-aria-practices-1.1/#tabpanel">WAI ARIA practices guide for tabs</a>.</p>
 <p>The full set of expected behaviors are detailed here:</p>
 <table>
   <caption>Tab interface keyboard behaviors</caption>
@@ -309,10 +288,15 @@ tab.setAttribute(<span class="hljs-string">'id'</span>, <span class="hljs-string
     </tr>
   </tbody>
 </table>
-<h4 id="focus-management">Focus management</h4>
-<p>In order to support arrow navigation (and suppress tab navigation) for unselected tabs, we need to programmatically manage focus.</p>
+<p>These are the standard behaviors, but there is some dispute over whether keyboard users are generally aware or expect arrow keys to be their sole means of selecting and activating tabs. The <a href="#demonstration">demonstration</a> script therefore supports the option of placing the tabs into focus order. With the <code>tabsFocusable</code> option set to <code>true</code> users can</p>
 <ul>
-  <li>Each unselected tab must take <code>tabindex="-1"</code>, removing it from user focus by <kbd>Tab</kbd></li>
+  <li>Simultaneously select and activate tabs using the left and right arrow keys</li>
+  <li>Focus tabs using the <kbd>Tab</kbd> key, then activate them with the <kbd>Enter</kbd> key</li>
+</ul>
+<h4 id="focus-management">Focus management</h4>
+<p>In order to support arrow navigation for unselected tabs, we need to programmatically manage focus.</p>
+<ul>
+  <li>Each unselected tab must take <code>tabindex="-1"</code>, removing it from user focus by <kbd>Tab</kbd> (unless <code>tabsFocusable</code> is set to <code>true</code> in the options object)</li>
   <li>
     <p>On pressing a left or right arrow key:</p>
     <ul>
@@ -322,16 +306,16 @@ tab.setAttribute(<span class="hljs-string">'id'</span>, <span class="hljs-string
     </ul>
   </li>
 </ul>
-<p>With the <code>tabindex</code> attribution included, the tablist should look something like this (assuming the second tab is currently selected):</p>
+<p>With the <code>tabindex</code> attribution included, the tablist should look something like this (assuming the second tab is currently selected, and <code>tabsFocusable</code> is set to <code>false</code> — the default value):</p>
 <pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">ul</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"tablist"</span>></span>
   <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"presentation"</span>></span>
-    <span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#section1"</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"tab"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"tab1"</span> <span class="hljs-attr">tabindex</span>=<span class="hljs-string">"-1"</span>></span>Section 1<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#section1"</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"tab"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"tab1"</span> <span class="hljs-attr">aria-selected</span>=<span class="hljs-string">"false"</span> <span class="hljs-attr">tabindex</span>=<span class="hljs-string">"-1"</span>></span>Section 1<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
   <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
   <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"presentation"</span>></span>
     <span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#section2"</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"tab"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"tab2"</span> <span class="hljs-attr">aria-selected</span>=<span class="hljs-string">"true"</span>></span>Section 2<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
   <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
   <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"presentation"</span>></span>
-    <span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#section3"</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"tab"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"tab3"</span> <span class="hljs-attr">tabindex</span>=<span class="hljs-string">"-1"</span>></span>Section 3<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#section3"</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"tab"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"tab3"</span> <span class="hljs-attr">aria-selected</span>=<span class="hljs-string">"false"</span> <span class="hljs-attr">tabindex</span>=<span class="hljs-string">"-1"</span>></span>Section 3<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
   <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
 <span class="hljs-tag">&#x3C;/<span class="hljs-name">ul</span>></span>
 </code></pre>
@@ -339,7 +323,7 @@ tab.setAttribute(<span class="hljs-string">'id'</span>, <span class="hljs-string
 <h3 id="initial-design">Initial design</h3>
 <p>It should be clear the list acts as a 'table of contents' for the upcoming sections. User agent styles take care of most of this for us, by providing bullets for the list items, and underlines for the links. If you override these styles, be sure to make it clear — by other means — that the interface given is a list of links.</p>
 <h3 id="enhanced-design">Enhanced design</h3>
-<p>As described in the <a href="http://www.bbc.co.uk/gel/guidelines/tabs#orb-footer">GEL Tabs page</a>, the relationship of the tabs to the panels should be clear — as well as which tab is the selected one.</p>
+<p>As described in the <a href="http://www.bbc.co.uk/gel/guidelines/tabs">GEL Tabs page</a>, the relationship of the tabs to the panels should be clear — as well as which tab is the selected one.</p>
 <p>In addition, be sure to include strong focus styles for keyboard users in accordance with WCAG <a href="https://www.w3.org/TR/WCAG20/#navigation-mechanisms-focus-visible">2.4.7 Focus Visible</a>. It is recommended the faint, dotted outline afforded by some user agents is replaced with an inset box-shadow.</p>
 <pre><code class="hljs language-css"><span class="hljs-selector-class">.tab-interface</span> <span class="hljs-selector-attr">[role="tab"]</span><span class="hljs-selector-pseudo">:focus</span> {
   <span class="hljs-attribute">outline</span>: none;
@@ -351,17 +335,26 @@ tab.setAttribute(<span class="hljs-string">'id'</span>, <span class="hljs-string
 <h2 id="demonstration">Demonstration</h2>
 <p>A <a href="assets/demo1.html">working demonstration</a> of the discussed implementation is available for you to explore.</p>
 <p>Note the initialization which accepts two arguments:</p>
-<ul>
-  <li>The node you wish to transform into a tab interface</li>
-  <li>The (minimum) breakpoint at which the tab interface structure should be adopted</li>
-</ul>
+<ol>
+  <li>The node you wish to transform into a tab interface (<em>DOM node</em>)</li>
+  <li>
+    <p>An options object:</p>
+    <ul>
+      <li><code>breakPoint</code>: the viewport width at which the script runs to enhance the content into tabs (string; default is <code>400px</code>)</li>
+      <li><code>trackHash</code>: whether or not to treat tab panels as page fragments and support the back button (Boolean; default is <code>true</code>)</li>
+      <li><code>tabsFocusable</code>: whether the tabs should be in focus order. Placing them in focus order in nonstandard but may aid usability for some audiences (Boolean; default is <code>false</code>)</li>
+    </ul>
+  </li>
+</ol>
 <pre><code class="hljs language-js"><span class="hljs-keyword">var</span> tabsElem = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'.tabs'</span>);
-<span class="hljs-keyword">var</span> tabInterface = <span class="hljs-keyword">new</span> Tabbed(tabsElem, <span class="hljs-string">'400px'</span>);
+<span class="hljs-keyword">var</span> tabInterface = <span class="hljs-keyword">new</span> Tabbed(tabsElem, {
+  <span class="hljs-attr">breakPoint</span>: <span class="hljs-string">'600px'</span>;
+});
 </code></pre>
 <p>To initialize multiple tab interfaces you can do something like this:</p>
 <pre><code class="hljs language-js"><span class="hljs-keyword">var</span> tabsElems = <span class="hljs-built_in">document</span>.querySelectorAll(<span class="hljs-string">'.tabs'</span>);
 <span class="hljs-built_in">Array</span>.prototype.forEach.call(tabsElems, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">tabsElem</span>) </span>{
-  <span class="hljs-keyword">var</span> tabInterface = <span class="hljs-keyword">new</span> Tabbed(tabsElem, <span class="hljs-string">'400px'</span>);
+  <span class="hljs-keyword">var</span> tabInterface = <span class="hljs-keyword">new</span> Tabbed(tabsElem);
 });
 </code></pre>
 <h2 id="variants-and-caveats">Variants and caveats</h2>
@@ -369,7 +362,7 @@ tab.setAttribute(<span class="hljs-string">'id'</span>, <span class="hljs-string
   <li>Inside a form interface, a set of radio buttons would be more appropriate than a tablist for choosing between panels of input options. Generally, only form elements are expected by users inside forms.</li>
   <li>Where there are only two tabs to choose from, allowing both tabs to be focusable by the user may be preferable since it is a more common interaction behavior and there is less need to give a 'bypass' ability to reduce tab stops.</li>
   <li>Do not use tab interfaces for your site's page navigation and, accordingly, do not make your site's page navigation <em>look</em> like a set of tabs. ARIA tab interfaces are for choosing content <em>within</em> a page. The focus behavior is — for one thing — quite different for loading whole pages.</li>
-  <li>Testing may reveal that the arrow navigation paradigm is not obvious to some users. It may be beneficial to provide a hint in the form of a description, or the reveal of arrow icons as the selected tab is focused.</li>
+  <li>Testing may reveal that the arrow navigation paradigm is not obvious to some users. It may be beneficial to provide a hint in the form of a description, or to make the tabs focusable. This is possible by setting <code>tabsFocusable</code> to <code>true</code> in the demonstration's options object argument.</li>
 </ul>
 
 

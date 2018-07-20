@@ -51,7 +51,7 @@
         outline: none;
       }
 
-      .tab-interface [role="tablist"] [aria-selected] {
+      .tab-interface [role="tablist"] [aria-selected="true"] {
         background: #ccc;
       }
 
@@ -69,10 +69,21 @@
   </head>
   <body>
     <h1>Tabs demonstration</h1>
-    <p><a href="#section1">Link to first section/panel</a></p>
-    <p><a href="#section-2-subsection">Link to subsection inside panel</a></p>
-    <!-- demo HTML -->
-    <div class="tabs">
+    <h2>Standard tabs demo</h2>
+    <p>Default settings with support for document fragment tracking and only arrow key navigation between tabs.</p>
+    <!-- standard demo HTML -->
+    <ul>
+      <li>
+        <a href="#section1">Link to first section/panel</a>
+      </li>
+      <li>
+        <a href="#section-2-subsection">Link to a subsection inside panel 2</a>
+      </li>
+      <li>
+        <a href="#blabla">Link to a non-existant document fragment</a>
+      </li>
+    </ul>
+    <div class="tabs-standard">
       <ul>
         <li>
           <a href="#section1">Section 1</a>
@@ -85,173 +96,73 @@
         </li>
       </ul>
       <section id="section1">
-        <h2>Section 1</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In porttitor mi eu enim tristique dapibus. Fusce nibh mauris, rhoncus dictum libero sit amet, malesuada porta eros. Proin interdum leo nec turpis vehicula, nec interdum ipsum dictum. Praesent molestie mattis ex, non cursus massa venenatis et. In et tortor diam. Aenean ut felis mattis, lacinia eros ac, venenatis elit. Phasellus dolor magna, sollicitudin in urna elementum, mollis feugiat elit. Nullam consectetur, nisl sed finibus mattis, sapien nisi ultricies odio, eleifend ullamcorper diam ante a risus. Quisque ac metus varius, pretium metus sed, mollis mi.</p>
+        <h3>Section 1</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In porttitor <a href="#section3">link to section 3</a> mi eu enim tristique dapibus. Fusce nibh mauris, rhoncus dictum libero sit amet, malesuada porta eros. Proin interdum leo nec turpis vehicula, nec interdum ipsum dictum. Praesent molestie mattis ex, non cursus massa venenatis et. In et tortor diam. Aenean ut felis mattis, lacinia eros ac, venenatis elit. Phasellus dolor magna, sollicitudin in urna elementum, mollis feugiat elit. Nullam consectetur, nisl sed finibus mattis, sapien nisi ultricies odio, eleifend ullamcorper diam ante a risus. Quisque ac metus varius, pretium metus sed, mollis mi.</p>
       </section>
       <section id="section2">
-        <h2>Section 2</h2>
-        <p>Aliquam erat volutpat. Pellentesque efficitur quam eget arcu scelerisque, id rutrum velit accumsan. Phasellus posuere lacus eu sagittis viverra. Aliquam nec sapien nec lectus sagittis luctus vel luctus magna. Nullam aliquam justo at justo dictum tempus. Suspendisse tempor ligula ligula, a convallis turpis pharetra eget. Fusce in ante urna. In volutpat euismod felis, vel scelerisque enim pellentesque sit amet. Phasellus elit neque, iaculis quis sollicitudin eget, tincidunt et lorem.</p>
-        <h3 id="section-2-subsection">A subsection in Section 2</h3>
-        <p>Etc.</p>
+        <h3>Section 2</h3>
+        <p>Aliquam erat volutpat. Pellentesque efficitur quam <a href="#section3">link to section 3</a>, id rutrum velit accumsan. Phasellus posuere lacus eu sagittis viverra. Aliquam nec sapien nec lectus sagittis luctus vel luctus magna. Nullam aliquam justo at justo dictum tempus. Suspendisse tempor ligula ligula, a convallis turpis pharetra eget. Fusce in ante urna. In volutpat euismod felis, vel scelerisque enim pellentesque sit amet. Phasellus elit neque, iaculis quis sollicitudin eget, tincidunt et lorem.</p>
+        <h3 id="section-2-subsection" tabindex="-1">A subsection in Section 2</h3>
+        <p><a href="#section3">link to section 3</a></p>
       </section>
       <section id="section3">
-        <h2>Section 3</h2>
-        <p>Sed rutrum ultricies ullamcorper. Aliquam et malesuada felis, sed semper orci. Aliquam erat volutpat. Pellentesque efficitur quam eget arcu scelerisque, id rutrum velit accumsan. Phasellus posuere lacus eu sagittis viverra. Aliquam nec sapien nec lectus sagittis luctus vel luctus magna. Nullam aliquam justo at justo dictum tempus. Suspendisse tempor ligula ligula, a convallis turpis pharetra eget. Fusce in ante urna. In volutpat euismod felis, vel scelerisque enim pellentesque sit amet. Phasellus elit neque, iaculis quis sollicitudin eget, tincidunt et lorem.</p>
+        <h3>Section 3</h3>
+        <p>Sed rutrum ultricies ullamcorper. Aliquam <a href="#section1">link to section 1</a>, sed semper orci. Aliquam erat volutpat. Pellentesque efficitur quam eget arcu scelerisque, id rutrum velit accumsan. Phasellus posuere lacus eu sagittis viverra. Aliquam nec sapien nec lectus sagittis luctus vel luctus magna. Nullam aliquam justo at justo dictum tempus. Suspendisse tempor ligula ligula, a convallis turpis pharetra eget. Fusce in ante urna. In volutpat euismod felis, vel scelerisque enim pellentesque sit amet. Phasellus elit neque, iaculis quis sollicitudin eget, tincidunt et lorem.</p>
       </section>
     </div>
-    <!-- end demo HTML -->
+    <!-- standard demo HTML -->
+    <h2>Focusable tabs demo</h2>
+    <p>Alternate version, where tabs are focusable using the <kbd>Tab</kbd> key.</p>
+    <!-- focusable tabs demo HTML -->
+    <ul>
+      <li>
+        <a href="#section4">Link to first section</a>
+      </li>
+      <li>
+        <a href="#section-5-subsection">Link to a subsection inside section 5</a>
+      </li>
+      <li>
+        <a href="#blabla">Link to a non-existant document fragment</a>
+      </li>
+    </ul>
+    <div class="tabs-focusable-tabs">
+      <ul>
+        <li>
+          <a href="#section4">Section 4</a>
+        </li>
+        <li>
+          <a href="#section5">Section 5</a>
+        </li>
+        <li>
+          <a href="#section6">Section 6</a>
+        </li>
+      </ul>
+      <section id="section4">
+        <h3>Section 1</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In porttitor <a href="#section6">link to section 3</a> mi eu enim tristique dapibus. Fusce nibh mauris, rhoncus dictum libero sit amet, malesuada porta eros. Proin interdum leo nec turpis vehicula, nec interdum ipsum dictum. Praesent molestie mattis ex, non cursus massa venenatis et. In et tortor diam. Aenean ut felis mattis, lacinia eros ac, venenatis elit. Phasellus dolor magna, sollicitudin in urna elementum, mollis feugiat elit. Nullam consectetur, nisl sed finibus mattis, sapien nisi ultricies odio, eleifend ullamcorper diam ante a risus. Quisque ac metus varius, pretium metus sed, mollis mi.</p>
+      </section>
+      <section id="section5">
+        <h3>Section 2</h3>
+        <p>Aliquam erat volutpat. Pellentesque efficitur quam <a href="#section6">link to section 6</a>, id rutrum velit accumsan. Phasellus posuere lacus eu sagittis viverra. Aliquam nec sapien nec lectus sagittis luctus vel luctus magna. Nullam aliquam justo at justo dictum tempus. Suspendisse tempor ligula ligula, a convallis turpis pharetra eget. Fusce in ante urna. In volutpat euismod felis, vel scelerisque enim pellentesque sit amet. Phasellus elit neque, iaculis quis sollicitudin eget, tincidunt et lorem.</p>
+        <h3 id="section-5-subsection" tabindex="-1">A subsection in Section 5</h3>
+        <p><a href="#section6">link to panel 6</a></p>
+      </section>
+      <section id="section6">
+        <h3>Section 3</h3>
+        <p>Sed rutrum ultricies ullamcorper. Aliquam <a href="#section4">link to section 4</a>, sed semper orci. Aliquam erat volutpat. Pellentesque efficitur quam eget arcu scelerisque, id rutrum velit accumsan. Phasellus posuere lacus eu sagittis viverra. Aliquam nec sapien nec lectus sagittis luctus vel luctus magna. Nullam aliquam justo at justo dictum tempus. Suspendisse tempor ligula ligula, a convallis turpis pharetra eget. Fusce in ante urna. In volutpat euismod felis, vel scelerisque enim pellentesque sit amet. Phasellus elit neque, iaculis quis sollicitudin eget, tincidunt et lorem.</p>
+      </section>
+    </div>
+    <!-- focusable tabs demo HTML -->
+    <script src="Tabbed.js"></script>
     <script>
-      // The tabs constructor
-      function Tabbed(elem, breakpoint) {
-        // Give the outer elem a class for styling
-        elem.classList.add('tab-interface');
+      // Initialize standard tabs (defaults)
+      var standard = document.querySelector('.tabs-standard');
+      var tabsStandard = new Tabbed(standard);
 
-        // Test for matchMedia support
-        if (typeof window.matchMedia !== "undefined") {
-          // Check to see we are above the breakpoint threshold
-          if (window.matchMedia('(min-width: '+breakpoint+')').matches) {
-            // Get key elements
-            var tablist = elem.querySelector('ul');
-            var tabs = tablist.querySelectorAll('a');
-            var panels = elem.querySelectorAll('ul:first-child ~ section');
-
-            // Set random id string to avoid duplicate ids
-            var ident = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
-
-            // Convert nodes into id arrays for convenience
-            var tabIDs = Array.prototype.map.call(tabs, function (tab) {
-              return '#' + tab.id;
-            });
-            var panelIDs = Array.prototype.map.call(panels, function (panel) {
-              return '#' + panel.id;
-            });
-
-            // Set up ARIA semantics
-            tablist.setAttribute('role', 'tablist');
-            Array.prototype.forEach.call(tabs, function (tab, i) {
-              tab.setAttribute('role', 'tab');
-              tab.setAttribute('tabindex', '-1');
-              tab.setAttribute('id', 'tab-' + ident + '-' + (i + 1));
-              tab.parentElement.setAttribute('role', 'presentation');
-            });
-            Array.prototype.forEach.call(panels, function (panel, i) {
-              panel.setAttribute('role', 'tabpanel');
-              panel.setAttribute('aria-labelledby', tabs[i].id);
-              panel.setAttribute('tabindex', '-1');
-              panel.hidden = true;
-            });
-
-            // The tab switching function
-            var switchTab = function (newTab, updateHash) {
-              // Handle old tab
-              var oldTab = tablist.querySelector('[aria-selected]');
-              if (oldTab) {
-                oldTab.setAttribute('tabindex', '-1');
-                oldTab.removeAttribute('aria-selected');
-              }
-
-              // Handle new tab
-              newTab.setAttribute('aria-selected', 'true');
-              newTab.removeAttribute('tabindex');
-
-              // Show/hide the relevant panels
-              if (oldTab) {
-                var oldIndex = Array.prototype.indexOf.call(tabs, oldTab);
-                panels[oldIndex].hidden = true;
-              }
-              var index = Array.prototype.indexOf.call(tabs, newTab);
-              panels[index].hidden = false;
-
-              // Update hash unless no matching hash
-              if (updateHash) {
-                history.pushState(null, null, '#' + panels[index].id);
-                document.querySelector(window.location.hash).focus();
-              }
-            };
-
-            // Set up mouse and keyboard events
-            Array.prototype.forEach.call(tabs, function (tab) {
-              // Mouse interaction
-              tab.addEventListener('click', function (e) {
-                e.preventDefault();
-                var currentTab = tablist.querySelector('[aria-selected]');
-                if (e.currentTarget !== currentTab) {
-                  switchTab(e.currentTarget, true);
-                }
-              });
-
-              // Keyboard interaction
-              tab.addEventListener('keydown', function (e) {
-                // Get index of focused tab
-                var index = Array.prototype.indexOf.call(tabs, e.currentTarget);
-
-                // Determine key pressed
-                var dir = e.which === 37 ? index - 1 : e.which === 39 ? index + 1 : null;
-
-                // Switch to the new tab if it exists
-                if (dir !== null) {
-                  e.preventDefault();
-
-                  // Find correct tab to focus
-                  var tabToFocus;
-                  if (tabs[dir]) {
-                    tabToFocus = tabs[dir];
-                  } else {
-                    // Loop around if adjacent tab doesn't exist
-                    tabToFocus = dir === index - 1 ? tabs[tabs.length - 1] : tabs[0];
-                  }
-                  switchTab(tabToFocus, true);
-                  tabToFocus.focus();
-                }
-              });
-            });
-
-            function panelWithHash (hash) {
-              var index = -1;
-              if (hash) {
-                panelIDs.forEach(function (id) {
-                  if (document.querySelector(id) && document.querySelector(id).contains(document.querySelector(hash))) {
-                    index = panelIDs.indexOf(id);
-                  }
-                });
-              }
-              return index;
-            }
-
-            // Support back button
-            window.addEventListener('hashchange', function (e) {
-              // Get the index of the panel id (or `-1` if it doesn't exist)
-              var indexOfHash = panelWithHash(window.location.hash);
-              // Is there a tab to activate?
-              var newTab = indexOfHash > -1 ? tabs[indexOfHash] : false;
-
-              if (newTab) {
-                switchTab(newTab, false);
-                // Focus the new panel, so it behaves similar to a document fragment
-                panels[indexOfHash].focus();
-              }
-            });
-
-            // Initial tab selection based on hash
-            window.addEventListener('DOMContentLoaded', function () {
-              // Get the index of the panel id (or `-1` if it doesn't exist)
-              var indexOfHash = panelWithHash(window.location.hash);
-              // Is there a tab to activate?
-              var newTab = indexOfHash > -1 ? tabs[indexOfHash] : tabs[0];
-              switchTab(newTab, indexOfHash > -1);
-
-              if (indexOfHash > -1) {
-                panels[indexOfHash].focus();
-              }
-            });
-          }
-        }
-      }
-
-      // Initialize
-      var tabsElems = document.querySelectorAll('.tabs');
-      Array.prototype.forEach.call(tabsElems, function (tabsElem) {
-        var tabInterface = new Tabbed(tabsElem, '400px');
+      // Initialize focusable tabs (defaults)
+      var focusableTabs = document.querySelector('.tabs-focusable-tabs');
+      var tabsStandard = new Tabbed(focusableTabs, {
+        tabsFocusable: true
       });
     </script>
   </body>

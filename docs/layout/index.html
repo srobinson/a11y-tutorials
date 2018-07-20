@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+	<meta charset="utf-8" />
+	<title>Tutorial: Accessible grid | BBC Accessibility Tutorials</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+    <script src="../static/vendor/fontfaceobserver/font-face-observer.js"></script>
+    <script>
+        (function() {
+            (new FontFaceObserver('ReithSans')).load().then(function () {
+                document.body.className += ' b-reith-sans-font';
+            });
+            (new FontFaceObserver('ReithSerif')).load().then(function () {
+                document.body.className += ' b-reith-serif-font';
+            });
+        })();
+    </script>
+	
+	<link rel="stylesheet" href="../static/vendor/highlight/styles/github.css">
+    <link rel="stylesheet" href="../static/css/main.css?ver-1532096215" />
+</head>
+<body>
+
+<header role="banner" class="header">
+    <div class="a11y-tuts__banner a11y-tuts__headerbanner">
+        <div class="gel-wrap gs-u-clearfix">
+            <div class="a11y-tuts-header__brand">
+                <a class="a11y-tuts-header__brand-logo" href="http://www.bbc.co.uk/">
+                    <svg aria-label="BBC GEL Logo" width="100" height="24">
+                        <title>BBC</title>
+                        <image xlink:href="../static/images/bbc-blocks_grey.svg" src="../static/images/bbc-blocks_grey.png" width="100%" height="100%"></image>
+                    </svg>
+                </a>
+                <!--a class="button a11y-tuts__button" href="http://www.bbc.co.uk/gel">Go to BBC GEL</a-->
+            </div>
+        </div>
+    </div>
+    <div class="a11y-tuts__banner">
+        <div class="gel-wrap gs-u-clearfix">
+            <h1 class="a11y-tuts__sitetitle"><a href="../index.html">Accessibility Tutorials</a></h1>
+        </div>
+    </div>
+</header>
+
+<article class="gel-wrap gs-u-clearfix">
+    <div class="gel-layout">
+        
+        <div class="gel-layout__item gel-1/5@l gel-side-nav">
+            <h2 class="gel-pica gs-u-mb gs-u-mt0">Content</h2>
+            <nav role="navigation" id="side-nav">
+                <ol>
+                    
+                    
+                        <li class="heading-1"><a href="#accessible-grid" class="gel-side-nav__link">Accessible grid</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#semantic-html" class="gel-side-nav__link">Semantic HTML</a></li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#order" class="gel-side-nav__link">Order</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#rtl-languages" class="gel-side-nav__link">RTL languages</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#tables" class="gel-side-nav__link">Tables</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#magnification" class="gel-side-nav__link">Magnification</a></li>
+                    
+                    
+                </ol>
+            </nav>
+        </div>
+        
+    
+        <div class="a11y-tut-content gel-layout__item gel-4/5@l">      
+            
+
+<h1 id="accessible-grid">Accessible grid</h1>
+<h2 id="semantic-html">Semantic HTML</h2>
+<p>Necessarily, a grid is composed of individual grid <em>items</em> that together form a set, or group. Sometimes the items should be perceived as related, and in other cases they are only grouped together in order to achieve a visual layout.</p>
+<p>A sighted user is typically afforded visual cues that two or more adjacent grid items belong to a set, such as a disparity in style and layout. A blind user instead has to rely on the semantics, or lack thereof, communicated by their screen reader software.</p>
+<p>Should grid items represent arbitrary containers, solely used to place items in a grid formation, the <code>&#x3C;div></code> element can be used.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout"</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout__item gel-1/2"</span>></span>One item<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout__item gel-1/2"</span>></span>Another unrelated item to the right<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+</code></pre>
+<p>The <code>&#x3C;div></code> element is not represented in the <a href="https://developer.paciellogroup.com/blog/2015/01/the-browser-accessibility-tree/">browser accessibility tree</a> and therefore presents the user with no undue or unexpected semantic information. Only the contents of the items, where semantic HTML is provided, will be interpreted.</p>
+<p>In some cases, the items will have independent semantics to express. In which case, use the appropriate semantic elements for the grid items. In the following example, a tangentially related <code>&#x3C;main></code> and <code>&#x3C;aside></code> form a wider content column and a narrower sidebar.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout"</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">main</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout__item gel-2/3"</span>></span>Content<span class="hljs-tag">&#x3C;/<span class="hljs-name">main</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">aside</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout__item gel-1/3"</span>></span>Sidebar<span class="hljs-tag">&#x3C;/<span class="hljs-name">aside</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+</code></pre>
+<h3 id="grids-as-lists">Grids as lists</h3>
+<p>If items belong thematically to a set, the standard is to mark them up as a list. Doing so fulfills <a href="https://www.w3.org/TR/WCAG20/#content-structure-separation">WCAG 1.3.1 Info and Relationships</a>.</p>
+<p>Lists are identified by assistive technologies, and their items are enumerated. Many screen readers also provide shortcuts to traverse list items, such as <a href="https://webaim.org/resources/shortcuts/nvda">the <kbd>i</kbd> key in NVDA</a>.</p>
+<p>A grid of scheduled programmes can be considered a thematic set, because each item is of the class "programme".</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout"</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout__item gel-1/4"</span>></span>Doctor Who<span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout__item gel-1/4"</span>></span>Miranda<span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout__item gel-1/4"</span>></span>Holby City<span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout__item gel-1/4"</span>></span>Springwatch<span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">ul</span>></span>
+</code></pre>
+<p>Lists that contain children that are not list items are invalid, and liable to cause inconsistent output in browsers. Such parsing issues are considered a failure under <a href="https://www.w3.org/TR/WCAG20/#ensure-compat">WCAG 4.1.1 Parsing</a>.</p>
+<p>The correct way to incorporate row wrappers into a list is, therefore, to use WAI-ARIA:</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"list"</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"presentation"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"listitem"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout__item gel-1/4"</span>></span>Doctor Who<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"listitem"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout__item gel-1/4"</span>></span>Miranda<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"listitem"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout__item gel-1/4"</span>></span>Holby City<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"listitem"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout__item gel-1/4"</span>></span>Springwatch<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"presentation"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"listitem"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout__item gel-1/4"</span>></span>Dragon's Den<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"listitem"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout__item gel-1/4"</span>></span>Blue Peter<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"listitem"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout__item gel-1/4"</span>></span>Daily Politics<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"listitem"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout__item gel-1/4"</span>></span>Robot Wars<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+</code></pre>
+<p>In the example, the grid is defined using <code>role="list"</code>. Children are explicitly removed from the accessibility tree using <code>role="presentation"</code>, and items are marked with <code>role="listitem"</code>. The outcome is that assistive technologies correctly report one list encapsulating eight list items.</p>
+<h3 id="headings">Headings</h3>
+<p>Headings, together with lists, create a perceivable structure non-visually, and provide navigational cues. A page should make liberal but appropriate use of headings, whether the layout is divided into a grid or exists as a single column of text.</p>
+<p>It's quite legitimate to place headings within list items, and beneficial where they represent grid items that contain a lot of structured content. But be aware that a list represents a <em>flat</em> hierarchical structure, so each heading should be of the same level, to reflect this. This level is determined by the level of the heading that introduces the list itself.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span>></span>Upcoming programmes<span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout"</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout__item gel-1/4"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">h3</span>></span>Doctor Who<span class="hljs-tag">&#x3C;/<span class="hljs-name">h3</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>[description]<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout__item gel-1/4"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">h3</span>></span>Miranda<span class="hljs-tag">&#x3C;/<span class="hljs-name">h3</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>[description]<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout__item gel-1/4"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">h3</span>></span>Holby City<span class="hljs-tag">&#x3C;/<span class="hljs-name">h3</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>[description]<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">ul</span>></span>
+</code></pre>
+<p>The nesting structure for the above example creates the following outline, with "Upcoming programmes" labelling a list of programme subsections.</p>
+<ul>
+  <li>
+    <p>Upcoming programmes</p>
+    <ul>
+      <li>Doctor Who</li>
+      <li>Miranda</li>
+      <li>Holby City</li>
+    </ul>
+  </li>
+</ul>
+<h2 id="order">Order</h2>
+<p>Since the <a href="https://github.com/bbc/gel-grid">GEL grid system</a> uses Flexbox, it is possible to affect the layout order of the grid items using the <code>order</code> property.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">style</span>></span><span class="css">
+<span class="hljs-selector-class">.promote</span> {
+    <span class="hljs-attribute">order</span>: <span class="hljs-number">1</span>;
+}
+</span><span class="hljs-tag">&#x3C;/<span class="hljs-name">style</span>></span>
+
+<span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout"</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout__item gel-1/3"</span>></span>First item<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout__item gel-1/3"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"promote"</span>></span>Second<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gel-layout__item gel-1/3"</span>></span>Third<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+</code></pre>
+<p>In this example, the <code>class="promote"</code> item is "promoted" from the second position to the first. This creates problems for blind, partially sighted, and keyboard users.</p>
+<ul>
+  <li>
+    <p><strong>Blind users:</strong> The markup consumed by the user's screen reader remains in the original order, meaning there is a disparity between their and a sighted user's experience</p>
+  </li>
+  <li>
+    <p><strong>Partially sighted users:</strong> If the user is running a screen reader, there is a disparity between the visual order they can partially perceive, and the order that content is announced by the screen reader. This can cause a failure under <a href="https://www.w3.org/TR/WCAG20/#content-structure-separation-sequence">WCAG 1.3.2 Meaningful Sequence</a></p>
+  </li>
+  <li>
+    <p><strong>Keyboard users:</strong> Any interactive/focusable elements will receive focus in an order that contradicts the order in which they appear. This is a failure according to <a href="https://www.w3.org/TR/WCAG20/#navigation-mechanisms-focus-order">WCAG 2.4.3 Focus Order</a>.</p>
+  </li>
+</ul>
+<p>For these reasons, in most cases a different visual order should be achieved by editing the source order — not by employing the <code>order</code> property.</p>
+<h2 id="rtl-languages">RTL languages</h2>
+<p>Flexbox intrinsically supports <code>direction</code> by reversing the order of grid items where <code>dir="ltr"</code> is switched to <code>dir="rtl"</code>, or the CSS property <code>direction</code> is switched between <code>ltr</code> and <code>rtl</code>.</p>
+<p>Since switching to a RTL <code>lang</code> does not automatically change the direction, you will have to explicitly reverse your grid's order in your CSS. In the following example, <code>my-grid</code> switches the direction of its items in a page set to Arabic.</p>
+<pre><code class="hljs language-css"><span class="hljs-selector-pseudo">:lang(ar)</span> <span class="hljs-selector-class">.my-grid</span> {
+    <span class="hljs-attribute">direction</span>: rtl;
+}
+</code></pre>
+<p>Depending on the content of the grid items, and their relationship to one another, it may not be necessary or suitable to switch the direction of the grid, even in a RTL language context.</p>
+<h2 id="tables">Tables</h2>
+<p>Data tables are read from top to bottom and left to right, with headers along the top and (sometimes) down the lefthand side. It is imperative the visual structure matches the semantic structure in all viewports: table elements must not be allowed to wrap and find themselves falling under different headers.</p>
+<p>The <a href="https://github.com/bbc/gel-grid">GEL grid system</a> is not applicable to data tables, which should be marked up using <code>&#x3C;table></code>, <code>&#x3C;th></code> (table header) and <code>&#x3C;td></code> elements, eliciting the basic, desired layout via user agent styling.</p>
+<p>Since wrapping is not permissible, creating a responsive table is a matter of letting the user scroll the table horizontally. To enable this accessibly, you need to:</p>
+<ol>
+  <li>Wrap the table in an element with <code>overflow-x: auto</code></li>
+  <li>Make this element focusable with <code>tabindex="0"</code>, so it can be scrolled using the keyboard</li>
+  <li>Label this focusable element for screen reader users, preferably using a table caption</li>
+</ol>
+<p><a href="https://inclusive-components.design/data-tables/">Inclusive components: Data tables</a> has an example. Note the <code>group</code> role, which elicits the the announcement of the role along with the element's associated label.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"table-container"</span> <span class="hljs-attr">tabindex</span>=<span class="hljs-string">"0"</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"group"</span> <span class="hljs-attr">aria-labelledby</span>=<span class="hljs-string">"caption"</span>></span>  
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">table</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">caption</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"caption"</span>></span>Grindcore bands<span class="hljs-tag">&#x3C;/<span class="hljs-name">caption</span>></span>
+    <span class="hljs-comment">&#x3C;!-- table content --></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">table</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+</code></pre>
+<h2 id="magnification">Magnification</h2>
+<p>Some users will magnify their web pages using add-on software, like <a href="https://www.zoomtext.com/products/zoomtext-magnifierreader/">ZoomText</a>. Others will use 'full-page zoom', as initiated by pressing <kbd>Cmd</kbd> (or <kbd>Ctrl</kbd>) and <kbd>+</kbd>.</p>
+<p>Full-page zoom triggers breakpoints in the same way that physically narrowing or widening the viewport does, meaning responsive interfaces support magnification, and the visually impaired. You just need to ensure that content <em>within</em> grid items is responsive too. That means:</p>
+<ul>
+  <li>Avoiding fixed widths, set with <code>width</code>, so that grid content does not overflow</li>
+  <li>Avoiding fixed heights, set with <code>height</code>, that would cause wrapped content to overlap</li>
+  <li>Avoiding <code>white-space: nowrap</code>, which prevents text from wrapping</li>
+</ul>
+
+
+        </div>
+    </div>
+</article>
+
+
+<div class="a11y-tuts__footerbanner">
+    <div class="gel-wrap">
+        <div class="gel-layout">
+            <div class="a11y-tuts__icon gel-layout__item gel-2/12@l gel-1/5@xl">
+                <image class="gel-icon gel-icon--large" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../static/images/gel-icon-help.svg" src="../static/images/gel-icon-help.svg" width="100%" height="100%" alt=""></image>
+            </div>
+            <div class="gel-layout__item gel-2/3@l gel-3/5@xl">
+                <h2 class="gel-contribution-banner__title">Could you improve this tutorial?</h2>
+                <p class="gel-contribution-banner-copy gel-great-primer">If you think you could make anything you see here a bit better then become one of <a href="../contributors/">our lovely contributors</a>!</p>
+            </div>
+            <div class="gel-layout__item gel-3/3@l gel-5/5@xl">
+            <p>
+            <small>
+                Copyright &copy; 2018 BBC. The BBC is not responsible for the content of external sites.<br>
+                <a href="http://www.bbc.co.uk/help/web/links/">Read about the BBC's approach to external linking.</a>
+            </small>
+            </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../static/vendor/highlight/highlight.pack.js"></script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Cards demo</title>
+    <style>
+      /* Just styles for the document */
+      html { font-family: sans-serif; line-height: 1.5; background-color: #f3f3ee } * { box-sizing: border-box; margin: 0; padding: 0; } body { max-width: 65rem; margin: 0 auto; padding: 2rem; } body > * { margin-top: 1.5rem } .demo-container { display: flex; justify-content: center; } body > h1, body > h2 { text-align: center }
+    </style>
+    <link rel="stylesheet" href="card.css">
+  </head>
+  <body>
+    <h1>Card demonstrations</h1>
+    <h2>Single card</h2>
+    <div class="demo-container">
+      <!-- start single card demo -->
+      <div class="card1">
+        <div class="card-interface-img">
+          <img src="images/1.jpeg" alt="">
+        </div>
+        <div class="card-interface-text">
+          <h2 class="card-interface-title"><a href="[url]">Title Of Card</a></h2>
+          <p>Description of the card </p>
+          <small>Attribution</small>
+        </div>
+        <ul class="card-interface-toolbar">
+          <li><button>Love</button></li>
+          <li><button>Add</button></li>
+          <li><button>Share</button></li>
+        </ul>
+      </div>
+    </div>
+    <!-- end single card demo -->
+    <h2 id="cards-as-a-list">Cards as a list</h2>
+    <!-- start cards as list demo -->
+    <ul class="card-interface-group">
+      <li>
+        <div class="card-interface-img">
+          <img src="images/2.jpeg" alt="">
+        </div>
+        <div class="card-interface-text">
+          <h2 class="card-interface-title"><a href="[url]">Title Of Card</a></h2>
+          <p>Description of the card </p>
+          <small>Attribution</small>
+        </div>
+        <ul class="card-interface-toolbar">
+          <li><button>Love</button></li>
+          <li><button>Add</button></li>
+          <li><button>Share</button></li>
+        </ul>
+      </li>
+      <li>
+        <div class="card-interface-img">
+          <img src="images/3.jpeg" alt="">
+        </div>
+        <div class="card-interface-text">
+          <h2 class="card-interface-title"><a href="[url]">Title Of Second Card</a></h2>
+          <p>Description of the card that is longer than other descriptions in the set of cards.</p>
+          <small>Attribution</small>
+        </div>
+        <ul class="card-interface-toolbar">
+          <li><button>Love</button></li>
+          <li><button>Add</button></li>
+          <li><button>Share</button></li>
+        </ul>
+      </li>
+      <li>
+        <div class="card-interface-img">
+          <img src="images/4.jpeg" alt="">
+        </div>
+        <div class="card-interface-text">
+          <h2 class="card-interface-title"><a href="[url]">The Third Card's Title Is Here</a></h2>
+          <p>Short description of the card</p>
+          <small>Attribution</small>
+        </div>
+        <ul class="card-interface-toolbar">
+          <li><button>Love</button></li>
+          <li><button>Add</button></li>
+          <li><button>Share</button></li>
+        </ul>
+      </li>
+    </ul>
+    <!-- end cards as list demo -->
+    <script src="Card.js"></script>
+    <script>
+      // Initialize demo 1
+      var cardElem1 = document.querySelector('.card1');
+      var card = new Card(cardElem1);
+
+      // Initialize demo 2
+      var cards = document.querySelectorAll('.card-interface-group > li');
+      Array.prototype.forEach.call(cards, function(card) {
+        var card = new Card(card);
+      });
+    </script>
+  </body>
+</html>
