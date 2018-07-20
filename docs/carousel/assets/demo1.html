@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Carousel demo</title>
+    <style>
+      /* Just styles for the document */
+      html { font-family: sans-serif; line-height: 1.5; background-color: #f3f3ee } * { box-sizing: border-box; } body { max-width: 60rem; margin: 3rem auto; padding: 2rem; }
+    </style>
+    <link rel="stylesheet" href="../../card/assets/card.css">
+    <style>
+      .carousel-interface {
+        position: relative;
+      }
+
+      .carousel-interface-scrollable {
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+        scroll-snap-type: mandatory;
+      }
+
+      .carousel-interface-scrollable:focus {
+        outline: 0.125rem solid;
+        outline-offset: 0.125rem;
+      }
+
+      .carousel-interface-scrollable::-webkit-scrollbar {
+        height: 0.5rem;
+      }
+
+      .carousel-interface-scrollable::-webkit-scrollbar-track {
+        background-color: #ccc;
+      }
+
+      .carousel-interface-scrollable::-webkit-scrollbar-thumb {
+        background-color: #404040;
+      }
+
+      .carousel-interface-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+      }
+
+      .carousel-interface-list > * {
+        flex-shrink: 0;
+      }
+
+      .carousel-interface-buttons {
+        position: absolute;
+        right: 0;
+        top: 3rem;
+        z-index: 1;
+      }
+
+      .carousel-interface-buttons button {
+        border-radius: none;
+        border: none;
+        padding: 0.25rem;
+        background: #404040;
+        color: #dcdcdc;
+      }
+
+      .carousel-interface-buttons button:focus {
+        outline: none;
+        box-shadow: inset 0 0 0 0.125rem #fff;
+      }
+
+      .carousel-interface-buttons button svg {
+        width: 2rem;
+        height: auto;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+      }
+
+      .carousel-interface-buttons button[disabled] {
+        opacity: 0.5;
+      }
+
+      .carousel-interface-buttons button + button {
+        margin-left: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Carousel demonstration</h1>
+    <!-- start demo HTML -->
+    <div class="carousel">
+      <ul>
+        <li>
+          <div class="card-interface-img">
+            <img src="images/1.jpeg" alt="">
+          </div>
+          <div class="card-interface-text">
+            <h2 class="card-interface-title"><a href="[url]">Title Of Card</a></h2>
+            <p>Description of the card</p>
+            <small>Attribution</small>
+          </div>
+          <ul class="card-interface-toolbar">
+            <li><button>Love</button></li>
+            <li><button>Add</button></li>
+            <li><button>Share</button></li>
+          </ul>
+        </li>
+        <li>
+          <div class="card-interface-img">
+            <img src="images/2.jpeg" alt="">
+          </div>
+          <div class="card-interface-text">
+            <h2 class="card-interface-title"><a href="[url]">Title Of Second Card</a></h2>
+            <p>Description of the card that is longer than other descriptions in the set of cards.</p>
+            <small>Attribution</small>
+          </div>
+          <ul class="card-interface-toolbar">
+            <li><button>Love</button></li>
+            <li><button>Add</button></li>
+            <li><button>Share</button></li>
+          </ul>
+        </li>
+        <li>
+          <div class="card-interface-img">
+            <img src="images/3.jpeg" alt="">
+          </div>
+          <div class="card-interface-text">
+            <h2 class="card-interface-title"><a href="[url]">The Third Card's Title</a></h2>
+            <p>Short description of the card</p>
+            <small>Attribution</small>
+          </div>
+          <ul class="card-interface-toolbar">
+            <li><button>Love</button></li>
+            <li><button>Add</button></li>
+            <li><button>Share</button></li>
+          </ul>
+        </li>
+        <li>
+          <div class="card-interface-img">
+            <img src="images/4.jpeg" alt="">
+          </div>
+          <div class="card-interface-text">
+            <h2 class="card-interface-title"><a href="[url]">The Fourth Card</a></h2>
+            <p>Long description of the card because that adds variety in terms of vertical space.</p>
+            <small>Attribution</small>
+          </div>
+          <ul class="card-interface-toolbar">
+            <li><button>Love</button></li>
+            <li><button>Add</button></li>
+            <li><button>Share</button></li>
+          </ul>
+        </li>
+        <li>
+          <div class="card-interface-img">
+            <img src="images/5.jpeg" alt="">
+          </div>
+          <div class="card-interface-text">
+            <h2 class="card-interface-title"><a href="[url]">The Fifth Card Is Here</a></h2>
+            <p>Short description here.</p>
+            <small>Attribution</small>
+          </div>
+          <ul class="card-interface-toolbar">
+            <li><button>Love</button></li>
+            <li><button>Add</button></li>
+            <li><button>Share</button></li>
+          </ul>
+        </li>
+        <li>
+          <div class="card-interface-img">
+            <img src="images/6.jpeg" alt="">
+          </div>
+          <div class="card-interface-text">
+            <h2 class="card-interface-title"><a href="[url]">The Sixth Card For You</a></h2>
+            <p>Short description here.</p>
+            <small>Attribution</small>
+          </div>
+          <ul class="card-interface-toolbar">
+            <li><button>Love</button></li>
+            <li><button>Add</button></li>
+            <li><button>Share</button></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <!-- end demo HTML -->
+    <script src="../../card/assets/Card.js"></script>
+    <script src="Carousel.js"></script>
+    <script>
+      // Initialize cards
+      var cards = document.querySelectorAll('.carousel > ul > li');
+      Array.prototype.forEach.call(cards, function(c) {
+        var card = new Card(c);
+      });
+
+      // Initialize carousel
+      var carouselElem = document.querySelector('.carousel');
+      var carousel = new Carousel(carouselElem, {imageHeight: 150});
+    </script>
+  </body>
+</html>

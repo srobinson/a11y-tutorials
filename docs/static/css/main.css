@@ -215,6 +215,17 @@ kbd {
   font-style: italic;
   font-display: swap; }
 
+table {
+  border-collapse: collapse; }
+
+th, td {
+  border: 1px solid #404040;
+  padding: 0.5rem;
+  text-align: left; }
+
+th {
+  font-weight: bold; }
+
 /* autoprefixer: off */
 /**
      * Grid containing element
