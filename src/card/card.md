@@ -229,3 +229,17 @@ In the following example, the `ch` unit is used to cap the measure to approximat
   max-width: 60ch;
 }
 ```
+
+### Alternative text
+
+Should the images for a set of cards be deemed non-decorative and require alternative text, the source order in the above demonstration is not optimal. That is, when a screen reader user is navigating by heading, they will 'step over' the image and will probably miss it or associate it with the previous card or section of the page.
+
+In this scenario, it is recommended the `.card-interface-img` element and the `.card-interface-text` element are switched in the source and FlexBox's `order` property is used to 'promote' the image to the top of the card.
+
+```css
+.card-interface-img {
+  order: 1;
+}
+```
+
+Though deceptive, this has a limited negative effect on users since the image is not interactive. Focus order, therefore, remains intuitive.
