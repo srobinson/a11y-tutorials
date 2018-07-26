@@ -1,162 +1,206 @@
-# Building Accessible Forms: Getting Started
+# Accessible Form Fields
 
-**Attention**: This tutorial is a *work-in-progress draft*. We believe in developing in the open as strongly as we believe you should not reference or link to this document in its current form.
+This guide sets out the accessible implementation of form fields, covering text inputs, radio buttons, checkboxes, and `<select>` elements. For further guidance specific to mobile/native applications, please consult the [BBC Mobile Accessibility Guidelines](http://www.bbc.co.uk/guidelines/futuremedia/accessibility/mobile/forms/labelling-form-controls). For field validation advice, see [Accessible Form Validation](/validation).
 
-In this tutorial we walk through a variety of examples of forms that follow the BBC GEL and BBC Accessibility Guidelines.
+## Native form elements
 
-## Our Old Workhorse, the Form
+The most efficient and robust way to implement accessible form fields is to use the native `<input>`, `<textarea>`, and `<select>` elements. These elements have predefined and expected behaviors, and automatically communicate their roles, values, and states to assistive technologies.
 
-The humble web form has been quietly toiling away on our web pages for nearly as long as there has been a Web. In fact, forms are so common that we might even be forgiven for taking them for granted, but that would be a mistake. The interactive power that forms unlock: to register and respond, to question and query, can make a huge difference to our users. And for users with disabilities, forms can be even more important, opening up services and utilities that would otherwise be inaccessible.
-
-With such a long history, not to mention near-universal browser support, it should be a straightforward job to deliver accessible web forms, but it is surprisingly easy to go off track with forms. Let's look at some ways we can keep forms working for everyone.
-
-## Start With Standards
-
-Most accessibility problems can be avoided from the start by applying a few fundamental rules from HTML standards. First among these is that input controls must be properly labelled.
-
-### Love Your Labels
-
-As a form creator, you obviously want the user to provide you with complete and valid information; labels can go a long way to making that happen.
-
-The HTML `label` element should generally be your starting point when asking the user for input. This one tag will provide a wide array of built-in usability and accessibility features to your form, automatically and for free.
-
-> "All form controls, such as text inputs, check boxes, select lists, or buttons, must each have a unique label." -- [BBC MAG: Labelling form controls](http://www.bbc.co.uk/guidelines/futuremedia/accessibility/mobile/forms/labelling-form-controls)
-
-### A Simple Example
- 
-```
-<label \!for="username"\!>User Name</label>
-<input type="text" \!id="username"\! name="username">
-```
-Fig: Use the `for` attribute to associate a label with its input control.
-
-The [HTML Specification for labels](https://html.spec.whatwg.org/multipage/forms.html#the-label-element) provides us with a list of all the types of elements that can have labels, the so-called "labelable elements". The most common labelable elements are shown below:
-
-* button
-* input (if type is not "hidden")
-* select
-* textarea
-
-### More Label Examples
+It is _possible_ to emulate native form element behavior with WAI-ARIA attribution and JavaScript, but it
+is rarely a good idea. Implementations tend towards complexity, and are necessarily more likely
+to break because they depend on JavaScript in order to function.
 
 ```html
-<label for="rating">Rating (between 1 and 5):</label>
-<input type="range" min="1" max="5" value="3" id="rating" name="rating">
-```
-Fig: You can use labels for a range of input controls, including the `range` control!
+<!-- native -->
+<input type="checkbox">
 
----
+<!-- WAI-ARIA (requiring JavaScript to switch the checked state) -->
+<div role="checkbox" aria-checked="false" tabindex="0"></div>
+```
+
+It is also not possible to access and serialize non-native form elements using methods like `FormData()` because the elements cannot be identified to their parent form. This is because they do not support the `name` attribute.
+
+```js
+var form = document.querySelector("form");
+var data = new FormData(form); // Would be empty
+```
+
+### Input types
+
+Where specialist HTML5 input types are well supported, it is advised they are used in place of the generic (and default) `type="text"`. The `number` `type`, for example, helpfully restricts input to numerals, allows incrementation—typically by providing up and down buttons—and elicits the display of a numerical virtual keyboard.
+
+### Visual design
+
+It's imperative form elements are easily recognizable, so the authored visual design should not stray far from operating system and user agent conventions.
+
+- Radio buttons should be round
+- Checkboxes should be square
+- Select elements should include a downwards pointing arrow
+- Text fields should appear as a bordered box that a user enters text into
+
+Styling some form elements directly is difficult, but you can 'defer' styles from a visually hidden input to a proxy element. Consider the following markup:
+
+```html
+<label>
+  <input type="checkbox" class="visually-hidden">
+  <span class="fake-checkbox">
+    <span class="fake-check" aria-hidden="true">✓</span>
+  </span>
+  <span class="text">The label</span>
+</label>
+```
+
+We can style the `fake-checkbox` element's `:focus` and `:checked` states, like so:
+
+```css
+.fake-check {
+  display: none; /* hide to begin with */
+}
+
+[type="checkbox"]:focus + .fake-checkbox {
+  box-shadow: 0 0 0 0.125rem blue;
+}
+
+[type="checkbox"]:checked + .fake-checkbox .fake-check {
+  display: inline-block;
+}
+```
+
+**Note:** A unicode point (as in the example) can be used, but should be hidden using `aria-hidden="true"` so that the value is not interpreted in screen readers. A custom SVG would be preferable. Do not use a `background-image` because it is liable to be eliminated in high contrast themes.
+
+## Labels
+
+All controls within a web application need labels to identify them. Typically, `<button>`s and links are labeled by their text content. Form elements are conventionally labeled _by association_ to a `<label>` element. This associative relationship is created by making the form element's `id` and the `<label>`'s `for` attribute share the same value. In the following example, the shared value is `dog`.
+
+```html
+<label for="dog">Your dog's name</label>
+<input type="text" id="dog" name="dog">
+```
+
+In this example, a screen reader user would hear _"Your dog's name, text input"_ (or similar) upon focusing the `<input>`. Since screen reader users tend to traverse forms by focus, from field to field, it is only by associating the label to the field directly that they would hear the label text. An unassociated label would simply be 'skipped over'.
+
+**Note:** It is a common misconception that the `name` attribute is used in label calculation. Although it often takes the same value as the `id`, it is only the `id` that associates the label to the input.
+
+### Group labels
+
+Sometimes multiple form elements should be grouped together under a common label. The standard method for creating such a group is with the `<fieldset>` and `<legend>` elements. The `<legend>` must be the first child inside the `<fieldset>`.
 
 ```html
 <fieldset>
-  <legend>Will you be attending?</legend>
-  
-  <input name="attending" type="radio" id="attending_yes" value="yes">
-  <label for="attending_yes">Yes, I plan to attend</label>
-  
-  <input name="attending" type="radio" id="attending_no" value="no">
-  <label for="attending_no">No, I will not attend</label>
+  <legend>Group label</legend>
+  <!-- individually labeled elements -->
 </fieldset>
 ```
-Fig: You can group related input controls, along with their unique labels, together under a shared `legend`.[^mag-formgroup]
 
-### Invisible Labels
-
-If labels are so useful, is there ever a case where you might want to hide them? Consider a fairly common case where a form is made up of only a single text input box and a button labelled "Search". In this case displaying the label "Search term" before the input box would be redundant, the information being requested is already made obvious by the text shown on the button.
+This is most important when providing radio button controls: a group of radio buttons, sharing a common `name` attribute, constitute _a single_ form field and the `<legend>` labels this field.
 
 ```html
-<form>
-  <label class="visuallyhidden" for="search_term">Search Term</label>
-  <input type="text" id="search_term" name="search_term">
-  <input type="submit" value="Search">
-</form>
+<fieldset>
+  <legend>Your favorite pet</legend>
+  <label>
+    <input type="radio" name="favorite-pet">
+    Cat
+  </label>
+  <label>
+    <input type="radio" name="favorite-pet">
+    Dog
+  </label>
+  <label>
+    <input type="radio" name="favorite-pet">
+    Seahorse
+  </label>
+</fieldset>
 ```
-Fig: Making the label vissually hidden makes sense in certain cases.
 
-Be careful not to take this technique too far however. For example, it would technically be possible to omit the submit button in the example above, relying on users to type <kbd>Enter</kbd> to submit the query, but doing so would also eliminate the only indication of what is expected to be entered in the input box.
+Note the use of labels _wrapping_ inputs in the above example. Only when wrapping inputs in `<label>`s can you omit the `for` and `id` association. It is a common pattern for radios and checkboxes.
 
-### Non-text Labels
-
-Some designs rely heavily on images and icons instead of text to communicate meaning; this is particularly true where the available screen-space is limited. However, this presents an obvious difficulty for low-vision and blind users.
-
-## ARIA
-
-The standard `label` element should always be preferred but there are edge cases where just a simple label might not be sufficient. In cases where visually-impaired user might not get sufficient context from the label alone, adding ARIA can be helpful.
-
-
-
-### Multiple labels for input
-
-In complex layouts, there may be several peices of information visible that combine to give the user information about a form input. For example, imagine a form input that is described by both a table column heading and a table row heading. While the meaning may be clear to a sighted user
+It's quite legitimate to place headings inside `<legend>`s. In fact, this helps to give your form a semantic structure (navigable by screen reader users) without having to create separate and redundant labels.
 
 ```html
-<h3 id="sender">Sender</h3>
-
-<div>
-    <label id="sender-name-lbl" for="sender-name">Full Name</label>
-    <input id="sender-name" name="sender-name" type="text" \!aria-labelledby="sender sender-name-lbl"\!>
-</div>
-<div>
-    <label id="sender-email-lbl" for="sender-email">Email</label>
-    <input id="sender-email" name="sender-email" type="text" aria-labelledby="sender sender-email-lbl">
-</div>
-
-<h3 id="recipient">Recipient</h3>
-
-<div>
-    <label id="recipient-name-lbl" for="recipient-name">Full Name</label>
-    <input id="recipient-name" name="recipient-name" type="text" \!aria-labelledby="recipient recipient-name-lbl"\!>
-</div>
-<div>
-    <label id="recipient-email-lbl" for="recipient-email">Email</label>
-    <input id="recipient" name="recipient" type="email" aria-labelledby="recipient recipient-email-lbl">
-</div>
+<fieldset>
+  <legend><h2>Group label</h2></legend>
+  <!-- individually labeled elements -->
+</fieldset>
 ```
-Fig: An exmple of using ARIA to associate multiple elements to label a single input field.
 
-Note that if a control has both an associated `<label>` and an `aria-labelledby` attribute, the referenced `aria-labelledby` text will take precedence and be read out instead of the `<label>`.
-
-## Be Clear, Be Concise
-
-> "Keep labels and legends succinct to minimise verbosity." -- [BBC Mobile Accessibility Guidelines: Grouping form elements](http://www.bbc.co.uk/guidelines/futuremedia/accessibility/mobile/forms/grouping-form-elements)
-
-Having clear and concise labels is helpful to everyone but it can be especially helpful to users with reading or comprehension difficulties. Finding the most effective wording is a job that can require careful consideration as well as user testing.
+The usual rules regarding heading levels and nesting apply. That is, if you were to include a nested fieldset, the heading level should reflect the parent/child structure.
 
 ```html
-Not enough information?
-<label for="username">Name</label>
-
-Too much information?
-<label for="username">Type your user's name from your account in the box here</label>
+<fieldset>
+  <legend><h2>Group label</h2></legend>
+  <!-- individually labeled elements -->
+  <fieldset>
+    <legend><h3>Nested group label</h3></legend>
+    <!-- individually labeled elements -->
+  </fieldset>
+</fieldset>
 ```
-Fig: Consider the wording of labels to maximise clarity.
 
-## Don't Surprise
+### Placeholders
 
-You won't get famous for avant-garde page layouts by using the familiar and expected arrangement of label and input control, but you will lighten your user's cognitive-decoding work considerably by being a bit boring. The [research into the subject of form readability](https://research.googleblog.com/2014/07/simple-is-better-making-your-web-forms.html) suggests that simple top-down scanning should be encouraged: Keep the label immediately adjacent to, and preferrably just above, its related input control.
+The `placeholder` attribute should not supplant the `<label>` element as a primary label for the following reasons:
 
-You want the user to complete your form fully and accurately, so make it easy for them to understand.
+- Not all assistive technologies support placeholders
+- Some users perceive inputs displaying placeholders as already completed
+- When the placeholder is replaced with a value, no label is available for checking the value against the requirement
+- The default text color for placeholders fails WCAG contrast requirements in many browsers
 
-## AutoComplete and AutoSuggest
+Use placeholders sparingly, and as intend, to provide hints. To help differentiate placeholder text from a real value, use an italic style and prefix the placeholder text with _"E.g."_ or similar.
 
-To the extent that enhancements like autoComplete and autoSuggest can be helpful to most users, it's important that these features don't add an unwelcome obstacle to users with disabilities.
+### Descriptions
 
-## Custom Controls
+Where space permits (and the visual design should allow for this), use descriptions in place of placeholders. Descriptions can simply be part of the `<label>` and will therefore be part of accessible label calculation.
 
-### Hidden labels / hidden controls
+In the following example, the `<small>` element is used to demarcate the description visually. By default, it will display smaller text. You can place it on a new line by applying `display: block`. Note that `<label>` elements are inline level, so it is non-conforming to include block elements inside them.
 
-### Inputs Without Forms?
+```html
+<label for="dog">
+  Your dog's name
+  <small>For example: 'Doggy McDog-Face'</small>
+</label>
+<input type="text" id="dog" name="dog">
+```
 
-## Validation
+### Invisible labels
 
-### Error messages
+It is strongly recommended that form fields have visible and persistent labels; labels that do not disappear upon focus or input.
 
-### A note about colour and error indicators
+However, in some specific circumstances an invisible but accessible label is acceptable. For example, a single input search form may have a submit button that reads "Search" — effectively providing a label for both the input and the button itself. In this case, you can hide the `<label>` visually, using a technique that keeps the label available to assistive technologies.
 
-## Complex and Multi-Page Forms
+```html
+<label for="search" class="visually-hidden">Your search term</label>
+<input id="search">
+<button type="submit">Search</button>
+```
 
-## CAPTCHA	
+The `visually-hidden` utility class looks like the following. Incorrectly using `display: none` would hide the label _both_ visually and from assistive technologies.
 
-## Notes
+```css
+.visually-hidden {
+  clip-path: inset(100%);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+}
+```
 
-[^mag-formgroup]: See [BBC Mobile Accessibility Guidelines: Grouping form elements](http://www.bbc.co.uk/guidelines/futuremedia/accessibility/mobile/forms/grouping-form-elements)								
+Invisible group labels can work in much the same way:
+
+```html
+<h2>Group label</h2>
+<fieldset>
+  <legend class="visually-hidden">Group label</legend>
+  <!-- individually labeled elements -->
+</fieldset>
+```
+
+In most circumstances group labels, like labels, should be visible. Hence, in the example, the group label is only hidden because a separate heading with the same information is already provided.
+
+### Visual design
+
+- Place labels _above_ form elements. This is especially important on mobile platforms because the invoked virtual keyboard has a habit of obscuring labels to the side or below inputs.
+- As stated in the [BBC Mobile Accessibility Guidelines](http://www.bbc.co.uk/guidelines/futuremedia/accessibility/mobile/forms/form-layout), labels should be placed more closely to their associated form elements.
+- Descriptions should appear below the principle label text, in a smaller font size
