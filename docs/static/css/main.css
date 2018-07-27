@@ -30,7 +30,7 @@ a:focus,
 a:hover,
 a:active {
   text-decoration: underline;
-  color: #00645d; }
+  color: #e6711b; }
 
 p, dl, ul, ol {
   max-width: 690px; }
@@ -1652,8 +1652,8 @@ body {
 
 .button:active {
   top: 1px;
-  background-color: #00645d;
-  border: 1px solid #00645d; }
+  background-color: #e6711b;
+  border: 1px solid #e6711b; }
 
 /* to make a button clear */
 .button--clear {
@@ -1710,7 +1710,7 @@ figcaption {
       line-height: 1rem; } }
 
 figcaption:before {
-  color: #00645d;
+  color: #e6711b;
   counter-increment: figcounter;
   content: "Fig " counter(figcounter) ".";
   margin-right: 8px;
@@ -1950,7 +1950,7 @@ article {
   font-style: normal;
   font-weight: bold;
   color: white;
-  background: #00645d;
+  background: #e6711b;
   vertical-align: top;
   text-transform: uppercase;
   letter-spacing: .2px; }
