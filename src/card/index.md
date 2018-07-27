@@ -13,7 +13,7 @@ In the following, which outlines the basic structure of a generic card, there ar
 ```html
 <div class="card-interface">
   <div class="card-interface-img">
-    <img src="images/1.jpeg" alt="">
+    <img src="1.jpg" alt="">
   </div>
   <div class="card-interface-text">
     <h2 class="card-interface-title">

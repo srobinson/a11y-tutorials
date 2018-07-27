@@ -20,7 +20,7 @@ The foundation of any performant and accessible component is semantic markup. Wh
   <ul>
     <li class="card-interface">
       <div class="card-interface-img">
-        <img src="images/1.jpeg" alt="">
+        <img src="1.jpg" alt="">
       </div>
       <div class="card-interface-text">
         <h2 class="card-interface-title"><a href="[url]">Title Of Card</a></h2>
@@ -35,7 +35,7 @@ The foundation of any performant and accessible component is semantic markup. Wh
     </li>
     <li class="card-interface">
       <div class="card-interface-img">
-        <img src="images/2.jpeg" alt="">
+        <img src="2.jpg" alt="">
       </div>
       <div class="card-interface-text">
         <h2 class="card-interface-title"><a href="[url]">Title Of Second Card</a></h2>
@@ -50,7 +50,7 @@ The foundation of any performant and accessible component is semantic markup. Wh
     </li>
     <li class="card-interface">
       <div class="card-interface-img">
-        <img src="images/3.jpeg" alt="">
+        <img src="3.jpg" alt="">
       </div>
       <div class="card-interface-text">
         <h2 class="card-interface-title"><a href="[url]">The Third Card's Title</a></h2>
@@ -65,7 +65,7 @@ The foundation of any performant and accessible component is semantic markup. Wh
     </li>
     <li class="card-interface">
       <div class="card-interface-img">
-        <img src="images/4.jpeg" alt="">
+        <img src="4.jpg" alt="">
       </div>
       <div class="card-interface-text">
         <h2 class="card-interface-title"><a href="[url]">The Fourth Card</a></h2>
@@ -80,7 +80,7 @@ The foundation of any performant and accessible component is semantic markup. Wh
     </li>
     <li>
       <div class="card-interface-img">
-        <img src="images/5.jpeg" alt="">
+        <img src="5.jpg" alt="">
       </div>
       <div class="card-interface-text">
         <h2 class="card-interface-title"><a href="[url]">The Fifth Card Is Here</a></h2>
@@ -95,7 +95,7 @@ The foundation of any performant and accessible component is semantic markup. Wh
     </li>
     <li>
       <div class="card-interface-img">
-        <img src="images/6.jpeg" alt="">
+        <img src="6.jpg" alt="">
       </div>
       <div class="card-interface-text">
         <h2 class="card-interface-title"><a href="[url]">The Sixth Card For You</a></h2>
@@ -148,7 +148,7 @@ The [demonstration script](#demonstration) provided enhances this basic semantic
       <ul class="carousel-interface-list">
          <li class="card-interface" style="width: 300px;">
             <div class="card-interface-img" style="height: 200px; cursor: pointer;">
-               <img src="images/1.jpeg" alt="">
+               <img src="1.jpg" alt="">
                <span class="card-interface-icon">
                   <svg fill="currentColor" viewBox="0 0 20 20" width="20" height="20" focusable="false">
                      <polyline points="2 2, 18 10, 2 18"></polyline>
@@ -168,7 +168,7 @@ The [demonstration script](#demonstration) provided enhances this basic semantic
          </li>
          <li class="card-interface" style="width: 300px; margin-left: 16px;">
             <div class="card-interface-img" style="height: 200px; cursor: pointer;">
-               <img src="images/2.jpeg" alt="">
+               <img src="2.jpg" alt="">
                <span class="card-interface-icon">
                   <svg fill="currentColor" viewBox="0 0 20 20" width="20" height="20" focusable="false">
                      <polyline points="2 2, 18 10, 2 18"></polyline>
