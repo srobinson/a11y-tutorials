@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Share tools demo</title>
+  <style>
+    /* Just styles for the document */
+
+    html {
+      font-family: sans-serif;
+      line-height: 1.5;
+      background-color: #f3f3ee
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    input,
+    button {
+      font-size: inherit;
+    }
+
+    body {
+      max-width: 65rem;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    body>* {
+      margin-top: 1.5rem
+    }
+
+    .demo-container {
+      display: flex;
+      justify-content: center;
+    }
+
+    body>h1,
+    body>h2 {
+      text-align: center
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    main>*+* {
+      margin-top: 3rem;
+    }
+  </style>
+  <link rel="stylesheet" href="share.css">
+</head>
+
+<body>
+  <h1>Share tools demo</h1>
+  <main>
+    <h2>Menu oriented to the right and below</h2>
+    <div class="share-tools share-tools-1">
+      <button class="share-tools-button">Share</button>
+      <div class="share-tools-menu" role="menu">
+        <ul class="share-tools-social">
+          <li>
+            <a href="#">T</a>
+          </li>
+          <li>
+            <a href="#">F</a>
+          </li>
+          <li>
+            <a href="#">I</a>
+          </li>
+          <li>
+            <a href="#">L</a>
+          </li>
+          <li>
+            <a href="#">T</a>
+          </li>
+          <li>
+            <a href="#">F</a>
+          </li>
+          <li>
+            <a href="#">I</a>
+          </li>
+          <li>
+            <a href="#">L</a>
+          </li>
+        </ul>
+        <div class="share-tools-copy">
+          <div>
+            <button class="share-copy-button">Copy this link</button>
+            <span class="share-copy-feedback" aria-hidden="true"></span>
+          </div>
+          <input onclick="this.select()" readonly class="share-copy-input" value="http://bbc.in/3x4mp1e" />
+        </div>
+        <button class="share-tools-close">
+          <svg viewBox="0 0 10 10" width="20" height="20">
+            <path d="M1,1 9,9 M9,1 1,9" stroke="#969696" />
+          </svg>
+          <span class="visually-hidden">close</span>
+        </button>
+      </div>
+    </div>
+    <h2>Menu oriented to the left and above</h2>
+    <div class="share-tools share-tools-2">
+      <button class="share-tools-button">Share</button>
+      <div class="share-tools-menu" role="menu">
+        <ul class="share-tools-social">
+          <li>
+            <a href="#">T</a>
+          </li>
+          <li>
+            <a href="#">F</a>
+          </li>
+          <li>
+            <a href="#">I</a>
+          </li>
+          <li>
+            <a href="#">L</a>
+          </li>
+          <li>
+            <a href="#">T</a>
+          </li>
+          <li>
+            <a href="#">F</a>
+          </li>
+          <li>
+            <a href="#">I</a>
+          </li>
+          <li>
+            <a href="#">L</a>
+          </li>
+        </ul>
+        <div class="share-tools-copy">
+          <div>
+            <button class="share-copy-button">Copy this link</button>
+            <span class="share-copy-feedback" aria-hidden="true"></span>
+          </div>
+          <input onclick="this.select()" readonly class="share-copy-input" value="http://bbc.in/3x4mp1e" />
+        </div>
+        <button class="share-tools-close">
+          <svg viewBox="0 0 10 10" width="20" height="20">
+            <path d="M1,1 9,9 M9,1 1,9" stroke="#969696" />
+          </svg>
+          <span class="visually-hidden">close</span>
+        </button>
+      </div>
+    </div>
+  </main>
+  </div>
+  <script src="ShareTools.js"></script>
+  <script>
+    var toolsElem = document.querySelector('.share-tools-1');
+    var tools = new ShareTools(toolsElem, 'right', 'below');
+
+    var toolsElem2 = document.querySelector('.share-tools-2');
+    var tools = new ShareTools(toolsElem2, 'left', 'above');
+  </script>
+</body>
+
+</html>
