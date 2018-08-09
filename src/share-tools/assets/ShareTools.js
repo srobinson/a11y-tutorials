@@ -14,23 +14,35 @@ function ShareTools(elem, halign, valign) {
   menu.classList.add(halign + '-' + valign);
 
   var uniq = +Date.now();
-  copyButton.id = 'copy-link-' + uniq;
-  copyInput.setAttribute('aria-labelledby', 'copy-link-' + uniq);
+
+  button.setAttribute('aria-haspopup', 'true');
+  button.setAttribute('aria-expanded', 'false');
+
+  menu.setAttribute('role', 'menu');
+
+  copyButton.id = 'copy-button-' + uniq;
+
+  copyFeedback.id = 'copy-feedback-' + uniq;
+
+  copyInput.setAttribute('aria-labelledby', 'copy-button-' + uniq);
+  copyInput.setAttribute('aria-describedby', 'copy-feedback-' + uniq);
 
   menu.hidden = true;
 
   function open() {
     menu.hidden = false;
+    button.setAttribute('aria-expanded', 'true');
     first.focus();
   }
 
   function close() {
     menu.hidden = true;
+    button.setAttribute('aria-expanded', 'false');
     button.focus();
   }
 
   button.addEventListener('click', function() {
-    open();
+    menu.hidden ? open() : close();
   });
 
   button.addEventListener('keydown', function(e) {
