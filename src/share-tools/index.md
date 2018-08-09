@@ -1,4 +1,4 @@
-# Accessible Cards
+# Accessible Share Tools
 
 The following is intended to be read alongside the [GEL share tools page](http://www.bbc.co.uk/gel/guidelines/share-tools). In fact, you should probably read that one first. Here, we'll just cover the technical requirements to make the share tools component as accessible as possible.
 
