@@ -143,12 +143,15 @@ In addition, some semantics are provided:
 1.  `class="share-tools-button"` → `role="menu"`
 2.  `class="share-tools-menu"` → `aria-haspopup="true"`
 3.  `class="share-tools-menu"` → `aria-expanded="false"`
+4.  Social icons → ARIA list semantics
 
 (1) identifies the element as a menu in assistive technologies. It is usually used in conjunction with `role="menuitem"` children, but the content inside a GEL share tools component is too diverse for this to be viable. In some screen readers, the term "menu" will still be announced when a user enters the menu.
 
 (2) is an ARIA property that identifies the button as having a popup menu secreted behind it. For example, in Voiceover for OSX, it means the button will be identified as a "popup button".
 
 (3) The user is kept abreast of the menu's state (expanded or collapsed) using `aria-expanded`. The initial value is `false`.
+
+(4) In testing it was revealed that removing the bullet styling for list items suppressed the list semantics in some screen reader / browser combinations. So `list` and `listitem` ARIA is applied remedially by [the script](assets/ShareTools.js).
 
 ## Interaction
 

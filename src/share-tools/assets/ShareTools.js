@@ -4,7 +4,7 @@ function ShareTools(elem, halign, valign) {
   var menu = elem.querySelector('.share-tools-menu');
   var shareList = elem.querySelector('.share-tools-social');
   var shareListItems = elem.querySelectorAll('.share-tools-social li');
-  var first = menu.querySelector('a, button, input');
+  var firstFocusable = menu.querySelector('a, button, input');
   var closeButton = elem.querySelector('.share-tools-close');
   var copyButton = elem.querySelector('.share-copy-button');
   var copyFeedback = elem.querySelector('.share-copy-feedback');
@@ -14,8 +14,6 @@ function ShareTools(elem, halign, valign) {
   var valign = valign || 'below';
 
   menu.classList.add(halign + '-' + valign);
-
-  var uniq = +Date.now();
 
   button.setAttribute('aria-haspopup', 'true');
   button.setAttribute('aria-expanded', 'false');
@@ -27,6 +25,8 @@ function ShareTools(elem, halign, valign) {
   Array.prototype.forEach.call(shareListItems, function(item) {
     item.setAttribute('role', 'listitem');
   });
+
+  var uniq = +Date.now();
 
   copyButton.id = 'copy-button-' + uniq;
 
@@ -40,7 +40,7 @@ function ShareTools(elem, halign, valign) {
   function open() {
     menu.hidden = false;
     button.setAttribute('aria-expanded', 'true');
-    first.focus();
+    firstFocusable.focus();
   }
 
   function close() {
