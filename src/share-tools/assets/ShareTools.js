@@ -2,6 +2,8 @@
 function ShareTools(elem, halign, valign) {
   var button = elem.querySelector('.share-tools-button');
   var menu = elem.querySelector('.share-tools-menu');
+  var shareList = elem.querySelector('.share-tools-social');
+  var shareListItems = elem.querySelectorAll('.share-tools-social li');
   var first = menu.querySelector('a, button, input');
   var closeButton = elem.querySelector('.share-tools-close');
   var copyButton = elem.querySelector('.share-copy-button');
@@ -19,6 +21,12 @@ function ShareTools(elem, halign, valign) {
   button.setAttribute('aria-expanded', 'false');
 
   menu.setAttribute('role', 'menu');
+
+  shareList.setAttribute('role', 'list');
+
+  Array.prototype.forEach.call(shareListItems, function(item) {
+    item.setAttribute('role', 'listitem');
+  });
 
   copyButton.id = 'copy-button-' + uniq;
 

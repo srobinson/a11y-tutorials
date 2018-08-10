@@ -45,6 +45,7 @@ In the demonstration to follow, JavaScript is used to enhance the following HTML
       <span class="share-copy-feedback" aria-hidden="true"></span>
       <input readonly class="share-copy-input" value="http://bbc.in/3x4mp1e" />
     </div>
+    <a href="#" class="share-tools-read-more">About sharing</a>
     <button class="share-tools-close">
       <svg viewBox="0 0 10 10" width="20" height="20">
         <path d="M1,1 9,9 M9,1 1,9" stroke="#969696" />

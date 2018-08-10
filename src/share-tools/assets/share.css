@@ -95,6 +95,13 @@
   text-align: center;
 }
 
+.share-tools-read-more {
+  font-size: 0.875rem;
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: #686868;
+}
+
 .share-tools-close,
 .share-copy-button {
   background: transparent;
@@ -110,6 +117,10 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
+}
+
+.share-tools-close svg {
+  width: 100%;
 }
 
 .share-tools-copy {
