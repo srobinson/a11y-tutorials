@@ -2,7 +2,8 @@ function ShareMenu(elem, options) {
   // The default settings for the tab interface
   var settings = {
     halign: 'right',
-    valign: 'below'
+    valign: 'below',
+    closeOnBlur: true
   };
 
   // Overwrite defaults where they are provided in options
@@ -77,4 +78,12 @@ function ShareMenu(elem, options) {
   });
 
   input.addEventListener('focus', select);
+
+  if (settings.closeOnBlur) {
+    document.addEventListener('click', function(e) {
+      if (!menu.contains(e.target) && !button.contains(e.target)) {
+        close();
+      }
+    });
+  }
 }

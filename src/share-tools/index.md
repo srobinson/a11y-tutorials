@@ -232,8 +232,7 @@ var tools = new ShareTools(toolsElem, 'right', 'below');
 ```js
 document.addEventListener('click', function(e) {
   if (!menu.contains(e.target) && !button.contains(e.target)) {
-      close();
-    }
+    close();
   }
 });
 ```
