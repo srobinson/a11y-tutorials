@@ -58,9 +58,100 @@
 </head>
 
 <body>
-  <h1>Share tools demo</h1>
   <main>
-    <h2>Menu oriented to the right and below</h2>
+    <h1>Share tools demo</h1>
+    <div class="share-tools">
+      <a href="#end" class="share-tools--skip">skip sharing tools</a>
+      <ul>
+        <li>
+          <a href="#" class="share-tools--item">
+            <span class="visually-hidden">Facebook, share this article, external</span>
+            <svg viewBox="0 0 15 15" focusable="false">
+              <polygon points="0,15 3,8 5,10 8,4 13,15" />
+              <circle cx="12" cy="3" r="1.5" />
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="share-tools--item">
+            <span class="visually-hidden">Twitter, share this article, external</span>
+            <svg viewBox="0 0 15 15" focusable="false">
+              <polygon points="0,15 3,8 5,10 8,4 13,15" />
+              <circle cx="12" cy="3" r="1.5" />
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="share-tools--item">
+            <span class="visually-hidden">LinkedIn, share this article, external</span>
+            <svg viewBox="0 0 15 15" focusable="false">
+              <polygon points="0,15 3,8 5,10 8,4 13,15" />
+              <circle cx="12" cy="3" r="1.5" />
+            </svg>
+          </a>
+        </li>
+        <li class="share-tools--more" hidden>
+          <button class="share-tools--button" aria-haspopup="true" aria-expanded="false">
+            <span class="visually-hidden">More</span>
+            Share
+            <span class="visually-hidden">tools</span>
+          </button>
+          <div class="share-tools--menu" role="menu">
+            <ul class="share-tools--social" role="list">
+              <li role="listitem">
+                <a href="#">
+                  <svg viewBox="0 0 15 15" focusable="false">
+                    <polygon points="0,15 3,8 5,10 8,4 13,15" />
+                    <circle cx="12" cy="3" r="1.5" />
+                  </svg>
+                  <span class="visually-hidden">Share on Twitter (external)</span>
+                </a>
+              </li>
+              <li role="listitem">
+                <a href="#">
+                  <svg viewBox="0 0 15 15" focusable="false">
+                    <polygon points="0,15 3,8 5,10 8,4 13,15" />
+                    <circle cx="12" cy="3" r="1.5" />
+                  </svg>
+                  <span class="visually-hidden">Share on Facebook (external)</span>
+                </a>
+              </li>
+              <li role="listitem">
+                <a href="#">
+                  <svg viewBox="0 0 15 15" focusable="false">
+                    <polygon points="0,15 3,8 5,10 8,4 13,15" />
+                    <circle cx="12" cy="3" r="1.5" />
+                  </svg>
+                  <span class="visually-hidden">Share on LinkedIn (external)</span>
+                </a>
+              </li>
+              <li role="listitem">
+                <a href="#">
+                  <svg viewBox="0 0 15 15" focusable="false">
+                    <polygon points="0,15 3,8 5,10 8,4 13,15" />
+                    <circle cx="12" cy="3" r="1.5" />
+                  </svg>
+                  <span class="visually-hidden">Share on Pinterest (external)</span>
+                </a>
+              </li>
+            </ul>
+            <div class="share-tools--copy">
+              <label>Copy this link</label>
+              <input readonly class="share-tools--link" value="http://bbc.in/3x4mp1e" />
+            </div>
+            <a href="#" class="share-tools--read-more">About sharing</a>
+            <button class="share-tools--close">
+              <svg viewBox="0 0 10 10" width="20" height="20">
+                <path d="M1,1 9,9 M9,1 1,9" stroke="#969696" />
+              </svg>
+              <span class="visually-hidden">Close sharing tools</span>
+            </button>
+          </div>
+        </li>
+      </ul>
+      <div id="end" tabindex="-1" class="share-tools--end">End of sharing tools</div>
+    </div>
+    <!--<h2>Menu oriented to the right and below</h2>
     <div class="share-tools share-tools-1">
       <button class="share-tools-button">Share</button>
       <div class="share-tools-menu">
@@ -171,16 +262,13 @@
           <span class="visually-hidden">close</span>
         </button>
       </div>
-    </div>
+    </div>-->
   </main>
   </div>
-  <script src="ShareTools.js"></script>
+  <script src="ShareMenu.js"></script>
   <script>
-    var toolsElem = document.querySelector('.share-tools-1');
-    var tools = new ShareTools(toolsElem, 'right', 'above');
-
-    var toolsElem2 = document.querySelector('.share-tools-2');
-    var tools = new ShareTools(toolsElem2, 'left', 'below');
+    var toolsElem = document.querySelector('.share-tools--more');
+    var tools = new ShareMenu(toolsElem, 'right', 'above');
   </script>
 </body>
 

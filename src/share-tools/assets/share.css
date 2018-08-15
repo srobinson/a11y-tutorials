@@ -1,44 +1,101 @@
 .share-tools {
-  display: inline-block;
   position: relative;
 }
 
-.share-tools-button {
-  border: 0;
-  background-color: #686868;
-  color: #fff;
-  padding: 0.25rem 1rem;
+.share-tools a,
+.share-tools label {
+  color: #686868;
 }
 
-.share-tools-menu {
+.share-tools--skip {
+  position: absolute;
+  bottom: 100%;
+  height: 0;
+  overflow: hidden;
+  font-size: 0.875rem;
+}
+
+.share-tools--skip:focus {
+  height: auto;
+}
+
+.share-tools ul {
+  margin: -0.125rem;
+}
+
+.share-tools li {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0.125rem;
+}
+
+.share-tools--more {
+  display: none;
+  position: relative;
+}
+
+.share-tools--item,
+.share-tools--button {
+  border: 0;
+  padding: 0.25rem 0.75rem;
+  color: inherit;
+  text-decoration: none;
+  display: inline-block;
+  background-color: #969696;
+  text-align: center;
+  height: 2rem;
+  line-height: 1;
+}
+
+.share-tools--button {
+  background-color: #686868;
+  color: #fff;
+}
+
+.share-tools--item svg {
+  height: 100%;
+  vertical-align: middle;
+}
+
+.visually-hidden,
+.share-tools--end {
+  clip-path: inset(100%);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  width: 1px;
+}
+
+.share-tools--menu {
   padding: 1rem;
-  padding-right: 2rem;
+  padding-right: 2.5rem;
   background-color: #e3e3e3;
   width: 15rem;
   position: absolute;
   z-index: 100;
 }
 
-.share-tools-menu.left-below {
+.share-tools--menu.left-below {
   top: calc(100% + 1rem);
 }
 
-.share-tools-menu.left-above {
+.share-tools--menu.left-above {
   bottom: calc(100% + 1rem);
 }
 
-.share-tools-menu.right-below {
+.share-tools--menu.right-below {
   right: 0;
   top: calc(100% + 1rem);
 }
 
-.share-tools-menu.right-above {
+.share-tools--menu.right-above {
   right: 0;
   bottom: calc(100% + 1rem);
 }
 
 @supports (clip-path: inset(100%)) {
-  .share-tools-menu::after {
+  .share-tools--menu::after {
     content: '';
     display: inline-block;
     background-color: inherit;
@@ -47,68 +104,58 @@
     position: absolute;
   }
 
-  .share-tools-menu.right-below::after,
-  .share-tools-menu.left-below::after {
+  .share-tools--menu.right-below::after,
+  .share-tools--menu.left-below::after {
     clip-path: polygon(0 100%, 50% 0, 100% 100%);
     top: -0.75rem;
   }
 
-  .share-tools-menu.right-above::after,
-  .share-tools-menu.left-above::after {
+  .share-tools--menu.right-above::after,
+  .share-tools--menu.left-above::after {
     clip-path: polygon(0 0, 50% 100%, 100% 0);
     bottom: -0.75rem;
   }
 
-  .share-tools-menu.right-below::after,
-  .share-tools-menu.right-above::after {
+  .share-tools--menu.right-below::after,
+  .share-tools--menu.right-above::after {
     right: 1.5rem;
   }
 
-  .share-tools-menu.left-below::after,
-  .share-tools-menu.left-above::after {
+  .share-tools--menu.left-below::after,
+  .share-tools--menu.left-above::after {
     left: 1.5rem;
   }
 }
 
-.share-tools-social {
+.share-tools--social {
   display: flex;
   flex-wrap: wrap;
   margin: -0.125rem;
 }
 
-.share-tools-social li {
+.share-tools--social a,
+.share-tools--social button {
   display: inline-block;
-  margin: 0.125rem;
-}
-
-.share-tools-social button,
-.share-tools-social a {
   border: 0;
-  background-color: transparent;
-  padding: 0.25rem;
-  color: inherit;
-  text-decoration: none;
-  display: inline-block;
   background-color: #969696;
   width: 2rem;
   height: 2rem;
-  text-align: center;
+  padding: 0.25rem;
 }
 
-.share-tools-read-more {
+.share-tools--copy {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.share-tools--read-more {
   font-size: 0.875rem;
   display: inline-block;
   margin-top: 0.5rem;
   color: #686868;
 }
 
-.share-tools-close,
-.share-copy-button {
-  background: transparent;
-  border: 0;
-}
-
-.share-tools-close {
+.share-tools--close {
   background: transparent;
   border: 0;
   width: 1rem;
@@ -119,39 +166,11 @@
   right: 1rem;
 }
 
-.share-tools-close svg {
+.share-tools--close svg {
   width: 100%;
 }
 
-.share-tools-copy {
-  font-size: 0.875rem;
-  margin-top: 0.5rem;
-}
-
-.share-copy-button,
-.share-copy-feedback {
-  color: #686868;
-}
-
-.share-copy-feedback {
-  margin-left: 0.25rem;
-  font-style: italic;
-}
-
-.share-copy-input {
+.share-tools--link {
   border: 0;
   padding: 0.5rem;
-}
-
-.visually-hidden {
-  clip-path: inset(100%);
-  clip: rect(1px, 1px, 1px, 1px);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  width: 1px;
-}
-
-svg {
-  fill: #fff;
 }
