@@ -19,11 +19,13 @@
   height: auto;
 }
 
-.share-tools ul {
+.share-tools ul,
+.share-tools--more ul {
   margin: -0.125rem;
 }
 
-.share-tools li {
+.share-tools li,
+.share-tools--more li {
   display: inline-block;
   vertical-align: middle;
   margin: 0.125rem;

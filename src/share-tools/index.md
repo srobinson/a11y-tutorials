@@ -6,54 +6,81 @@ The following is intended to be read alongside the [GEL share tools page](http:/
 
 ### Initial HTML
 
-The foundation of any performant and accessible component is semantic markup. Where semantic markup is provided, we can defer to standard browser behaviors. The share tools component is a button that reveals a menu, with behaviors that resemble that of a standard [menu button as set out in the WAI-ARIA Authoring Practices](https://www.w3.org/TR/wai-aria-practices-1.1/#menubutton).
+The foundation of any performant and accessible component is semantic markup. Where semantic markup is provided, we can defer to standard browser behaviors.
 
 In the demonstration to follow, JavaScript is used to enhance the following HTML and apply behaviors to it.
 
+#### Exposed version
+
+This version includes exposed share links, followed by a menu button to reveal extra sharing options.
+
 ```html
 <div class="share-tools">
-  <button class="share-tools-button">Share</button>
-  <div class="share-tools-menu">
-    <ul class="share-tools-social">
-      <li>
-        <a href="#">
-          <svg>[icon here]</svg>
-          <span class="visually-hidden">Share on Twitter</span>
-        </a>
-      </li>
-      <li>
-        <a href="#">
-          <svg>[icon here]</svg>
-          <span class="visually-hidden">Share on Facebook</span>
-        </a>
-      </li>
-      <li>
-        <a href="#">
-          <svg>[icon here]</svg>
-          <span class="visually-hidden">Share on LinkedIn</span>
-        </a>
-      </li>
-      <li>
-        <a href="#">
-          <svg>[icon here]</svg>
-          <span class="visually-hidden">Share on Pinterest</span>
-        </a>
-      </li>
-    </ul>
-    <div class="share-tools-copy">
-      <button class="share-copy-button">Copy this link</button>
-      <span class="share-copy-feedback" aria-hidden="true"></span>
-      <input readonly class="share-copy-input" value="http://bbc.in/3x4mp1e" />
-    </div>
-    <a href="#" class="share-tools-read-more">About sharing</a>
-    <button class="share-tools-close">
-      <svg viewBox="0 0 10 10" width="20" height="20">
-        <path d="M1,1 9,9 M9,1 1,9" stroke="#969696" />
-      </svg>
-      <span class="visually-hidden">close</span>
-    </button>
-  </div>
-</div>
+  <a href="#end" class="share-tools--skip">skip sharing tools</a>
+  <ul>
+    <li>
+      <a href="#" class="share-tools--item">
+        <span class="visually-hidden">Facebook, share this article, external</span>
+        <svg viewBox="0 0 15 15" focusable="false">
+          <polygon points="0,15 3,8 5,10 8,4 13,15" />
+          <circle cx="12" cy="3" r="1.5" />
+        </svg>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="share-tools--item">
+        <span class="visually-hidden">Twitter, share this article, external</span>
+        <svg viewBox="0 0 15 15" focusable="false">
+          <polygon points="0,15 3,8 5,10 8,4 13,15" />
+          <circle cx="12" cy="3" r="1.5" />
+        </svg>
+      </a>
+    </li>
+    <!-- more share tools -->
+    <li class="share-tools--more">
+      <button class="share-tools--button" aria-haspopup="true" aria-expanded="false">
+        <span class="visually-hidden">More</span>
+        Share
+        <span class="visually-hidden">tools</span>
+        &hellip;
+      </button>
+      <div class="share-tools--menu" role="menu">
+        <ul class="share-tools--social" role="list">
+          <li role="listitem">
+            <a href="#">
+              <svg viewBox="0 0 15 15" focusable="false">
+                <polygon points="0,15 3,8 5,10 8,4 13,15" />
+                <circle cx="12" cy="3" r="1.5" />
+              </svg>
+              <span class="visually-hidden">Twitter, share this article, external</span>
+            </a>
+          </li>
+          <li role="listitem">
+            <a href="#">
+              <svg viewBox="0 0 15 15" focusable="false">
+                <polygon points="0,15 3,8 5,10 8,4 13,15" />
+                <circle cx="12" cy="3" r="1.5" />
+              </svg>
+              <span class="visually-hidden">Twitter, share this article, external</span>
+            </a>
+          </li>
+          <!-- more share options -->
+        </ul>
+        <div class="share-tools--copy">
+          <label for="copy">Copy this link</label>
+          <input id="copy" readonly class="share-tools--link" value="http://bbc.in/3x4mp1e" />
+        </div>
+        <a href="#" class="share-tools--read-more">About sharing</a>
+        <button class="share-tools--close">
+          <svg viewBox="0 0 10 10" width="20" height="20">
+            <path d="M1,1 9,9 M9,1 1,9" stroke="#969696" />
+          </svg>
+          <span class="visually-hidden">Close sharing tools</span>
+        </button>
+      </div>
+    </li>
+  </ul>
+  <div id="end" tabindex="-1" class="share-tools--end">End of sharing tools</div>
 ```
 
 Let's break down what we have here:
@@ -62,26 +89,10 @@ Let's break down what we have here:
   <caption>Semantic elements</caption>
   <tr>
     <th scope="row">
-      <code>.share-tools-button</code>
+      <code>.share-tools--skip</code> and <code>.share-tools--end</code>
     </th>
     <td>
-      <p>This is the main button for opening (and closing) the menu. It's important a button, and not a link, is used here because its purpose is only to open the menu. It does not navigate the user anywhere by itself.</p>
-    </td>
-  </tr>
-  <tr>
-    <th scope="row">
-      <code>.share-tools-menu</code>
-    </th>
-    <td>
-      <p>The menu container, which holds all the sharing options.</p>
-    </td>
-  </tr>
-  <tr>
-    <th scope="row">
-      <code>.share-tools-social</code>
-    </th>
-    <td>
-      <p>The social media sharing links are equivalent, so grouped together in a list. Screen reader users are told when they encounter lists and their items are enumerated.</p>
+      <p>Although per-component skip links are unconventional, research showed that keyboard users benefited from the ability to skip past the many tab stops of share tools when encountered in the body of an article. The <code>.share-tools--end</code> target is invisible to sighted keyboard users but offers assurance to screen reader users with its "End of sharing tools" text.</p>
     </td>
   </tr>
   <tr>
@@ -90,78 +101,136 @@ Let's break down what we have here:
     </th>
     <td>
       <p>A visually hidden (but screen reader perceivable) <code>&lt;span></code> is preferred to an <code>aria-label</code> because it is translatable by in-browser translation services.</p>
+      <p>In the case of the "Share" button, this technique is used to expand the accessible label to "More sharing tools". In research, users were not found to be confused that a button reading "Share" appears next to a set of extant sharing tools, so the shorter visual label suffices.</p>
     </td>
   </tr>
   <tr>
     <th scope="row">
-      <code>.share-copy-feedback</code>
+      <code>.share-tools--button</code>
     </th>
     <td>
-      <p>This empty <code>&lt;span></code> will be populated with the text "Copied!" as feedback for when the link is copied from the input to the user's clipboard. More on that to follow.</p>
+      <p>This behaves as an [ARIA menu button](https://www.w3.org/TR/wai-aria-practices-1.1/#menubutton). It has <code>aria-haspopup="true"</code> to warn the user pressing it they will open (and move their focus to) a menu. <code>aria-expanded</code> indicates the open/closed state.</p>
     </td>
   </tr>
   <tr>
     <th scope="row">
-      <code>.share-copy-input</code>
+      <code>.share-tools--link</code>
     </th>
     <td>
-      <p>The input element which the copy button acts on. Some implementations hide this, but leaving it visible gives the user the choice to copy the link from the input manually, which might be their inclination.</p>
+      <p>This input contains the sharing URL as its value. It is set to <code>readonly</code>. It remains focusable and keyboard users can select the URL.</p>
     </td>
   </tr>
   <tr>
     <th scope="row">
-      <code>.share-tools-close</code>
+      <code>.share-tools--menu</code>
     </th>
     <td>
-      <p>Unlike standard menu button components, this one has an explicit close button. This is last in focus order, and therefore last to receive focus.</p>
+      <p>The menu that corresponds to <code>.share-tools--button</code>. It is not a conventional ARIA menu because it does not contain <code>aria-menuitem</code> children. Instead, its children are a list of links and a labeled input. It is important <code>aria-menuitem</code> is not used to override the semantics of these elements.</p>
+    </td>
+  </tr>
+  <tr>
+    <th scope="row">
+      <code>.share-tools--close</code>
+    </th>
+    <td>
+      <p>Unlike standard menu button components, this one has an explicit close button. This is last in source order, and therefore last to receive focus.</p>
     </td>
   </tr>
 </table>
 
-### Enhanced HTML
+The share tools component is largely static. Only the menu button/menu is powered using JavaScript. As such, it is only exposed to the user when JavaScript is running. That is, its `display` style is switched from `none` to `inline-block`.
 
-The HTML is enhanced in a number of ways when the [script](assets/ShareTools.js) runs. Notably, the copy button and feedback `span` are associated to the input using `aria-labelledby` and `aria-describedby` respectively. The unique string is generated using `+new Date()`. All `id`s must be unique.
+```js
+elem.style.display = 'inline-block';
+```
+
+#### Non-exposed version
+
+Where only the "Share" button is required, the container element should be a `<div>`. There is no need to provide the skip link functionality in this case, because the menu button only represents a single tab stop. The `share-tools--more` class is still needed for styling purposes.
 
 ```html
-<div class="share-tools-copy">
-  <button class="share-copy-button" id="copy-button-76387465">Copy this link</button>
-  <span class="share-copy-feedback"
-        aria-hidden="true"
-        id="copy-feedback-76387465">
-  </span>
-  <input readonly
-         class="share-copy-input"
-         value="http://bbc.in/3x4mp1e"
-         aria-labelledby="copy-button-76387465"
-         aria-describedby="copy-feedback-76387465"
-  />
+<div class="share-tools--more">
+  <button class="share-tools--button" aria-haspopup="true" aria-expanded="false">
+    Share&hellip;
+  </button>
+  <div class="share-tools--menu" role="menu">
+    <ul class="share-tools--social" role="list">
+      <li role="listitem">
+        <a href="#">
+          <svg viewBox="0 0 15 15" focusable="false">
+            <polygon points="0,15 3,8 5,10 8,4 13,15" />
+            <circle cx="12" cy="3" r="1.5" />
+          </svg>
+          <span class="visually-hidden">Share on Twitter (external)</span>
+        </a>
+      </li>
+      <li role="listitem">
+        <a href="#">
+          <svg viewBox="0 0 15 15" focusable="false">
+            <polygon points="0,15 3,8 5,10 8,4 13,15" />
+            <circle cx="12" cy="3" r="1.5" />
+          </svg>
+          <span class="visually-hidden">Share on Facebook (external)</span>
+        </a>
+      </li>
+      <!-- more share options -->
+    </ul>
+    <div class="share-tools--copy">
+      <label for="copy">Copy this link</label>
+      <input id="copy" readonly class="share-tools--link" value="http://bbc.in/3x4mp1e" />
+    </div>
+    <a href="#" class="share-tools--read-more">About sharing</a>
+    <button class="share-tools--close">
+      <svg viewBox="0 0 10 10" width="20" height="20">
+        <path d="M1,1 9,9 M9,1 1,9" stroke="#969696" />
+      </svg>
+      <span class="visually-hidden">Close sharing tools</span>
+    </button>
+  </div>
 </div>
 ```
 
-In addition, some semantics are provided:
-
-1.  `class="share-tools-button"` → `role="menu"`
-2.  `class="share-tools-menu"` → `aria-haspopup="true"`
-3.  `class="share-tools-menu"` → `aria-expanded="false"`
-4.  Social icons → ARIA list semantics
-
-(1) identifies the element as a menu in assistive technologies. It is usually used in conjunction with `role="menuitem"` children, but the content inside a GEL share tools component is too diverse for this to be viable. In some screen readers, the term "menu" will still be announced when a user enters the menu.
-
-(2) is an ARIA property that identifies the button as having a popup menu secreted behind it. For example, in Voiceover for OSX, it means the button will be identified as a "popup button".
-
-(3) The user is kept abreast of the menu's state (expanded or collapsed) using `aria-expanded`. The initial value is `false`.
-
-(4) In testing it was revealed that removing the bullet styling for list items suppressed the list semantics in some screen reader / browser combinations. So `list` and `listitem` ARIA is applied remedially by [the script](assets/ShareTools.js).
+Note that the clarified _"More sharing tools"_ accessible label is not needed when the menu button is not accompanied by preceding exposed share tools.
 
 ## Interaction
 
 ### General behavior
 
-When a mouse or touch user clicks the "Share" menu button, the share tools menu is revealed. When the button is pressed again or the "⨉" close button is clicked, the menu closes. The social media sharing buttons link off to their respective sites. Clicking the "Copy this link" button selects the text inside the input and copies it to the clipboard. The term "Copied!" is revealed as confirmation.
+When a mouse or touch user clicks the "Share" menu button, the share tools menu is revealed. When the button is pressed again or the "⨉" close button is clicked, the menu closes. The social media sharing buttons link off to their respective sites.
+
+Clicking on the <code>share-tools--link</code> input selects the value and copies it to the user's clipboard.
+
+```js
+input.select();
+document.execCommand('copy');
+```
+
+By default, if you click outside the menu / menu button, the menu will be closed. This requires an event listener on `document` and is functionality that can be removed in the [demo](#demonstration) script's initialization options object as `closeOnBlur`:
+
+```js
+var toolsElem = document.querySelector('.share-tools--more');
+var tools = new ShareMenu(toolsElem, {
+  closeOnBlur: false
+});
+```
 
 ### Keyboard behavior
 
-Many of the keyboard behaviors of the share tools component should match those of a [standard menu button / menu](https://www.w3.org/TR/wai-aria-practices-1.1/#keyboard-interaction-12).
+#### Skip functionality
+
+As the user moves to the share tools component, their first tab stop is the "skip sharing tools" link, which is revealed on focus by resetting its `0` height value.
+
+```css
+.share-tools--skip:focus {
+  height: auto;
+}
+```
+
+Should the skip link not be invoked, each of the exposed share buttons receives focus in order.
+
+#### Share button
+
+Many of the keyboard behaviors of the share tools "Share" button should match those of a [standard menu button / menu](https://www.w3.org/TR/wai-aria-practices-1.1/#keyboard-interaction-12).
 
 <table>
   <caption>Keyboard behaviors</caption>
@@ -193,46 +262,44 @@ Many of the keyboard behaviors of the share tools component should match those o
 
 ### Screen reader behavior
 
-The semantics and their affect of screen reader output are covered in the **Enhanced HTML** section above. When focus is moved between the menu button and the menu, the focus elements are identified by their roles, labels, and accompanying information.
+The exposed share tools and "Share" button are members of an unordered list. When the user enters that list and focuses the first item, the list is identified and the number of items is enumerated. If JavaScript is not run, the list item in the expanded configuration remains hidden (with `display: none`) and is not counted in enumeration.
 
-### The link copying functionality
+Screen readers tend to identify the "Share" menu button as a "popup button" and will communicate the state as _"expanded/collapsed"_ or _"opened/closed"_. When the button is activated, focus is moved to the first focusable item in the menu, which triggers its announcement, along with contextual link information and (in some screen readers) the ancestor menu role.
 
-The behavior peculiar to sharing tools, and worth discussing in more depth, is that of copying links via the input element. When a screen reader user click the "Copy this link" button, the text (value) of the input is selected, moving the users focus to the input. This elicits announcement of the input's role and its label, which is taken from the button using `aria-labelledby`. Appended to this information is the announcement of "Copied!" which is provided as the input's description.
+When <kbd>ESC</kbd> or the close button is pressed, the menu button is refocused, triggering the announcement of its role, label, and collapsed state.
 
-Note that "Copied!" is only announced when the button is clicked, and not when the user traverses to the input and selects its text manually. In this scenario, it would be up to the user to select and copy the text. There is therefore no place for 'feedback' regarding the work of JavaScript on the user's behalf.
+When a screen reader user focuses the <code>share-tools--link</code> input, the content/value is automatically selected. Some screen readers will announce "selected" as affirmation. For users that are unaware the text is selected, manually pressing <kbd>CTRL</kbd> + <kbd>A</kbd> works just as well.
 
 ## Visual design requirements
 
 The visual design requirements for share tools are laid out in the [GEL share tools page](http://www.bbc.co.uk/gel/guidelines/share-tools). Note that the [working demonstration](assets/demo1.html) provides parameters for choosing a vertical and horizontal alignment for the menu itself (see below).
 
+In addition, it is recommended that an ellipsis (as in the [demonstration](assets/demo1.html)) or a downward point arrow is included as part of the "Share" menu button design. This assures users of the presence of a submenu, and that they will not be navigated away from the current context.
+
 ## Demonstration
 
-A [working demonstration](assets/demo1.html) of the discussed implementation is available for you to explore. This centers around a [small script](assets/ShareTools.js).
+A [working demonstration](assets/demo1.html) of the discussed implementation is available for you to explore. This includes a [small script](assets/ShareMenu.js) for providing the menu button functionality.
 
-Note the initialization which accepts three arguments:
+Note the initialization which accepts two arguments:
 
 1.  The parent node you wish to transform into a share tools component
-2.  The horizontal alignment of the menu (string: `'left'` (default) or `'right'`)
-3.  The vertical alignment of the menu (string: `'below'` (default) or `'above'`)
+2.  The options object, with the following properties:
+    - `hAlign` (string; `right` or `left` — default is `right`)
+    - `vALign` (string; `below` or `above` — default is `below`)
+    - `closeOnBlur` (Boolean; default is `true`)
 
 ### Example initialization
 
 ```js
-var toolsElem = document.querySelector('.share-tools');
-var tools = new ShareTools(toolsElem, 'right', 'below');
+var toolsElem = document.querySelector('.share-tools--more');
+var tools = new ShareMenu(toolsElem, {
+  hAlign: 'left',
+  vAlign: 'above'
+});
 ```
 
 ## Variants and caveats
 
-- Social media icons are not provided in the demo, with placeholder icons in their place. Consult [GEL's iconography docs](https://www.bbc.co.uk/gel/guidelines/iconography).
+- Social media icons are not provided in the demo, with placeholder icons in their place. Consult [GEL's iconography docs](https://www.bbc.co.uk/gel/guidelines/iconography)
 - Standard menu buttons are discussed at length in [Menus & Menu Buttons](https://inclusive-components.design/menus-menu-buttons/).
 - The pointer shapes for the bubbles are considered a progressive enhancement and are created using `clip-path` in supporting browsers. You can achieve a similar effect with borders or a background image but be aware that these techniques might fail in Windows High Contrast Mode.
-- It is possible to close the menu when a user clicks outside it, but this is not included in the script because it requires a `click` handler on the `document`. It can be implemented like so, if desired:
-
-```js
-document.addEventListener('click', function(e) {
-  if (!menu.contains(e.target) && !button.contains(e.target)) {
-    close();
-  }
-});
-```

@@ -1,8 +1,8 @@
 function ShareMenu(elem, options) {
   // The default settings for the tab interface
   var settings = {
-    halign: 'right',
-    valign: 'below',
+    hAlign: 'right',
+    vAlign: 'below',
     closeOnBlur: true
   };
 
@@ -25,7 +25,7 @@ function ShareMenu(elem, options) {
   button.setAttribute('aria-expanded', 'false');
 
   // Add alignment class
-  menu.classList.add(settings.halign + '-' + settings.valign);
+  menu.classList.add(settings.hAlign + '-' + settings.vAlign);
 
   // reveal the parent element if JavaScript runs
   elem.style.display = 'inline-block';
@@ -50,6 +50,13 @@ function ShareMenu(elem, options) {
     menu.hidden = true;
     button.setAttribute('aria-expanded', 'false');
     button.focus();
+  }
+
+  function closeOnBlur(e) {
+    if (!menu.contains(e.target) && !button.contains(e.target)) {
+      menu.hidden = true;
+      button.setAttribute('aria-expanded', 'false');
+    }
   }
 
   function select() {
@@ -80,10 +87,6 @@ function ShareMenu(elem, options) {
   input.addEventListener('focus', select);
 
   if (settings.closeOnBlur) {
-    document.addEventListener('click', function(e) {
-      if (!menu.contains(e.target) && !button.contains(e.target)) {
-        close();
-      }
-    });
+    document.addEventListener('click', closeOnBlur);
   }
 }
