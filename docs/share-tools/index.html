@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+	<meta charset="utf-8" />
+	<title>Tutorial: Accessible Share Tools | BBC Accessibility Tutorials</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+    <script src="../static/vendor/fontfaceobserver/font-face-observer.js"></script>
+    <script>
+        (function() {
+            (new FontFaceObserver('ReithSans')).load().then(function () {
+                document.body.className += ' b-reith-sans-font';
+            });
+            (new FontFaceObserver('ReithSerif')).load().then(function () {
+                document.body.className += ' b-reith-serif-font';
+            });
+        })();
+    </script>
+	
+	<link rel="stylesheet" href="../static/vendor/highlight/styles/github.css">
+    <link rel="stylesheet" href="../static/css/main.css?ver-1535106053" />
+</head>
+<body>
+
+<header role="banner" class="header">
+    <div class="a11y-tuts__banner a11y-tuts__headerbanner">
+        <div class="gel-wrap gs-u-clearfix">
+            <div class="a11y-tuts-header__brand">
+                <a class="a11y-tuts-header__brand-logo" href="http://www.bbc.co.uk/">
+                    <svg aria-label="BBC GEL Logo" width="100" height="24">
+                        <title>BBC</title>
+                        <image xlink:href="../static/images/bbc-blocks_grey.svg" src="../static/images/bbc-blocks_grey.png" width="100%" height="100%"></image>
+                    </svg>
+                </a>
+                <!--a class="button a11y-tuts__button" href="http://www.bbc.co.uk/gel">Go to BBC GEL</a-->
+            </div>
+        </div>
+    </div>
+    <div class="a11y-tuts__banner">
+        <div class="gel-wrap gs-u-clearfix">
+            <h1 class="a11y-tuts__sitetitle"><a href="../index.html">Accessibility Tutorials</a></h1>
+        </div>
+    </div>
+</header>
+
+<article class="gel-wrap gs-u-clearfix">
+    <div class="gel-layout">
+        
+        <div class="gel-layout__item gel-1/5@l gel-side-nav">
+            <h2 class="gel-pica gs-u-mb gs-u-mt0">Content</h2>
+            <nav role="navigation" id="side-nav">
+                <ol>
+                    
+                    
+                        <li class="heading-1"><a href="#accessible-share-tools" class="gel-side-nav__link">Accessible Share Tools</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#semantics" class="gel-side-nav__link">Semantics</a></li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#interaction" class="gel-side-nav__link">Interaction</a></li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#visual-design-requirements" class="gel-side-nav__link">Visual design requirements</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#demonstration" class="gel-side-nav__link">Demonstration</a></li>
+                    
+                    
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#variants-and-caveats" class="gel-side-nav__link">Variants and caveats</a></li>
+                    
+                    
+                </ol>
+            </nav>
+        </div>
+        
+    
+        <div class="a11y-tut-content gel-layout__item gel-4/5@l">      
+            
+
+<h1 id="accessible-share-tools">Accessible Share Tools</h1>
+<p>The following is intended to be read alongside the <a href="http://www.bbc.co.uk/gel/guidelines/share-tools">GEL share tools page</a>. In fact, you should probably read that one first. Here, we'll just cover the technical requirements to make the share tools component as accessible as possible.</p>
+<h2 id="semantics">Semantics</h2>
+<h3 id="initial-html">Initial HTML</h3>
+<p>The foundation of any performant and accessible component is semantic markup. Where semantic markup is provided, we can defer to standard browser behaviors.</p>
+<p>In the demonstration to follow, JavaScript is used to enhance the following HTML and apply behaviors to it.</p>
+<h4 id="exposed-version">Exposed version</h4>
+<p>This version includes exposed share links, followed by a menu button to reveal extra sharing options.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"share-tools"</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#end"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"share-tools--skip"</span>></span>skip sharing tools<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">ul</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"share-tools--item"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"visually-hidden"</span>></span>Facebook, share this article, external<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">svg</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">"0 0 15 15"</span> <span class="hljs-attr">focusable</span>=<span class="hljs-string">"false"</span>></span>
+          <span class="hljs-tag">&#x3C;<span class="hljs-name">polygon</span> <span class="hljs-attr">points</span>=<span class="hljs-string">"0,15 3,8 5,10 8,4 13,15"</span> /></span>
+          <span class="hljs-tag">&#x3C;<span class="hljs-name">circle</span> <span class="hljs-attr">cx</span>=<span class="hljs-string">"12"</span> <span class="hljs-attr">cy</span>=<span class="hljs-string">"3"</span> <span class="hljs-attr">r</span>=<span class="hljs-string">"1.5"</span> /></span>
+        <span class="hljs-tag">&#x3C;/<span class="hljs-name">svg</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"share-tools--item"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"visually-hidden"</span>></span>Twitter, share this article, external<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">svg</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">"0 0 15 15"</span> <span class="hljs-attr">focusable</span>=<span class="hljs-string">"false"</span>></span>
+          <span class="hljs-tag">&#x3C;<span class="hljs-name">polygon</span> <span class="hljs-attr">points</span>=<span class="hljs-string">"0,15 3,8 5,10 8,4 13,15"</span> /></span>
+          <span class="hljs-tag">&#x3C;<span class="hljs-name">circle</span> <span class="hljs-attr">cx</span>=<span class="hljs-string">"12"</span> <span class="hljs-attr">cy</span>=<span class="hljs-string">"3"</span> <span class="hljs-attr">r</span>=<span class="hljs-string">"1.5"</span> /></span>
+        <span class="hljs-tag">&#x3C;/<span class="hljs-name">svg</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+    <span class="hljs-comment">&#x3C;!-- more share tools --></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"share-tools--more"</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"share-tools--button"</span> <span class="hljs-attr">aria-haspopup</span>=<span class="hljs-string">"true"</span> <span class="hljs-attr">aria-expanded</span>=<span class="hljs-string">"false"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"visually-hidden"</span>></span>More<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+        Share
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"visually-hidden"</span>></span>tools<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+        &#x26;hellip;
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"share-tools--menu"</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"menu"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"share-tools--social"</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"list"</span>></span>
+          <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"listitem"</span>></span>
+            <span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#"</span>></span>
+              <span class="hljs-tag">&#x3C;<span class="hljs-name">svg</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">"0 0 15 15"</span> <span class="hljs-attr">focusable</span>=<span class="hljs-string">"false"</span>></span>
+                <span class="hljs-tag">&#x3C;<span class="hljs-name">polygon</span> <span class="hljs-attr">points</span>=<span class="hljs-string">"0,15 3,8 5,10 8,4 13,15"</span> /></span>
+                <span class="hljs-tag">&#x3C;<span class="hljs-name">circle</span> <span class="hljs-attr">cx</span>=<span class="hljs-string">"12"</span> <span class="hljs-attr">cy</span>=<span class="hljs-string">"3"</span> <span class="hljs-attr">r</span>=<span class="hljs-string">"1.5"</span> /></span>
+              <span class="hljs-tag">&#x3C;/<span class="hljs-name">svg</span>></span>
+              <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"visually-hidden"</span>></span>Twitter, share this article, external<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+            <span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+          <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+          <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"listitem"</span>></span>
+            <span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#"</span>></span>
+              <span class="hljs-tag">&#x3C;<span class="hljs-name">svg</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">"0 0 15 15"</span> <span class="hljs-attr">focusable</span>=<span class="hljs-string">"false"</span>></span>
+                <span class="hljs-tag">&#x3C;<span class="hljs-name">polygon</span> <span class="hljs-attr">points</span>=<span class="hljs-string">"0,15 3,8 5,10 8,4 13,15"</span> /></span>
+                <span class="hljs-tag">&#x3C;<span class="hljs-name">circle</span> <span class="hljs-attr">cx</span>=<span class="hljs-string">"12"</span> <span class="hljs-attr">cy</span>=<span class="hljs-string">"3"</span> <span class="hljs-attr">r</span>=<span class="hljs-string">"1.5"</span> /></span>
+              <span class="hljs-tag">&#x3C;/<span class="hljs-name">svg</span>></span>
+              <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"visually-hidden"</span>></span>Twitter, share this article, external<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+            <span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+          <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+          <span class="hljs-comment">&#x3C;!-- more share options --></span>
+        <span class="hljs-tag">&#x3C;/<span class="hljs-name">ul</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"share-tools--copy"</span>></span>
+          <span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"copy"</span>></span>Copy this link<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
+          <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"copy"</span> <span class="hljs-attr">readonly</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"share-tools--link"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"http://bbc.in/3x4mp1e"</span> /></span>
+        <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"share-tools--read-more"</span>></span>About sharing<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"share-tools--close"</span>></span>
+          <span class="hljs-tag">&#x3C;<span class="hljs-name">svg</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">"0 0 10 10"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"20"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"20"</span>></span>
+            <span class="hljs-tag">&#x3C;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M1,1 9,9 M9,1 1,9"</span> <span class="hljs-attr">stroke</span>=<span class="hljs-string">"#969696"</span> /></span>
+          <span class="hljs-tag">&#x3C;/<span class="hljs-name">svg</span>></span>
+          <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"visually-hidden"</span>></span>Close sharing tools<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+        <span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">ul</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"end"</span> <span class="hljs-attr">tabindex</span>=<span class="hljs-string">"-1"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"share-tools--end"</span>></span>End of sharing tools<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+</code></pre>
+<p>Let's break down what we have here:</p>
+<table>
+  <caption>Semantic elements</caption>
+  <tbody>
+    <tr>
+      <th scope="row"><code>.share-tools--skip</code> and <code>.share-tools--end</code></th>
+      <td>
+        <p>Although per-component skip links are unconventional, research showed that keyboard users benefited from the ability to skip past the many tab stops of share tools when encountered in the body of an article. The <code>.share-tools--end</code> target is invisible to sighted keyboard users but offers assurance to screen reader users with its "End of sharing tools" text.</p>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row"><code>.visually-hidden</code></th>
+      <td>
+        <p>A visually hidden (but screen reader perceivable) <code>&#x3C;span></code> is preferred to an <code>aria-label</code> because it is translatable by in-browser translation services.</p>
+        <p>In the case of the "Share" button, this technique is used to expand the accessible label to "More sharing tools". In research, users were not found to be confused that a button reading "Share" appears next to a set of extant sharing tools, so the shorter visual label suffices.</p>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row"><code>.share-tools--button</code></th>
+      <td>
+        <p>This behaves as an [ARIA menu button](https://www.w3.org/TR/wai-aria-practices-1.1/#menubutton). It has <code>aria-haspopup="true"</code> to warn the user pressing it they will open (and move their focus to) a menu. <code>aria-expanded</code> indicates the open/closed state.</p>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row"><code>.share-tools--link</code></th>
+      <td>
+        <p>This input contains the sharing URL as its value. It is set to <code>readonly</code>. It remains focusable and keyboard users can select the URL.</p>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row"><code>.share-tools--menu</code></th>
+      <td>
+        <p>The menu that corresponds to <code>.share-tools--button</code>. It is not a conventional ARIA menu because it does not contain <code>aria-menuitem</code> children. Instead, its children are a list of links and a labeled input. It is important <code>aria-menuitem</code> is not used to override the semantics of these elements.</p>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row"><code>.share-tools--close</code></th>
+      <td>
+        <p>Unlike standard menu button components, this one has an explicit close button. This is last in source order, and therefore last to receive focus.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>The share tools component is largely static. Only the menu button/menu is powered using JavaScript. As such, it is only exposed to the user when JavaScript is running. That is, its <code>display</code> style is switched from <code>none</code> to <code>inline-block</code>.</p>
+<pre><code class="hljs language-js">elem.style.display = <span class="hljs-string">'inline-block'</span>;
+</code></pre>
+<h4 id="non-exposed-version">Non-exposed version</h4>
+<p>Where only the "Share" button is required, the container element should be a <code>&#x3C;div></code>. There is no need to provide the skip link functionality in this case, because the menu button only represents a single tab stop. The <code>share-tools--more</code> class is still needed for styling purposes.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"share-tools--more"</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"share-tools--button"</span> <span class="hljs-attr">aria-haspopup</span>=<span class="hljs-string">"true"</span> <span class="hljs-attr">aria-expanded</span>=<span class="hljs-string">"false"</span>></span>
+    Share&#x26;hellip;
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"share-tools--menu"</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"menu"</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"share-tools--social"</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"list"</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"listitem"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#"</span>></span>
+          <span class="hljs-tag">&#x3C;<span class="hljs-name">svg</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">"0 0 15 15"</span> <span class="hljs-attr">focusable</span>=<span class="hljs-string">"false"</span>></span>
+            <span class="hljs-tag">&#x3C;<span class="hljs-name">polygon</span> <span class="hljs-attr">points</span>=<span class="hljs-string">"0,15 3,8 5,10 8,4 13,15"</span> /></span>
+            <span class="hljs-tag">&#x3C;<span class="hljs-name">circle</span> <span class="hljs-attr">cx</span>=<span class="hljs-string">"12"</span> <span class="hljs-attr">cy</span>=<span class="hljs-string">"3"</span> <span class="hljs-attr">r</span>=<span class="hljs-string">"1.5"</span> /></span>
+          <span class="hljs-tag">&#x3C;/<span class="hljs-name">svg</span>></span>
+          <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"visually-hidden"</span>></span>Share on Twitter (external)<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+        <span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"listitem"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#"</span>></span>
+          <span class="hljs-tag">&#x3C;<span class="hljs-name">svg</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">"0 0 15 15"</span> <span class="hljs-attr">focusable</span>=<span class="hljs-string">"false"</span>></span>
+            <span class="hljs-tag">&#x3C;<span class="hljs-name">polygon</span> <span class="hljs-attr">points</span>=<span class="hljs-string">"0,15 3,8 5,10 8,4 13,15"</span> /></span>
+            <span class="hljs-tag">&#x3C;<span class="hljs-name">circle</span> <span class="hljs-attr">cx</span>=<span class="hljs-string">"12"</span> <span class="hljs-attr">cy</span>=<span class="hljs-string">"3"</span> <span class="hljs-attr">r</span>=<span class="hljs-string">"1.5"</span> /></span>
+          <span class="hljs-tag">&#x3C;/<span class="hljs-name">svg</span>></span>
+          <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"visually-hidden"</span>></span>Share on Facebook (external)<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+        <span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+      <span class="hljs-comment">&#x3C;!-- more share options --></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">ul</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"share-tools--copy"</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"copy"</span>></span>Copy this link<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"copy"</span> <span class="hljs-attr">readonly</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"share-tools--link"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"http://bbc.in/3x4mp1e"</span> /></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"share-tools--read-more"</span>></span>About sharing<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"share-tools--close"</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">svg</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">"0 0 10 10"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"20"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"20"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M1,1 9,9 M9,1 1,9"</span> <span class="hljs-attr">stroke</span>=<span class="hljs-string">"#969696"</span> /></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">svg</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"visually-hidden"</span>></span>Close sharing tools<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+</code></pre>
+<p>Note that the clarified <em>"More sharing tools"</em> accessible label is not needed when the menu button is not accompanied by preceding exposed share tools.</p>
+<h2 id="interaction">Interaction</h2>
+<h3 id="general-behavior">General behavior</h3>
+<p>When a mouse or touch user clicks the "Share" menu button, the share tools menu is revealed. When the button is pressed again or the "⨉" close button is clicked, the menu closes. The social media sharing buttons link off to their respective sites.</p>
+<p>Clicking on the <code>share-tools--link</code> input selects the value and copies it to the user's clipboard.</p>
+<pre><code class="hljs language-js">input.select();
+<span class="hljs-built_in">document</span>.execCommand(<span class="hljs-string">'copy'</span>);
+</code></pre>
+<p>By default, if you click outside the menu / menu button, the menu will be closed. This requires an event listener on <code>document</code> and is functionality that can be removed in the <a href="#demonstration">demo</a> script's initialization options object as <code>closeOnBlur</code>:</p>
+<pre><code class="hljs language-js"><span class="hljs-keyword">var</span> toolsElem = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'.share-tools--more'</span>);
+<span class="hljs-keyword">var</span> tools = <span class="hljs-keyword">new</span> ShareMenu(toolsElem, {
+  <span class="hljs-attr">closeOnBlur</span>: <span class="hljs-literal">false</span>
+});
+</code></pre>
+<h3 id="keyboard-behavior">Keyboard behavior</h3>
+<h4 id="skip-functionality">Skip functionality</h4>
+<p>As the user moves to the share tools component, their first tab stop is the "skip sharing tools" link, which is revealed on focus by resetting its <code>0</code> height value.</p>
+<pre><code class="hljs language-css"><span class="hljs-selector-class">.share-tools--skip</span><span class="hljs-selector-pseudo">:focus</span> {
+  <span class="hljs-attribute">height</span>: auto;
+}
+</code></pre>
+<p>Should the skip link not be invoked, each of the exposed share buttons receives focus in order.</p>
+<h4 id="share-button">Share button</h4>
+<p>Many of the keyboard behaviors of the share tools "Share" button should match those of a <a href="https://www.w3.org/TR/wai-aria-practices-1.1/#keyboard-interaction-12">standard menu button / menu</a>.</p>
+<table>
+  <caption>Keyboard behaviors</caption>
+  <tbody>
+    <tr>
+      <th scope="row"><kbd>Enter</kbd> or <kbd>Space</kbd> on the "Share" button (with menu closed)</th>
+      <td>
+        <p>Opens the menu and moves focus to the first interactive element inside the menu.</p>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row"><kbd>↓</kbd> (down arrow) on the "Share" button (with menu closed)</th>
+      <td>
+        <p>Opens the menu and moves focus to the first interactive element inside the menu.</p>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row"><kbd>Esc</kbd> (while focus is within the menu)</th>
+      <td>
+        <p>Closes the menu and moves focus back to the "Share" button.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="screen-reader-behavior">Screen reader behavior</h3>
+<p>The exposed share tools and "Share" button are members of an unordered list. When the user enters that list and focuses the first item, the list is identified and the number of items is enumerated. If JavaScript is not run, the list item in the expanded configuration remains hidden (with <code>display: none</code>) and is not counted in enumeration.</p>
+<p>Screen readers tend to identify the "Share" menu button as a "popup button" and will communicate the state as <em>"expanded/collapsed"</em> or <em>"opened/closed"</em>. When the button is activated, focus is moved to the first focusable item in the menu, which triggers its announcement, along with contextual link information and (in some screen readers) the ancestor menu role.</p>
+<p>When <kbd>ESC</kbd> or the close button is pressed, the menu button is refocused, triggering the announcement of its role, label, and collapsed state.</p>
+<p>When a screen reader user focuses the <code>share-tools--link</code> input, the content/value is automatically selected. Some screen readers will announce "selected" as affirmation. For users that are unaware the text is selected, manually pressing <kbd>CTRL</kbd> + <kbd>A</kbd> works just as well.</p>
+<h2 id="visual-design-requirements">Visual design requirements</h2>
+<p>The visual design requirements for share tools are laid out in the <a href="http://www.bbc.co.uk/gel/guidelines/share-tools">GEL share tools page</a>. Note that the <a href="assets/demo1.html">working demonstration</a> provides parameters for choosing a vertical and horizontal alignment for the menu itself (see below).</p>
+<p>In addition, it is recommended that an ellipsis (as in the <a href="assets/demo1.html">demonstration</a>) or a downward point arrow is included as part of the "Share" menu button design. This assures users of the presence of a submenu, and that they will not be navigated away from the current context.</p>
+<h2 id="demonstration">Demonstration</h2>
+<p>A <a href="assets/demo1.html">working demonstration</a> of the discussed implementation is available for you to explore. This includes a <a href="assets/ShareMenu.js">small script</a> for providing the menu button functionality.</p>
+<p>Note the initialization which accepts two arguments:</p>
+<ol>
+  <li>The parent node you wish to transform into a share tools component</li>
+  <li>
+    <p>The options object, with the following properties:</p>
+    <ul>
+      <li><code>hAlign</code> (string; <code>right</code> or <code>left</code> — default is <code>right</code>)</li>
+      <li><code>vALign</code> (string; <code>below</code> or <code>above</code> — default is <code>below</code>)</li>
+      <li><code>closeOnBlur</code> (Boolean; default is <code>true</code>)</li>
+    </ul>
+  </li>
+</ol>
+<h3 id="example-initialization">Example initialization</h3>
+<pre><code class="hljs language-js"><span class="hljs-keyword">var</span> toolsElem = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'.share-tools--more'</span>);
+<span class="hljs-keyword">var</span> tools = <span class="hljs-keyword">new</span> ShareMenu(toolsElem, {
+  <span class="hljs-attr">hAlign</span>: <span class="hljs-string">'left'</span>,
+  <span class="hljs-attr">vAlign</span>: <span class="hljs-string">'above'</span>
+});
+</code></pre>
+<h2 id="variants-and-caveats">Variants and caveats</h2>
+<ul>
+  <li>Social media icons are not provided in the demo, with placeholder icons in their place. Consult <a href="https://www.bbc.co.uk/gel/guidelines/iconography">GEL's iconography docs</a></li>
+  <li>Standard menu buttons are discussed at length in <a href="https://inclusive-components.design/menus-menu-buttons/">Menus &#x26; Menu Buttons</a>.</li>
+  <li>The pointer shapes for the bubbles are considered a progressive enhancement and are created using <code>clip-path</code> in supporting browsers. You can achieve a similar effect with borders or a background image but be aware that these techniques might fail in Windows High Contrast Mode.</li>
+</ul>
+
+
+        </div>
+    </div>
+</article>
+
+
+<div class="a11y-tuts__footerbanner">
+    <div class="gel-wrap">
+        <div class="gel-layout">
+            <div class="a11y-tuts__icon gel-layout__item gel-2/12@l gel-1/5@xl">
+                <image class="gel-icon gel-icon--large" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../static/images/gel-icon-help.svg" src="../static/images/gel-icon-help.svg" width="100%" height="100%" alt=""></image>
+            </div>
+            <div class="gel-layout__item gel-2/3@l gel-3/5@xl">
+                <h2 class="gel-contribution-banner__title">Could you improve this tutorial?</h2>
+                <p class="gel-contribution-banner-copy gel-great-primer">If you think you could make anything you see here a bit better then become one of <a href="../contributors/">our lovely contributors</a>!</p>
+            </div>
+            <div class="gel-layout__item gel-3/3@l gel-5/5@xl">
+            <p>
+            <small>
+                Copyright &copy; 2018 BBC. The BBC is not responsible for the content of external sites.<br>
+                <a href="http://www.bbc.co.uk/help/web/links/">Read about the BBC's approach to external linking.</a>
+            </small>
+            </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../static/vendor/highlight/highlight.pack.js"></script>
+</body>
+</html>

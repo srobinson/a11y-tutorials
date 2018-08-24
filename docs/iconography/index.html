@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+	<meta charset="utf-8" />
+	<title>Tutorial: Accessible iconography | BBC Accessibility Tutorials</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+    <script src="../static/vendor/fontfaceobserver/font-face-observer.js"></script>
+    <script>
+        (function() {
+            (new FontFaceObserver('ReithSans')).load().then(function () {
+                document.body.className += ' b-reith-sans-font';
+            });
+            (new FontFaceObserver('ReithSerif')).load().then(function () {
+                document.body.className += ' b-reith-serif-font';
+            });
+        })();
+    </script>
+	
+	<link rel="stylesheet" href="../static/vendor/highlight/styles/github.css">
+    <link rel="stylesheet" href="../static/css/main.css?ver-1535106053" />
+</head>
+<body>
+
+<header role="banner" class="header">
+    <div class="a11y-tuts__banner a11y-tuts__headerbanner">
+        <div class="gel-wrap gs-u-clearfix">
+            <div class="a11y-tuts-header__brand">
+                <a class="a11y-tuts-header__brand-logo" href="http://www.bbc.co.uk/">
+                    <svg aria-label="BBC GEL Logo" width="100" height="24">
+                        <title>BBC</title>
+                        <image xlink:href="../static/images/bbc-blocks_grey.svg" src="../static/images/bbc-blocks_grey.png" width="100%" height="100%"></image>
+                    </svg>
+                </a>
+                <!--a class="button a11y-tuts__button" href="http://www.bbc.co.uk/gel">Go to BBC GEL</a-->
+            </div>
+        </div>
+    </div>
+    <div class="a11y-tuts__banner">
+        <div class="gel-wrap gs-u-clearfix">
+            <h1 class="a11y-tuts__sitetitle"><a href="../index.html">Accessibility Tutorials</a></h1>
+        </div>
+    </div>
+</header>
+
+<article class="gel-wrap gs-u-clearfix">
+    <div class="gel-layout">
+        
+        <div class="gel-layout__item gel-1/5@l gel-side-nav">
+            <h2 class="gel-pica gs-u-mb gs-u-mt0">Content</h2>
+            <nav role="navigation" id="side-nav">
+                <ol>
+                    
+                    
+                        <li class="heading-1"><a href="#accessible-iconography" class="gel-side-nav__link">Accessible iconography</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#when-to-use-icons" class="gel-side-nav__link">When to use icons</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#creating-icons" class="gel-side-nav__link">Creating icons</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#avoid-icon-fonts" class="gel-side-nav__link">Avoid icon fonts</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#labeling" class="gel-side-nav__link">Labeling</a></li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#focus" class="gel-side-nav__link">Focus</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#color" class="gel-side-nav__link">Color</a></li>
+                    
+                    
+                    
+                    
+                    
+                    
+                </ol>
+            </nav>
+        </div>
+        
+    
+        <div class="a11y-tut-content gel-layout__item gel-4/5@l">      
+            
+
+<h1 id="accessible-iconography">Accessible iconography</h1>
+<p>The following is a set of accessibility best practices for working with <a href="https://www.bbc.co.uk/gel/guidelines/iconography">BBC icons</a>.</p>
+<h2 id="when-to-use-icons">When to use icons</h2>
+<p>Text is the primary form of communication on the web, and is highly interoperable. Only use icons where additional clarity is sought. Icons may help those with cognitive impairments, and others who find themselves on a page that isn't in their first language.</p>
+<p>In most cases, icons should accompany text. Only where icons are extremely well-established—such as the play and stop buttons of a media player—is it reliable to use them without supplementary text.</p>
+<h2 id="creating-icons">Creating icons</h2>
+<p>A <a href="http://bbc.github.io/gel-iconography/">comprehensive and standardized set</a> of BBC icons is available. It is not recommended you create your own iconography. Cognition depends heavily on convention, and only by using established iconography can you foster familiarity.</p>
+<h2 id="avoid-icon-fonts">Avoid icon fonts</h2>
+<p>The <a href="http://bbc.github.io/gel-iconography/">BBC icons</a> are intended for implementation using inline SVG. Like icon fonts, SVG icons are infinitely scalable without degradation.</p>
+<p>Unlike SVG, icon fonts icons are mapped to unicode points and interpreted as text. This can have accessibility issues. Most icon font sets map their icons to the unicode <a href="https://en.wikipedia.org/wiki/Private_Use_Areas">Private Use Areas</a> in order to avoid overriding established, meaningful characters and symbols. A problem occurs when users set their own fonts, using an extension or user stylesheet: the icons are replaced with 'missing character' symbols. Dyslexic users sometimes set their own fonts for improved legibility.</p>
+<p>Icon font icons mapped to established characters are equally problematic. A close icon mapped to an 'A' would reveal itself as an 'A' when the font is overridden. Also, screen readers would interpret and announce the icon as 'A'.</p>
+<h2 id="labeling">Labeling</h2>
+<p>All interactive controls need accessible labels, whether provided by text nodes or auxiliary attributes like <code>aria-labelledby</code>. Depending on how you incorporate icons into your controls, you need to choose an appropriate labeling method.</p>
+<h3 id="icon-with-text">Icon with text</h3>
+<p>In cases where both the icon and accompanying text are visible, ensure the text is within the control element. The following example is for a download link. Note that the icon must be to the left of the text.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"link/to/download"</span> <span class="hljs-attr">download</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">svg</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">use</span> <span class="hljs-attr">xlink:href</span>=<span class="hljs-string">"assets/svg/gel-icons-core-set.svg#gel-icon-download"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">use</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">svg</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span>></span>Download<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+</code></pre>
+<p>Since the icon is not directly labeled, it will be ignored by assistive technologies and the calculated accessible name for the link will simply be <em>"Download"</em>. Do not provide alternative text / labels for icons where text is already available.</p>
+<p>In the following incorrect example, the SVG takes the <code>img</code> role and an <code>aria-label</code> in order to be perceived as an <code>&#x3C;img /></code> with <code>alt</code> text. The repetitious output becomes <em>"link, download, download"</em>, <em>"link, graphic: download, download"</em> or similar (depending on the assistive software in use).</p>
+<pre><code class="hljs language-html"><span class="hljs-comment">&#x3C;!-- Avoid this --></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"link/to/download"</span> <span class="hljs-attr">download</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">svg</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"img"</span> <span class="hljs-attr">aria-label</span>=<span class="hljs-string">"download"</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">use</span> <span class="hljs-attr">xlink:href</span>=<span class="hljs-string">"assets/svg/gel-icons-core-set.svg#gel-icon-download"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">use</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">svg</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span>></span>Download<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+</code></pre>
+<h3 id="standalone-icon">Standalone icon</h3>
+<p>Where only an icon is provided in the visual design, a supplementary invisible label is needed. The method from the previous section, using <code>role="img"</code> and <code>aria-label</code> is one method. However, <code>aria-label</code> is <a href="http://www.heydonworks.com/article/aria-label-is-a-xenophobe">not a string automatically translated by translation services</a>. Instead, hide the <code>&#x3C;span></code> visually, but leave it available to assistive technologies. Note <code>class="visually-hidden"</code> below:</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"link/to/download"</span> <span class="hljs-attr">download</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">svg</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">use</span> <span class="hljs-attr">xlink:href</span>=<span class="hljs-string">"assets/svg/gel-icons-core-set.svg#gel-icon-download"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">use</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">svg</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"visually-hidden"</span>></span>Download<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+</code></pre>
+<p>The <code>visually-hidden</code> class is formed like this:</p>
+<pre><code class="hljs language-css"><span class="hljs-selector-class">.visually-hidden</span> {
+  <span class="hljs-attribute">clip-path</span>: <span class="hljs-built_in">inset</span>(100%);
+  <span class="hljs-attribute">clip</span>: <span class="hljs-built_in">rect</span>(1px, 1px, 1px, 1px);
+  <span class="hljs-attribute">height</span>: <span class="hljs-number">1px</span>;
+  <span class="hljs-attribute">overflow</span>: hidden;
+  <span class="hljs-attribute">position</span>: absolute;
+  <span class="hljs-attribute">white-space</span>: nowrap;
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">1px</span>;
+}
+</code></pre>
+<h4 id="tooltips">Tooltips</h4>
+<p>If the icon has a <a href="https://en.wikipedia.org/wiki/Tooltip">tooltip</a>, the tooltip can act as the primary label.</p>
+<p>In the following example, the <code>class="tooltip"</code> element provides the label.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"link/to/download"</span> <span class="hljs-attr">download</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">svg</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">use</span> <span class="hljs-attr">xlink:href</span>=<span class="hljs-string">"assets/svg/gel-icons-core-set.svg#gel-icon-download"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">use</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">svg</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"tooltip"</span>></span>Download<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+</code></pre>
+<p>By default, the tooltip would be hidden using <code>display: none</code>. It would be revealed on the <code>:hover</code> and <code>:focus</code> events.</p>
+<pre><code class="hljs language-css"><span class="hljs-selector-attr">[download]</span> <span class="hljs-selector-class">.tooltip</span> {
+  <span class="hljs-attribute">display</span>: none;
+}
+
+<span class="hljs-selector-attr">[download]</span><span class="hljs-selector-pseudo">:hover</span> <span class="hljs-selector-class">.tooltip</span>,
+<span class="hljs-selector-attr">[download]</span><span class="hljs-selector-pseudo">:focus</span> <span class="hljs-selector-class">.tooltip</span> {
+  <span class="hljs-attribute">display</span>: block;
+}
+</code></pre>
+<p><strong>Important:</strong> <a href="https://developer.paciellogroup.com/blog/2012/01/html5-accessibility-chops-title-attribute-use-and-abuse/">Do not rely on the <code>title</code> attribute</a> for your tooltips. These do not appear on focus, and are therefore not keyboard accessible.</p>
+<p>If the tooltip element appears outside the control, associate it to the control element using <code>aria-labelledby</code>. In the following example, <code>aria-labelledby</code> and the tooltip's <code>id</code> share the value "download-tooltip".</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"download-container"</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"link/to/download"</span> <span class="hljs-attr">download</span> <span class="hljs-attr">aria-labelledby</span>=<span class="hljs-string">"download-tooltip"</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">svg</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">use</span> <span class="hljs-attr">xlink:href</span>=<span class="hljs-string">"assets/svg/gel-icons-core-set.svg#gel-icon-download"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">use</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">svg</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"tooltip"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"download-tooltip"</span>></span>Download<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+</code></pre>
+<h2 id="focus">Focus</h2>
+<p>Icons used in controls would rarely need to be focusable themselves, because the (outer) control would receive focus instead. You should not, therefore, add <code>tabindex="0"</code> to icon SVGs.</p>
+<p>Unfortunately, SVGs are focusable by default in Internet Explorer and some versions of Edge. To suppress focus in these browsers, you will need to add <code>focusable="false"</code> to the SVG itself.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"link/to/download"</span> <span class="hljs-attr">download</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">svg</span> <span class="hljs-attr">focusable</span>=<span class="hljs-string">"false"</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">use</span> <span class="hljs-attr">xlink:href</span>=<span class="hljs-string">"assets/svg/gel-icons-core-set.svg#gel-icon-download"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">use</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">svg</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"visually-hidden"</span>></span>Download<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+</code></pre>
+<h2 id="color">Color</h2>
+<p>The usual <a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html">WCAG rules</a> for color contrast apply to icons, although the impact of icons with inadequate contrast is likely to be less critical than text. As with text, the larger the icon the more minimal the impact of low contrast. There is no good reason, however, to consider low contrast combinations under any circumstances.</p>
+<h3 id="high-contrast-mode">High Contrast Mode</h3>
+<p>In Windows High Contrast Mode, the text color is augmented to become very dark or very light. SVG icons are typically used alongside text like icon font icons. So that they adopt the same high contrast color of the text, use <code>currentColor</code>. For the BBC icons in the <a href="http://bbc.github.io/gel-iconography/">demonstration page</a> this is already implemented. For reference, this is how it would be applied in CSS:</p>
+<pre><code class="hljs language-css"><span class="hljs-selector-tag">svg</span> {
+  <span class="hljs-attribute">fill</span>: currentColor;
+}
+</code></pre>
+<p>Note that SVG uses <code>fill</code>, not <code>color</code>.</p>
+<h3 id="color-independence">Color independence</h3>
+<p>Controls often exist in changing states: active, disabled etc. It's important these states are not communicated in color alone, as outlined in <a href="https://www.w3.org/TR/WCAG20/#visual-audio-contrast-without-color">WCAG 1.4.1 Use of Color</a>. Otherwise they will not be perceivable to some color blind users, and others using non-color displays.</p>
+<p>The movement icons get around this by using a diagonal line-through style for the "off" state (pictured).</p>
+<p><img src="./assets/movement.png" alt="Movement on and movement off icons, with a line through the off version from top right to bottom left">.</p>
+
+
+        </div>
+    </div>
+</article>
+
+
+<div class="a11y-tuts__footerbanner">
+    <div class="gel-wrap">
+        <div class="gel-layout">
+            <div class="a11y-tuts__icon gel-layout__item gel-2/12@l gel-1/5@xl">
+                <image class="gel-icon gel-icon--large" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../static/images/gel-icon-help.svg" src="../static/images/gel-icon-help.svg" width="100%" height="100%" alt=""></image>
+            </div>
+            <div class="gel-layout__item gel-2/3@l gel-3/5@xl">
+                <h2 class="gel-contribution-banner__title">Could you improve this tutorial?</h2>
+                <p class="gel-contribution-banner-copy gel-great-primer">If you think you could make anything you see here a bit better then become one of <a href="../contributors/">our lovely contributors</a>!</p>
+            </div>
+            <div class="gel-layout__item gel-3/3@l gel-5/5@xl">
+            <p>
+            <small>
+                Copyright &copy; 2018 BBC. The BBC is not responsible for the content of external sites.<br>
+                <a href="http://www.bbc.co.uk/help/web/links/">Read about the BBC's approach to external linking.</a>
+            </small>
+            </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../static/vendor/highlight/highlight.pack.js"></script>
+</body>
+</html>

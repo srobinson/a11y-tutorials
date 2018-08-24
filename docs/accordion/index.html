@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+	<meta charset="utf-8" />
+	<title>Tutorial: Accessible Accordion | BBC Accessibility Tutorials</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+    <script src="../static/vendor/fontfaceobserver/font-face-observer.js"></script>
+    <script>
+        (function() {
+            (new FontFaceObserver('ReithSans')).load().then(function () {
+                document.body.className += ' b-reith-sans-font';
+            });
+            (new FontFaceObserver('ReithSerif')).load().then(function () {
+                document.body.className += ' b-reith-serif-font';
+            });
+        })();
+    </script>
+	
+	<link rel="stylesheet" href="../static/vendor/highlight/styles/github.css">
+    <link rel="stylesheet" href="../static/css/main.css?ver-1535106053" />
+</head>
+<body>
+
+<header role="banner" class="header">
+    <div class="a11y-tuts__banner a11y-tuts__headerbanner">
+        <div class="gel-wrap gs-u-clearfix">
+            <div class="a11y-tuts-header__brand">
+                <a class="a11y-tuts-header__brand-logo" href="http://www.bbc.co.uk/">
+                    <svg aria-label="BBC GEL Logo" width="100" height="24">
+                        <title>BBC</title>
+                        <image xlink:href="../static/images/bbc-blocks_grey.svg" src="../static/images/bbc-blocks_grey.png" width="100%" height="100%"></image>
+                    </svg>
+                </a>
+                <!--a class="button a11y-tuts__button" href="http://www.bbc.co.uk/gel">Go to BBC GEL</a-->
+            </div>
+        </div>
+    </div>
+    <div class="a11y-tuts__banner">
+        <div class="gel-wrap gs-u-clearfix">
+            <h1 class="a11y-tuts__sitetitle"><a href="../index.html">Accessibility Tutorials</a></h1>
+        </div>
+    </div>
+</header>
+
+<article class="gel-wrap gs-u-clearfix">
+    <div class="gel-layout">
+        
+        <div class="gel-layout__item gel-1/5@l gel-side-nav">
+            <h2 class="gel-pica gs-u-mb gs-u-mt0">Content</h2>
+            <nav role="navigation" id="side-nav">
+                <ol>
+                    
+                    
+                        <li class="heading-1"><a href="#accessible-accordion" class="gel-side-nav__link">Accessible Accordion</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#semantics" class="gel-side-nav__link">Semantics</a></li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#interaction" class="gel-side-nav__link">Interaction</a></li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#visual-design-requirements" class="gel-side-nav__link">Visual design requirements</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#demonstration" class="gel-side-nav__link">Demonstration</a></li>
+                    
+                    
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#variants-and-caveats" class="gel-side-nav__link">Variants and caveats</a></li>
+                    
+                    
+                </ol>
+            </nav>
+        </div>
+        
+    
+        <div class="a11y-tut-content gel-layout__item gel-4/5@l">      
+            
+
+<h1 id="accessible-accordion">Accessible Accordion</h1>
+<p>The following is intended to be read alongside the <a href="https://www.bbc.co.uk/gel/guidelines/accordion">GEL Accordion page</a>. In fact, you should probably read that one first. Here, we'll just cover the technical requirements to make tab interfaces as accessible as possible.</p>
+<p>The implementation to come is:</p>
+<ul>
+  <li>Written with plain CSS and ES5 Javascript (<em>no build process assumed</em>)</li>
+  <li>Lacking any dependencies (<em>for maximum portability and minimum payload</em>)</li>
+  <li>Based on progressive enhancement (<em>the HTML is fine without the Javascript or the CSS</em>)</li>
+  <li>Is editor friendly (<em>can be easily dropped into HTML and/or markdown files</em>)</li>
+</ul>
+<h2 id="semantics">Semantics</h2>
+<h3 id="initial-html">Initial HTML</h3>
+<p>There are a couple of different ways you can mark up the basic content to be enhanced into an accordion interface. One way is to write a succession of sections, introduced by headings each of an equal level.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"accordion"</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">section</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span>></span>Section 1<span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>Lorem ipsum dolor sit amet...<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">section</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">section</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span>></span>Section 2<span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>Pellentesque facilisis...<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">section</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">section</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span>></span>Section 3<span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>Nam condimentum lobortis...<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">section</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">section</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span>></span>Section 4<span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>Suspendisse pharetra nec...<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">section</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+</code></pre>
+<p>Both the heading elements and <code>&#x3C;section></code>s provide structure and navigation cues in screen reader software. For example, the <kbd>R</kbd> key in JAWS lets one move between regions (<code>&#x3C;section></code> elements implicitly have region roles).</p>
+<p>Alternatively, and depending on the context, you might consider a list a better choice:</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"accordion"</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span>></span>Section 1<span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>Lorem ipsum dolor sit amet...<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span>></span>Section 2<span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>Pellentesque facilisis...<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span>></span>Section 3<span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>Nam condimentum lobortis...<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span>></span>Section 4<span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>Suspendisse pharetra nec...<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">ul</span>></span>
+</code></pre>
+<p>Lists also provide navigation shortcuts in screen reader software. For example, NVDA provides <kbd>L</kbd> for switching between lists and <kbd>I</kbd> for switching between list items. The added advantage of a list is that, upon being first identified, it will enumerate the items available. This gives assistive software users an idea of how much content is present before they embark on traversing it.</p>
+<p>The accordion constructor of the <a href="#demonstation">demonstration</a> to follow gives the option — as the second argument — of forcing list semantics with ARIA. This allows you to use simple <code>&#x3C;section></code>s or just <code>&#x3C;div></code>s at the outset and before enhancement.</p>
+<h3 id="enhanced-html">Enhanced HTML</h3>
+<p>Assuming <code>&#x3C;section></code> are used in the initial HTML, and list semantics are requested, this is what the augmented HTML would look like after initialization:</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"accordion accordion-interface"</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"list"</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">section</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"listitem"</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"accordion-interface-header"</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span>></span>Section 1<span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">button</span> <span class="hljs-attr">aria-expanded</span>=<span class="hljs-string">"false"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">svg</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"20"</span> <span class="hljs-attr">viewbox</span>=<span class="hljs-string">"0 0 20 20"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"20"</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">polyline</span> <span class="hljs-attr">points</span>=<span class="hljs-string">"4 4, 10 16, 16 4"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">polyline</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">svg</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"visually-hidden"</span>></span>Open Section 1<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"accordion-interface-drawer"</span> <span class="hljs-attr">hidden</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>Lorem ipsum dolor sit amet...<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">section</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">section</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"listitem"</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"accordion-interface-header"</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"section2"</span>></span>Section 2<span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">button</span> <span class="hljs-attr">aria-expanded</span>=<span class="hljs-string">"false"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">svg</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"20"</span> <span class="hljs-attr">viewbox</span>=<span class="hljs-string">"0 0 20 20"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"20"</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">polyline</span> <span class="hljs-attr">points</span>=<span class="hljs-string">"4 4, 10 16, 16 4"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">polyline</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">svg</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"visually-hidden"</span>></span>Open Section 2<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"accordion-interface-drawer"</span> <span class="hljs-attr">hidden</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>Pellentesque facilisis...<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">section</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">section</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"listitem"</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"accordion-interface-header"</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span>></span>Section 3<span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">button</span> <span class="hljs-attr">aria-expanded</span>=<span class="hljs-string">"false"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">svg</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"20"</span> <span class="hljs-attr">viewbox</span>=<span class="hljs-string">"0 0 20 20"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"20"</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">polyline</span> <span class="hljs-attr">points</span>=<span class="hljs-string">"4 4, 10 16, 16 4"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">polyline</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">svg</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"visually-hidden"</span>></span>Open Section 3<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"accordion-interface-drawer"</span> <span class="hljs-attr">hidden</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>Nam condimentum lobortis est eu maximus...<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">section</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">section</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"listitem"</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"accordion-interface-header"</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span>></span>Section 4<span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">button</span> <span class="hljs-attr">aria-expanded</span>=<span class="hljs-string">"false"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">svg</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"20"</span> <span class="hljs-attr">viewbox</span>=<span class="hljs-string">"0 0 20 20"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"20"</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">polyline</span> <span class="hljs-attr">points</span>=<span class="hljs-string">"4 4, 10 16, 16 4"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">polyline</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">svg</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"visually-hidden"</span>></span>Open Section 4<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"accordion-interface-drawer"</span> <span class="hljs-attr">hidden</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>Suspendisse pharetra nec neque...<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">section</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+</code></pre>
+<p>Let's unpack that new structure, piece by piece.</p>
+<table>
+  <caption>Restructured HTML</caption>
+  <tbody>
+    <tr>
+      <th scope="row"><code>role="list"</code></th>
+      <td>The parent element take <code>role="list"</code>, making it a <code>&#x3C;ul></code> in the accessibility tree.</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>role="listitem"</code></th>
+      <td>Accordingly, each accordion item must have <code>role="listitem"</code>. Note that this will override the region role of <code>&#x3C;section></code> here.</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>accordion-interface-header</code> and <code>accordion-interface-drawer</code></th>
+      <td>Each item is divided into two: a header and body ('drawer'). At the outset, the drawer is hidden using the <code>hidden</code> property. To support older user agents ensure you include <code>[hidden] { display: none }</code> in your CSS. This property behaves like <code>display: none</code> by hiding the subject DOM tree from assistive technologies and remove its contents from tab order. Keyboard users are therefore able to jump directly between header buttons.</td>
+    </tr>
+    <tr>
+      <th scope="row">The button</th>
+      <td>A button is supplied for toggling the display of the drawer, with the following faetures:
+        <ul>
+          <li><code>aria-expanded</code>: This ARIA attribute communicates whether the subject drawer is in an expanded (<code>true</code>) or collapsed (<code>false</code>) state</li>
+          <li><strong>Visually hidden text:</strong> Because the state is being toggled, the label must persist. Screen reader users will hear something similar to _"open [section name], toggle button, expanded"_ and _"open [section name], toggle button, collapsed"_. A visually hidden <code>&#x3C;span></code> is prefered over an <code>aria-label</code> because <a href="http://www.heydonworks.com/article/aria-label-is-a-xenophobe"><code>aria-label</code> is not translated</a>. The <code>visually-hidden</code> (but available to assistive technologies) class is available in the <a href="assets/demo1.html">demo</a>.</li>
+          <li><strong>The SVG:</strong> A small inline SVG is provided for performance. It uses <code>currentColor</code> to ensure it respects schemes chosen in Windows High Contrast Mode.</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h2 id="interaction">Interaction</h2>
+<h3 id="general-behavior">General behavior</h3>
+<p>The enhancement in experience offered by an accordion is that the user is afforded an overview of the sections available to read. An accordion is its own table of contents. Accordions also reduce the amount of scrolling required, and make it less easy to get 'lost' among longform content.</p>
+<p>The toggle function at the heart of the <a href="assets/Accordion.js">demonstration script</a> is quite simple:</p>
+<pre><code class="hljs language-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">toggle</span>(<span class="hljs-params">button, drawer</span>) </span>{
+  <span class="hljs-keyword">var</span> expanded = button.getAttribute(<span class="hljs-string">'aria-expanded'</span>) === <span class="hljs-string">'true'</span> || <span class="hljs-literal">false</span>;
+  button.setAttribute(<span class="hljs-string">'aria-expanded'</span>, !expanded);
+  drawer.hidden = !drawer.hidden;
+}
+</code></pre>
+<p>When a user clicks or taps anywhere on a header, the item's 'drawer' is opened to show the drawer content. The SVG arrow upends to indicate that the next action will close the drawer.</p>
+<h3 id="keyboard-behavior">Keyboard behavior</h3>
+<p>Accordions have an added advantage for keyboard users. By removing the contents of closed accordion items from focus order, it's faster and easier to switch between the different sections, bringing only requested content into focus order.</p>
+<p>Keyboard users operate the provided toggle <code>&#x3C;button></code> directly by focusing and activating it with either the <kbd>Space</kbd> or <kbd>Enter</kbd> keys. Note that the only reason mouse and touch users can click <em>anywhere</em> on the bar is because the action is delegated to the button:</p>
+<pre><code class="hljs language-js"><span class="hljs-comment">// Add listener to header</span>
+header.addEventListener(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{
+  <span class="hljs-keyword">if</span> (e.target !== button) {
+    button.click();
+  }
+});
+</code></pre>
+<h3 id="screen-reader-behavior">Screen reader behavior</h3>
+<p>As covered, where list semantics are present, the list is identified and its items enumerated. For example, if I navigate to the accordion list in VoiceOver for OSX using <kbd>Ctrl</kbd> + <kbd>Option</kbd> + <code>→</code>, I will hear <em>"list, four items"</em>.</p>
+<p>If, instead, I am navigating by <kbd>Tab</kbd> and I focus the first <code>&#x3C;button></code>, I will hear <em>"open section 1, collapsed button, list, four items"</em>. When I activate the button, VoiceOver immediately feeds back by saying <em>"Open Section 1, expanded button"</em>. The opened content is easy to find because it is next in source order.</p>
+<h2 id="visual-design-requirements">Visual design requirements</h2>
+<p>The visual design of the demo follows <a href="https://www.bbc.co.uk/gel/guidelines/accordion">advice provided in the GEL Accordion page</a>.</p>
+<p>In addition, the recommended hover style is also mapped to <code>:focus-within</code>. That is, where <code>:focus-within</code> is supported, the whole header appears focused rather than just the focused button. Note that the focus style for the button is only removed <em>if</em> <code>:focus-within</code> is supported. This means older user agents still get a basic focus style.</p>
+<pre><code class="hljs language-css"><span class="hljs-selector-class">.accordion-interface-header</span><span class="hljs-selector-pseudo">:hover</span>,
+<span class="hljs-selector-class">.accordion-interface-header</span><span class="hljs-selector-pseudo">:focus-within</span> {
+  <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#c8c8c8</span>;
+}
+
+<span class="hljs-selector-class">.accordion-interface-header</span><span class="hljs-selector-pseudo">:focus-within</span> <span class="hljs-selector-tag">button</span><span class="hljs-selector-pseudo">:focus</span> {
+  <span class="hljs-attribute">outline</span>: none;
+}
+</code></pre>
+<h2 id="demonstration">Demonstration</h2>
+<p>A <a href="assets/demo1.html">working demonstration</a> of the discussed implementation is available for you to explore.</p>
+<p>Note the initialization which accepts two arguments:</p>
+<ul>
+  <li>The node you wish to transform into an accordion interface (<em>DOM node</em>)</li>
+  <li>Whether to enforce list semantics, which is not necessary if a list is used for the initial HTML (<em>Boolean</em>, default: <code>false</code>)</li>
+</ul>
+<h3 id="initialization">Initialization</h3>
+<pre><code class="hljs language-js"><span class="hljs-comment">// Initialize</span>
+<span class="hljs-keyword">var</span> accordionElem = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'.accordion'</span>);
+<span class="hljs-keyword">var</span> accordion = <span class="hljs-keyword">new</span> Accordion(accordionElem);
+</code></pre>
+<p>To enforce list semantics, just add <code>true</code> as the second argument to the constructor:</p>
+<pre><code class="hljs language-js"><span class="hljs-keyword">var</span> accordion = <span class="hljs-keyword">new</span> Accordion(accordionElem, <span class="hljs-literal">true</span>);
+</code></pre>
+<h2 id="variants-and-caveats">Variants and caveats</h2>
+<p>One variant would be to make the toggle button the child of the heading, like so:</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">button</span> <span class="hljs-attr">aria-expanded</span>=<span class="hljs-string">"false"</span>></span>Section 1<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+</code></pre>
+<p>Arguably this provides a better experience to screen reader users because they can effectively navigate to the button <em>as</em> they navigate to the heading and vice versa. That is, they would hear something similar to <em>"Heading level 2, Section 1, button, collapsed"</em>. However, at least in some screen readers, navigating to the heading does not focus the button therein. A second navigation step is still necessary and label inherited by the button omits the explicit "Open..." prefix, so may be unclear on account of repetition.</p>
+<p>If this structure is adopted, one would have to carefully reset the button styles so that they inherited each from the parent heading. The <code>all: inherit</code> declaration is the least verbose solution, but it is not supported in Internet Explorer.</p>
+<pre><code class="hljs language-css"><span class="hljs-selector-tag">h2</span> <span class="hljs-selector-tag">button</span> {
+  <span class="hljs-attribute">all</span>: inherit
+}
+</code></pre>
+
+
+        </div>
+    </div>
+</article>
+
+
+<div class="a11y-tuts__footerbanner">
+    <div class="gel-wrap">
+        <div class="gel-layout">
+            <div class="a11y-tuts__icon gel-layout__item gel-2/12@l gel-1/5@xl">
+                <image class="gel-icon gel-icon--large" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../static/images/gel-icon-help.svg" src="../static/images/gel-icon-help.svg" width="100%" height="100%" alt=""></image>
+            </div>
+            <div class="gel-layout__item gel-2/3@l gel-3/5@xl">
+                <h2 class="gel-contribution-banner__title">Could you improve this tutorial?</h2>
+                <p class="gel-contribution-banner-copy gel-great-primer">If you think you could make anything you see here a bit better then become one of <a href="../contributors/">our lovely contributors</a>!</p>
+            </div>
+            <div class="gel-layout__item gel-3/3@l gel-5/5@xl">
+            <p>
+            <small>
+                Copyright &copy; 2018 BBC. The BBC is not responsible for the content of external sites.<br>
+                <a href="http://www.bbc.co.uk/help/web/links/">Read about the BBC's approach to external linking.</a>
+            </small>
+            </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../static/vendor/highlight/highlight.pack.js"></script>
+</body>
+</html>
