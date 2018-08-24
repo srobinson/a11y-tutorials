@@ -4,118 +4,111 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Tabs Demo</title>
+    <title>Accordion demo</title>
     <style>
       /* Just styles for the document */
-      html { font-family: sans-serif; line-height: 1.5; } * { box-sizing: border-box; } body { max-width: 40rem; margin: 3rem auto; }
+      html { font-family: sans-serif; line-height: 1.5; } * { box-sizing: border-box; } body { max-width: 60rem; margin: 3rem auto; padding: 0 1.5rem; }
     </style>
     <style>
-      /* Demo specific styles */
-      .tab-interface > ul {
-        padding: 2rem;
-        margin: 0;
-        list-style: none;
-        background: #ccc;
+
+      .accordion-interface, .accordion-interface button {
+        color: #575757;
       }
 
-      .tab-interface [role="tablist"] {
+      .accordion-interface button {
+        border: 0;
+        background: none;
         padding: 0;
-        margin: 0;
+      }
+
+      .accordion-interface button[aria-expanded="true"] svg {
+        transform: rotate(180deg);
+      }
+
+      .accordion-interface > section {
+        border-top: 1px solid #575757;
+        border-bottom: 1px solid #575757;
+      }
+
+      .accordion-interface > section + section {
+        border-top: 0;
+      }
+
+      .accordion-interface-header {
         display: flex;
-        background: transparent;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #e2e2e2;
       }
 
-      .tab-interface [role="tablist"] li + li {
-        margin-left: 0.75rem;
+      .accordion-interface-header,
+      .accordion-interface-panel {
+        padding: 0.75rem;
       }
 
-      .tab-interface [role="tabpanel"] {
-        background: #ccc;
-        padding: 2rem;
+      .accordion-interface-header:hover,
+      .accordion-interface-header:focus-within {
+        background-color: #c8c8c8;
       }
 
-      .tab-interface [role="tab"] {
-        font-weight: bold;
-        background: #aaa;
-        text-decoration: none;
-        display: inline-block;
-        padding: 1rem 2rem;
+      .accordion-interface-header * {
+        margin: 0;
       }
 
-      .tab-interface [role="tab"]:focus {
-        outline: none;
-        box-shadow: inset 0 0 0 0.25rem #666;
+      .accordion-interface-header button {
+        margin-left: 1rem;
       }
 
-      .tab-interface [role="tabpanel"]:focus {
-        outline: none;
+      .accordion-interface-header svg {
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 4;
+        stroke-linejoin: miter;
       }
 
-      .tab-interface [role="tablist"] [aria-selected] {
-        background: #ccc;
+      .accordion-interface-panel {
+        background-color: #f5f5f5;
       }
 
-      /* just for this demo file */
-      html {
-        font-family: sans-serif;
-        line-height: 1.5;
-      }
-
-      * {
-        box-sizing: border-box;
-        color: inherit;
+      .visually-hidden {
+        clip-path: inset(100%);
+        clip: rect(1px, 1px, 1px, 1px);
+        height: 1px;
+        overflow: hidden;
+        position: absolute;
+        white-space: nowrap;
+        width: 1px;
       }
     </style>
   </head>
   <body>
-    <h1>Tabs demonstration</h1>
-    <ul>
-      <li>
-        <a href="#section1">Link to a first section/panel</a>
-      </li>
-      <li>
-        <a href="#section-2-subsection">Link to a subsection inside panel 2</a>
-      </li>
-      <li>
-        <a href="#blabla">Link to a non-existant document fragment</a>
-      </li>
-    </ul>
-    <!-- demo HTML -->
-    <div class="tabs">
-      <ul>
-        <li>
-          <a href="#section1">Section 1</a>
-        </li>
-        <li>
-          <a href="#section2">Section 2</a>
-        </li>
-        <li>
-          <a href="#section3">Section 3</a>
-        </li>
-      </ul>
-      <section id="section1">
+    <h1>Accordion demonstration</h1>
+    <!-- start demo HTML -->
+    <div class="accordion">
+      <section>
         <h2>Section 1</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In porttitor <a href="#section3">link to panel 3</a> mi eu enim tristique dapibus. Fusce nibh mauris, rhoncus dictum libero sit amet, malesuada porta eros. Proin interdum leo nec turpis vehicula, nec interdum ipsum dictum. Praesent molestie mattis ex, non cursus massa venenatis et. In et tortor diam. Aenean ut felis mattis, lacinia eros ac, venenatis elit. Phasellus dolor magna, sollicitudin in urna elementum, mollis feugiat elit. Nullam consectetur, nisl sed finibus mattis, sapien nisi ultricies odio, eleifend ullamcorper diam ante a risus. Quisque ac metus varius, pretium metus sed, mollis mi.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris in sem erat. Maecenas vitae lorem eu nulla rutrum porta nec in arcu. Ut at ullamcorper nibh. Ut sagittis posuere eros, in dignissim augue aliquam suscipit. In hac habitasse platea dictumst. In aliquet, purus vitae consequat fermentum, turpis tellus consectetur diam, vel cursus lorem dui non dui.</p>
       </section>
-      <section id="section2">
-        <h2>Section 2</h2>
-        <p>Aliquam erat volutpat. Pellentesque efficitur quam <a href="#section3">link to panel 3</a>, id rutrum velit accumsan. Phasellus posuere lacus eu sagittis viverra. Aliquam nec sapien nec lectus sagittis luctus vel luctus magna. Nullam aliquam justo at justo dictum tempus. Suspendisse tempor ligula ligula, a convallis turpis pharetra eget. Fusce in ante urna. In volutpat euismod felis, vel scelerisque enim pellentesque sit amet. Phasellus elit neque, iaculis quis sollicitudin eget, tincidunt et lorem.</p>
-        <h3 id="section-2-subsection" tabindex="-1">A subsection in Section 2</h3>
-        <p><a href="#section3">link to panel 3</a></p>
+      <section>
+        <h2 id="section2">Section 2</h2>
+        <p>Pellentesque facilisis ante ex, eu malesuada nulla ultrices sed. Nam ligula nulla, tempus nec erat volutpat, ullamcorper sodales dolor. Etiam lobortis fermentum tincidunt. Fusce eleifend sagittis luctus. Sed ut sem libero. Ut vehicula eros non facilisis porta. Vestibulum finibus pellentesque erat. In id lacus neque. Proin sed odio sed nulla aliquet mattis. Vivamus sem odio, vulputate quis augue nec, viverra cursus erat. Phasellus et fermentum felis, sit amet maximus tellus. Cras purus erat, consequat id ullamcorper at, tincidunt id eros.</p>
       </section>
-      <section id="section3">
+      <section>
         <h2>Section 3</h2>
-        <p>Sed rutrum ultricies ullamcorper. Aliquam <a href="#section1">link to panel 1</a>, sed semper orci. Aliquam erat volutpat. Pellentesque efficitur quam eget arcu scelerisque, id rutrum velit accumsan. Phasellus posuere lacus eu sagittis viverra. Aliquam nec sapien nec lectus sagittis luctus vel luctus magna. Nullam aliquam justo at justo dictum tempus. Suspendisse tempor ligula ligula, a convallis turpis pharetra eget. Fusce in ante urna. In volutpat euismod felis, vel scelerisque enim pellentesque sit amet. Phasellus elit neque, iaculis quis sollicitudin eget, tincidunt et lorem.</p>
+        <p>Nam condimentum lobortis est eu maximus. Donec auctor rutrum congue. Vestibulum ac malesuada sapien. Cras sed turpis nibh. Donec at placerat ligula. Ut vehicula tincidunt interdum. Aliquam fermentum ullamcorper ligula at blandit. Donec viverra metus nulla, at egestas ex molestie suscipit.</p>
+        <p>Fusce eleifend sagittis luctus. Sed ut sem libero. Ut vehicula eros non facilisis porta. Vestibulum finibus pellentesque erat. In id lacus neque. Proin sed odio sed nulla aliquet mattis. Vivamus sem odio, vulputate quis augue nec, viverra cursus erat. Phasellus et fermentum felis, sit amet maximus tellus. Cras purus erat, consequat id ullamcorper at, tincidunt id eros.</p>
+      </section>
+      <section>
+        <h2>Section 4</h2>
+        <p>Suspendisse pharetra nec neque at egestas. Sed eget lectus sollicitudin, finibus enim ut, maximus libero. Ut dui ipsum, rhoncus sed nisl ac, efficitur blandit ipsum. Proin dictum massa eu leo vestibulum iaculis. In hac habitasse platea dictumst. Aenean ex nunc, eleifend vitae ipsum gravida, tristique laoreet sem. Suspendisse vel purus in nibh porttitor aliquet aliquam a dolor. Quisque aliquam cursus sem, eu efficitur ipsum vulputate quis. Vestibulum justo turpis, imperdiet ac ornare vitae, rutrum in massa. Aenean in dapibus sem, sed consequat risus. Fusce venenatis viverra vulputate. Nam ultricies tellus ut cursus accumsan. Sed in nulla quis erat hendrerit suscipit ac nec urna. Pellentesque quis massa quam.</p>
       </section>
     </div>
     <!-- end demo HTML -->
-    <script src="Tabbed.js"></script>
+    <script src="Accordion.js"></script>
     <script>
       // Initialize
-      var tabsElems = document.querySelectorAll('.tabs');
-      Array.prototype.forEach.call(tabsElems, function (tabsElem) {
-        var tabInterface = new Tabbed(tabsElem, '400px');
-      });
+      var accordionElem = document.querySelector('.accordion');
+      var accordion = new Accordion(accordionElem, true);
     </script>
   </body>
 </html>
