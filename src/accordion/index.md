@@ -4,10 +4,10 @@ The following is intended to be read alongside the [GEL Accordion page](https://
 
 The implementation to come is:
 
-* Written with plain CSS and ES5 Javascript (_no build process assumed_)
-* Lacking any dependencies (_for maximum portability and minimum payload_)
-* Based on progressive enhancement (_the HTML is fine without the Javascript or the CSS_)
-* Is editor friendly (_can be easily dropped into HTML and/or markdown files_)
+- Written with plain CSS and ES5 Javascript (_no build process assumed_)
+- Lacking any dependencies (_for maximum portability and minimum payload_)
+- Based on progressive enhancement (_the HTML is fine without the Javascript or the CSS_)
+- Is editor friendly (_can be easily dropped into HTML and/or markdown files_)
 
 ## Semantics
 
@@ -181,6 +181,15 @@ function toggle(button, drawer) {
 }
 ```
 
+Note that, when the `click` event is attached to the button, we have to use `e.stopPropagation()`. This prevents the event from firing twice (for the button and its child SVG) thereby opening _and_ closing (or closing and opening) the drawer.
+
+```js
+button.addEventListener('click', function(e) {
+  e.stopPropagation();
+  toggle(button, drawer);
+});
+```
+
 When a user clicks or taps anywhere on a header, the item's 'drawer' is opened to show the drawer content. The SVG arrow upends to indicate that the next action will close the drawer.
 
 ### Keyboard behavior
@@ -227,8 +236,8 @@ A [working demonstration](assets/demo1.html) of the discussed implementation is 
 
 Note the initialization which accepts two arguments:
 
-* The node you wish to transform into an accordion interface (*DOM node*)
-* Whether to enforce list semantics, which is not necessary if a list is used for the initial HTML (*Boolean*, default: `false`)
+- The node you wish to transform into an accordion interface (_DOM node_)
+- Whether to enforce list semantics, which is not necessary if a list is used for the initial HTML (_Boolean_, default: `false`)
 
 ### Initialization
 
@@ -260,6 +269,6 @@ If this structure is adopted, one would have to carefully reset the button style
 
 ```css
 h2 button {
-  all: inherit
+  all: inherit;
 }
 ```

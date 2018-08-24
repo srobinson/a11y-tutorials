@@ -36,7 +36,10 @@ function Accordion(elem, listARIA) {
     header.classList.add('accordion-interface-header');
     header.appendChild(heading);
     var button = document.createElement('button');
-    button.innerHTML = '<svg viewBox="0 0 20 20" width="20" height="20" focusable="false"><polyline points="4 4, 10 16, 16 4"></polyline></svg><span class="visually-hidden">Open '+heading.textContent+'</span>';
+    button.innerHTML =
+      '<svg viewBox="0 0 20 20" width="20" height="20" focusable="false"><polyline points="4 4, 10 16, 16 4"></polyline></svg><span class="visually-hidden">Open ' +
+      heading.textContent +
+      '</span>';
     button.setAttribute('aria-expanded', false);
     header.appendChild(button);
 
@@ -55,7 +58,8 @@ function Accordion(elem, listARIA) {
     section.appendChild(drawer);
 
     // Add toggle handler
-    button.addEventListener('click', function() {
+    button.addEventListener('click', function(e) {
+      e.stopPropagation();
       toggle(button, drawer);
     });
 
