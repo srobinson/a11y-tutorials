@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+	<meta charset="utf-8" />
+	<title>Tutorial: Accessible Cards | BBC Accessibility Tutorials</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+    <script src="../static/vendor/fontfaceobserver/font-face-observer.js"></script>
+    <script>
+        (function() {
+            (new FontFaceObserver('ReithSans')).load().then(function () {
+                document.body.className += ' b-reith-sans-font';
+            });
+            (new FontFaceObserver('ReithSerif')).load().then(function () {
+                document.body.className += ' b-reith-serif-font';
+            });
+        })();
+    </script>
+	
+	<link rel="stylesheet" href="../static/vendor/highlight/styles/github.css">
+    <link rel="stylesheet" href="../static/css/main.css?ver-1533303910" />
+</head>
+<body>
+
+<header role="banner" class="header">
+    <div class="a11y-tuts__banner a11y-tuts__headerbanner">
+        <div class="gel-wrap gs-u-clearfix">
+            <div class="a11y-tuts-header__brand">
+                <a class="a11y-tuts-header__brand-logo" href="http://www.bbc.co.uk/">
+                    <svg aria-label="BBC GEL Logo" width="100" height="24">
+                        <title>BBC</title>
+                        <image xlink:href="../static/images/bbc-blocks_grey.svg" src="../static/images/bbc-blocks_grey.png" width="100%" height="100%"></image>
+                    </svg>
+                </a>
+                <!--a class="button a11y-tuts__button" href="http://www.bbc.co.uk/gel">Go to BBC GEL</a-->
+            </div>
+        </div>
+    </div>
+    <div class="a11y-tuts__banner">
+        <div class="gel-wrap gs-u-clearfix">
+            <h1 class="a11y-tuts__sitetitle"><a href="../index.html">Accessibility Tutorials</a></h1>
+        </div>
+    </div>
+</header>
+
+<article class="gel-wrap gs-u-clearfix">
+    <div class="gel-layout">
+        
+        <div class="gel-layout__item gel-1/5@l gel-side-nav">
+            <h2 class="gel-pica gs-u-mb gs-u-mt0">Content</h2>
+            <nav role="navigation" id="side-nav">
+                <ol>
+                    
+                    
+                        <li class="heading-1"><a href="#accessible-cards" class="gel-side-nav__link">Accessible Cards</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#semantics" class="gel-side-nav__link">Semantics</a></li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#interaction" class="gel-side-nav__link">Interaction</a></li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#visual-design-requirements" class="gel-side-nav__link">Visual design requirements</a></li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#demonstration" class="gel-side-nav__link">Demonstration</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#variants-and-caveats" class="gel-side-nav__link">Variants and caveats</a></li>
+                    
+                    
+                </ol>
+            </nav>
+        </div>
+        
+    
+        <div class="a11y-tut-content gel-layout__item gel-4/5@l">      
+            
+
+<h1 id="accessible-cards">Accessible Cards</h1>
+<p>The following is intended to be read alongside the <a href="https://www.bbc.co.uk/gel/guidelines/cards">GEL Cards page</a>. In fact, you should probably read that one first. Here, we'll just cover the technical requirements to make cards as accessible as possible.</p>
+<h2 id="semantics">Semantics</h2>
+<h3 id="initial-html">Initial HTML</h3>
+<p>The foundation of any performant and accessible component is semantic markup. Where semantic markup is provided, we can defer to standard browser behaviors.</p>
+<p>In the following, which outlines the basic structure of a generic card, there are three sections.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface"</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-img"</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"1.jpg"</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">""</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-text"</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-title"</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"[url]"</span>></span>Title Of Card<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>Description of the card<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">small</span>></span>Attribution<span class="hljs-tag">&#x3C;/<span class="hljs-name">small</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-toolbar"</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Love<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Add<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Share<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">ul</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+</code></pre>
+<p>Let's break down what we have here:</p>
+<table>
+  <caption>Semantic elements</caption>
+  <tbody>
+    <tr>
+      <th scope="row"><code>.card-interface</code></th>
+      <td>
+        <p>This class is added by the <code>Card</code> constructor of the [demonstration](#demonstartion) if it does not exist. It identifies the container for the card. <strong>Important:</strong> Most cards appear as part of packs/decks and these packs must be marked up as lists. In which case, the <code>.card-interface</code> element would be an <code>&#x3C;li></code>.</p>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row"><code>.card-interface-img</code></th>
+      <td>
+        <p>This element houses the image, and can be removed if no image is required. In many implementations, the image for a card is (a) linked and, therefore, (b) takes <code>alt</code> text that labels the link and its action. This is avoided as it represents duplication and an increased number of <kbd>Tab</kbd> stops. The title/heading's link suffices as the main action (see <code>.card-interface-title</code>). The image is a decorative flourish and takes <code>alt=""</code> to suppress its identification is screen reader software. All the pertinent information should be in the visible text (see below).</p>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row"><code>.card-interface-text</code></th>
+      <td>
+        <p>This container houses all of the text content. It is the only child element <em>needed</em> in the composition of the card (the image and toolbar can be removed, where applicable, and without damaging the layout).</p>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row"><code>.card-interface-title</code></th>
+      <td>
+        <p>This should be a heading of the correct level in the document outline. Where cards belong to a list (which most will), each heading must be of the same level, regardless of how 'important' any one or more cards might be deemed. Place featured/important cards first, and don't break the heading structure.</p>
+        <p><strong>Important:</strong> The link wrapping the heading text represents the only element that links to the primary URL/permalink. In some implementations, the entire card is wrapped in a link. This (a) results in a long and confusing label for the link and (b) makes targeting interactive elements <em>inside</em> the link prone to error. The JavaScript in the <a href="#demonstration">demonstration</a> makes the image container clickable by mouse, to increase the targetable area without duplication in assistive technologies, or adding of redundant <kbd>Tab</kbd> stops.</p>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row"><code>.card-interface-toolbar</code></th>
+      <td>
+        <p>This contains a list of actions, facilitated by <code>&#x3C;button></code> elements. Since the actions (<em>love, add, and/or share</em>) do not represent navigating to a new page or section, the <code>&#x3C;a></code> element would be inappropriate. The list semantics groups the actions/controls together as a set of equivalent choices — a tool set.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="enhanced-html">Enhanced HTML</h3>
+<p>The card component should be usable in the absence of JavaScript. The only enhancement, therefore, is to add a default icon, which overlays the image as prescribed in the <a href="https://www.bbc.co.uk/gel/guidelines/cards">GEL Cards page</a>. This is for convenience. The <a href="#demonstration">demonstration</a> renders the default icon of a play button. This can be overridden as the <code>icon</code> property of the options object. A falsey value will mean the rendering of an icon is skipped.</p>
+<h2 id="interaction">Interaction</h2>
+<h3 id="general-behavior">General behavior</h3>
+<p>The user can click on the title/heading or the image (if present) and the link supplied to the title/heading will be activated. The following JavaScript is responsible for handling the image click event to activate the link.</p>
+<pre><code class="hljs language-js"><span class="hljs-comment">// Make the image box clickable</span>
+<span class="hljs-keyword">if</span> (imgBox &#x26;&#x26; titleLink) {
+  imgBox.style.cursor = <span class="hljs-string">'pointer'</span>;
+  imgBox.addEventListener(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    titleLink.click();
+  });
+}
+</code></pre>
+<h3 id="keyboard-behavior">Keyboard behavior</h3>
+<p>The proxying of the click event as described under <strong>General behavior</strong> makes the principle heading/title link the first <kbd>Tab</kbd> stop, eliminating redundancy. From this point, any other controls in the <code>.card-interface-text</code> container will be focused, followed by any controls in <code>.card-interface-toolbar</code>.</p>
+<p>It is recommended the total number of <kbd>Tab</kbd> stops are few, since multiple tab stops make keyboard navigation across multiple cards arduous.</p>
+<h3 id="screen-reader-behavior">Screen reader behavior</h3>
+<ul>
+  <li>The decorative image is suppressed and ignored in in screen reader output.</li>
+  <li>The user can navigate between cards in a list using list and list item shortcut keys</li>
+  <li>The user can navigate between cards using the heading shortcut key (typically <kbd>h</kbd> or a number key representing the appropriate level)</li>
+  <li>The toolbar buttons are identified as belonging to a list and can be switched between using the <kbd>Tab</kbd> key</li>
+</ul>
+<p>Some implementations provide a separate call-to-action in the form of a "read more" or "expand" button. However, this results in undifferentiated link labels in the screen reader link list interfaces. Instead, the unique title/heading doubles as the main interactive control.</p>
+<p><strong>Note:</strong> The specific actions of the individual toolbar buttons are not known at the time of writing. However, if they toggle state, this should be reflected in assistive technologies. For example, it is likely the <em>love</em> button is a simple toggle — click to love; click to unlove. The <code>aria-pressed</code> attribute is appropriate here.</p>
+<pre><code class="hljs language-html"><span class="hljs-comment">&#x3C;!-- unloved --></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">button</span> <span class="hljs-attr">aria-pressed</span>=<span class="hljs-string">"false"</span>></span>Love<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span>
+
+<span class="hljs-comment">&#x3C;!-- loved --></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">button</span> <span class="hljs-attr">aria-pressed</span>=<span class="hljs-string">"true"</span>></span>Love<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span>
+</code></pre>
+<p>Do not change the label along with the state, because this can cause confusion. It should remain "Love" here.</p>
+<h2 id="visual-design-requirements">Visual design requirements</h2>
+<h3 id="image-editorial">Image editorial</h3>
+<p>Images fit the available space of their container without losing their aspect ratio, thanks to <code>object-fit: cover</code> where supported.</p>
+<pre><code class="hljs language-css"><span class="hljs-selector-class">.card-interface-img</span> <span class="hljs-selector-tag">img</span> {
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;
+  <span class="hljs-attribute">height</span>: <span class="hljs-number">100%</span>;
+  <span class="hljs-attribute">object-fit</span>: cover;
+}
+</code></pre>
+<p>This allows the author to adjust the height of the card's image without fear of squashing the image or otherwise breaking the layout. The height is set using the <code>imgHeight</code> property of the constructor's options object.</p>
+<h3 id="consistent-height">Consistent height</h3>
+<p>When the cards are rendered side-by-side, they should share the same height. This can be achieved automatically by making the parent (container) element a FlexBox context.</p>
+<pre><code class="hljs language-css"><span class="hljs-selector-class">.cards</span> {
+  <span class="hljs-attribute">display</span>: flex;
+}
+</code></pre>
+<p>To distribute the card's contents vertically, the card is also made a FlexBox container, with <code>flex-direction: column</code>. The last element in the card is given <code>margin-top: auto</code> so that it is aligned with the bottom of the card's height. Other implementations try to achieve this with <code>position: absolute</code>, but this would mean knowing the height of the last element ahead of time and compensating for it with padding.</p>
+<p><a href="assets/demo1.html#cards-as-a-list">See the demo for multiple cards in a FlexBox list.</a></p>
+<h3 id="card-width">Card width</h3>
+<p>The card width is determined by the author, in the CSS. In the <a href="assets/demo1.html#cards-as-a-list">demo</a> it is set at <code>300px</code>. For a responsive solution, it may be optimal to set the width on the container using CSS grid, where supported.</p>
+<p>In the following example, cards are between <code>300px</code> and <code>1fr</code> in width, depending on the available space. The upshot here is that no 'gaps' become visible as the cards wrap. Because we are using <code>object-fit: cover</code> for the image, the variable width does not break the image layout.</p>
+<pre><code class="hljs language-css">@<span class="hljs-keyword">supports</span> (display: grid) {
+  <span class="hljs-selector-class">.cards</span> {
+    <span class="hljs-attribute">display</span>: grid;
+    <span class="hljs-attribute">grid-template-columns</span>: <span class="hljs-built_in">repeat</span>(auto-fill, minmax(300px, 1fr));
+    <span class="hljs-attribute">grid-column-gap</span>: <span class="hljs-number">1.5rem</span>;
+    <span class="hljs-attribute">grid-row-gap</span>:<span class="hljs-number">1.5rem</span>;
+  }
+}
+</code></pre>
+<p><strong>Note:</strong> It is suggested that fallback CSS is used for where CSS grid is not supported. In the <a href="assets/demo1.html#cards-as-a-list">demo</a> a fixed width, floats, and margins are used, then undone where CSS Grid is supported.</p>
+<pre><code class="hljs language-css"><span class="hljs-comment">/* group styles */</span>
+<span class="hljs-selector-class">.card-interface-group</span> <span class="hljs-selector-class">.card-interface</span> {
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">300px</span>;
+  <span class="hljs-attribute">float</span>: left;
+  <span class="hljs-attribute">margin-right</span>: <span class="hljs-number">1.5rem</span>;
+}
+
+@<span class="hljs-keyword">supports</span> (display: grid) {
+  <span class="hljs-selector-class">.card-interface-group</span> {
+    <span class="hljs-attribute">display</span>: grid;
+    <span class="hljs-attribute">grid-template-columns</span>: <span class="hljs-built_in">repeat</span>(auto-fill, minmax(300px, 1fr));
+    <span class="hljs-attribute">grid-column-gap</span>: <span class="hljs-number">1.5rem</span>;
+    <span class="hljs-attribute">grid-row-gap</span>:<span class="hljs-number">1.5rem</span>;
+  }
+
+  <span class="hljs-selector-class">.card-interface-group</span> <span class="hljs-selector-class">.card-interface</span> {
+    <span class="hljs-attribute">width</span>: auto;
+    <span class="hljs-attribute">float</span>: none;
+    <span class="hljs-attribute">margin-right</span>: <span class="hljs-number">0</span>;
+  }
+}
+</code></pre>
+<h3 id="the-icon">The icon</h3>
+<p>The default icon is a small inline SVG, using <code>currentColor</code> to ensure that Windows High Contrast mode is respected and the fill changes color in line with the surrounding text. The <code>focusable="false"</code> attribution is also included, because Internet Explorer and early versions of Edge make SVGs focusable by default.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">svg</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">"currentColor"</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">"0 0 20 20"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"20"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"20"</span> <span class="hljs-attr">focusable</span>=<span class="hljs-string">"false"</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">polyline</span> <span class="hljs-attr">points</span>=<span class="hljs-string">"2 2, 18 10, 2 18"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">polyline</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">svg</span>></span>
+</code></pre>
+<h2 id="demonstration">Demonstration</h2>
+<p>A <a href="assets/demo1.html">working demonstration</a> of the discussed implementation is available for you to explore.</p>
+<p>Note the initialization which accepts two arguments:</p>
+<ol>
+  <li>The node you wish to transform into a card</li>
+  <li>
+    <p>An options object</p>
+    <ul>
+      <li><code>imgHeight</code>: the height of the image area of the card in pixels (integer; default is <code>200</code>)</li>
+      <li><code>icon</code>: the code for the icon, recommended as inline SVG (string, default is a small SVG using <code>currentColor</code> to support Windows High Contrast Mode)</li>
+    </ul>
+  </li>
+</ol>
+<h2 id="variants-and-caveats">Variants and caveats</h2>
+<p>Where cards have a variable width, it's possible that — in some configurations — they may become quite wide. This may cause a wider-than-optimal <a href="https://en.wikipedia.org/wiki/Line_length">measure</a> for the description and diminish readability. You can cap the measure (line length) using <code>max-width</code>. The optimal measure is between 45 and 75 characters.</p>
+<p>In the following example, the <code>ch</code> unit is used to cap the measure to approximately 60 characters (1 <code>ch</code> is equal to the width of one <code>0</code> character).</p>
+<pre><code class="hljs language-css"><span class="hljs-selector-class">.card-interface</span> <span class="hljs-selector-tag">p</span> {
+  <span class="hljs-attribute">max-width</span>: <span class="hljs-number">60ch</span>;
+}
+</code></pre>
+
+
+        </div>
+    </div>
+</article>
+
+
+<div class="a11y-tuts__footerbanner">
+    <div class="gel-wrap">
+        <div class="gel-layout">
+            <div class="a11y-tuts__icon gel-layout__item gel-2/12@l gel-1/5@xl">
+                <image class="gel-icon gel-icon--large" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../static/images/gel-icon-help.svg" src="../static/images/gel-icon-help.svg" width="100%" height="100%" alt=""></image>
+            </div>
+            <div class="gel-layout__item gel-2/3@l gel-3/5@xl">
+                <h2 class="gel-contribution-banner__title">Could you improve this tutorial?</h2>
+                <p class="gel-contribution-banner-copy gel-great-primer">If you think you could make anything you see here a bit better then become one of <a href="../contributors/">our lovely contributors</a>!</p>
+            </div>
+            <div class="gel-layout__item gel-3/3@l gel-5/5@xl">
+            <p>
+            <small>
+                Copyright &copy; 2018 BBC. The BBC is not responsible for the content of external sites.<br>
+                <a href="http://www.bbc.co.uk/help/web/links/">Read about the BBC's approach to external linking.</a>
+            </small>
+            </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../static/vendor/highlight/highlight.pack.js"></script>
+</body>
+</html>

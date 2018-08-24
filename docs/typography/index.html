@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+	<meta charset="utf-8" />
+	<title>Tutorial: Accessible typography | BBC Accessibility Tutorials</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+    <script src="../static/vendor/fontfaceobserver/font-face-observer.js"></script>
+    <script>
+        (function() {
+            (new FontFaceObserver('ReithSans')).load().then(function () {
+                document.body.className += ' b-reith-sans-font';
+            });
+            (new FontFaceObserver('ReithSerif')).load().then(function () {
+                document.body.className += ' b-reith-serif-font';
+            });
+        })();
+    </script>
+	
+	<link rel="stylesheet" href="../static/vendor/highlight/styles/github.css">
+    <link rel="stylesheet" href="../static/css/main.css?ver-1533303910" />
+</head>
+<body>
+
+<header role="banner" class="header">
+    <div class="a11y-tuts__banner a11y-tuts__headerbanner">
+        <div class="gel-wrap gs-u-clearfix">
+            <div class="a11y-tuts-header__brand">
+                <a class="a11y-tuts-header__brand-logo" href="http://www.bbc.co.uk/">
+                    <svg aria-label="BBC GEL Logo" width="100" height="24">
+                        <title>BBC</title>
+                        <image xlink:href="../static/images/bbc-blocks_grey.svg" src="../static/images/bbc-blocks_grey.png" width="100%" height="100%"></image>
+                    </svg>
+                </a>
+                <!--a class="button a11y-tuts__button" href="http://www.bbc.co.uk/gel">Go to BBC GEL</a-->
+            </div>
+        </div>
+    </div>
+    <div class="a11y-tuts__banner">
+        <div class="gel-wrap gs-u-clearfix">
+            <h1 class="a11y-tuts__sitetitle"><a href="../index.html">Accessibility Tutorials</a></h1>
+        </div>
+    </div>
+</header>
+
+<article class="gel-wrap gs-u-clearfix">
+    <div class="gel-layout">
+        
+        <div class="gel-layout__item gel-1/5@l gel-side-nav">
+            <h2 class="gel-pica gs-u-mb gs-u-mt0">Content</h2>
+            <nav role="navigation" id="side-nav">
+                <ol>
+                    
+                    
+                        <li class="heading-1"><a href="#accessible-typography" class="gel-side-nav__link">Accessible typography</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#font-size" class="gel-side-nav__link">Font size</a></li>
+                    
+                    
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#alignment" class="gel-side-nav__link">Alignment</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#measure" class="gel-side-nav__link">Measure</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#leading-and-white-space" class="gel-side-nav__link">Leading and white space</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#all-caps" class="gel-side-nav__link">All caps</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#links" class="gel-side-nav__link">Links</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#contrast" class="gel-side-nav__link">Contrast</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#unicode-and-emoji" class="gel-side-nav__link">Unicode and emoji</a></li>
+                    
+                    
+                </ol>
+            </nav>
+        </div>
+        
+    
+        <div class="a11y-tut-content gel-layout__item gel-4/5@l">      
+            
+
+<h1 id="accessible-typography">Accessible typography</h1>
+<h2 id="font-size">Font size</h2>
+<p>The most fundamental provision for accessible type is font size. The body <code>font-size</code> must be</p>
+<ol>
+  <li>Reasonably large by default</li>
+  <li>Adjustable by different means</li>
+</ol>
+<p>GEL <a href="https://www.bbc.co.uk/gel/guidelines/typography#type-sizes">type sizes</a> for body text range between 15 and and 18 pixels, depending on the screen dimensions. Although these are prescribed in terms of pixels, they should always be <em>set</em> in relative units such as <code>em</code>s and <code>rem</code>s.</p>
+<p>The reason for this is that a not insignificant number of users (<a href="https://medium.com/@vamptvo/pixels-vs-ems-users-do-change-font-size-5cfb20831773">about the same number as there are Microsoft Edge users</a>) adjust the default font size at a browser or operating system level. Text set in <code>px</code> <em>does not</em> honor that setting.</p>
+<p>Accordingly, the root <code>font-size</code> should be set as a percentage of the user's chosen size, and all other sizes should be relative to this one.</p>
+<pre><code class="hljs language-css"><span class="hljs-selector-pseudo">:root</span> {
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">100%</span>; <span class="hljs-comment">/* the default value; this line is not needed */</span>
+}
+
+<span class="hljs-selector-tag">h2</span> {
+  @include gel-typography("trafalgar"); <span class="hljs-comment">/* translates to 2rem */</span>
+}
+
+<span class="hljs-selector-tag">small</span> {
+  @include gel-typography("brevier") <span class="hljs-comment">/* translates to 0.8125rem */</span>;
+}
+</code></pre>
+<p>Use font sizes in the scale smaller than 'Body Copy' sparingly, and only for supplementary, tangential information. A <a href="https://bbc.github.io/gel-typography-v2/v2">live demonstration of the type scale</a> is available for comparison.</p>
+<h3 id="pinch-zoom">Pinch zoom</h3>
+<p>In addition, be sure not to suppress zooming by touch on handheld devices. This prohibits users from being able to increase font size, along with the size of any other media on the page. Your viewport meta tag should omit <code>user-scalable=no</code> to look like the following:</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"viewport"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"width=device-width, initial-scale=1"</span>></span>
+</code></pre>
+<h2 id="alignment">Alignment</h2>
+<p>There are a number of typographic techniques that have an impact on readers' ability to scan text content. Many of these, including the mandate not to justify text, are covered under <a href="https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-visual-presentation">WCAG 1.4.8 Visual Presentation</a>. Despite this success criterion belonging to the AAA level, you should adhere closely to the advice. Visually dyslexic readers in particular will benefit.</p>
+<p>Justified text (text aligned along both margins) is achieved by varying the spacing between words, disrupting the regularity of the layout and increasing cognitive strain. Instead, align text along the left hand side. Since this is the default behavior in most browsers the following should not be necessary.</p>
+<pre><code class="hljs language-css"><span class="hljs-selector-tag">p</span> {
+  <span class="hljs-attribute">text-align</span>: left;
+}
+</code></pre>
+<h2 id="measure">Measure</h2>
+<p>A measure (line length) that is too long makes it difficult for readers to scan back and find the next line in order to continue. <a href="https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-visual-presentation">WCAG 1.4.8 Visual Presentation</a> recommends a measure of no more than 80 characters, but between 60 and 70 is better still.</p>
+<p>The measure must be:</p>
+<ol>
+  <li>Set using an appropriate unit</li>
+  <li>Allowed to decrease in accordance with the width of its containing element</li>
+</ol>
+<p>A measure set in pixels is not relative to <code>font-size</code>, permitting measure to lengthen as the <code>font-size</code> is decreased. Instead, measure should be set in <code>ch</code>. <code>1ch</code> is roughly equal to the width of one character. Set the value using <code>max-width</code> to allow text wrapping.</p>
+<pre><code class="hljs language-css"><span class="hljs-selector-tag">p</span> {
+  <span class="hljs-attribute">max-width</span>: <span class="hljs-number">65ch</span>;
+}
+</code></pre>
+<h2 id="leading-and-white-space">Leading and white space</h2>
+<p><a href="https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-visual-presentation">WCAG 1.4.8 Visual Presentation</a> recommends a leading (line height) for body text of no less than 1.5. However, this should be treated as a baseline since—as recommended by <a href="http://webtypography.net/2.2.1">The Elements Of Typographic Style</a>—the leading should be chosen to suit the metrics of the font.</p>
+<p>It's most important that the <code>line-height</code> is not hard-coded using the <code>px</code> unit, since this restricts it from adjusting automatically in accordance with <code>font-size</code>. The following uses the unitless multiplier <code>1.5</code> meaning <em>"1.5 times the font size"</em>.</p>
+<pre><code class="hljs language-css"><span class="hljs-selector-tag">p</span> {
+  <span class="hljs-attribute">line-height</span>: <span class="hljs-number">1.5</span>;
+}
+</code></pre>
+<p>A value in <code>rem</code>s is also acceptable, as prescribed automatically when using the <code>gel-typography</code> mixin.</p>
+<p>The most efficient way to manage white space between successive blocks of text while maintaining a good <a href="https://24ways.org/2006/compose-to-a-vertical-rhythm">vertical rhythm</a> is to make each space a multiple of the line height. Typically, paragraphs are spaced using one whole line. In the following example, successive paragraphs receive a margin of <code>1.5em</code> to separate them.</p>
+<pre><code class="hljs language-stylus"><span class="hljs-selector-tag">p</span> + <span class="hljs-selector-tag">p</span> {
+  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">1.5rem</span>;
+}
+</code></pre>
+<p>Cognition depends heavily on a sense of belonging, so ensure that related elements are separated with more white space than those that are unrelated. For example, the white space between a preceding section and a heading should be greater than the white space between the heading and the first paragraph of its own section.</p>
+<pre><code class="hljs language-css"><span class="hljs-selector-tag">h2</span> {
+  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">3rem</span>; <span class="hljs-comment">/* two lines; maintains vertical rhythm */</span>
+  <span class="hljs-attribute">margin-bottom</span>: <span class="hljs-number">1.5rem</span>;
+}
+</code></pre>
+<h2 id="all-caps">All caps</h2>
+<p>Text set in all caps (<code>text-transform: uppercase</code>) is harder to read because the characters become similarly 'square' in their occupation of space, and harder to differentiate. Many screen readers also have a habit of interpreting any all-caps text as acronyms, reading words out letter-by-letter. It should, therefore, be avoided in almost all cases.</p>
+<p>Acronyms and initialisms must appear in all-caps. Improve their legibility by increasing their <code>letter-spacing</code> by something in the order of 10%, as suggested in <a href="http://webtypography.net/2.1.6">The Elements Of Typographic Style</a>:</p>
+<pre><code class="hljs language-css"><span class="hljs-selector-tag">abbr</span> {
+  <span class="hljs-attribute">letter-spacing</span>: <span class="hljs-number">0.1em</span>;
+}
+</code></pre>
+<p>Do <em>not</em> increase the <code>letter-spacing</code> of sentence-case text. The BBC Reith font is designed for optimal legibility without adjusting the tracking.</p>
+<h2 id="links">Links</h2>
+<p>It is important that links are clearly differentiated from surrounding text. As mandated by <a href="https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-without-color">WCAG 1.4.1 Use of color</a> this means not differentiating links by color alone. Not all people can (accurately) perceive color differences, and not all devices and screens accurately convey color.</p>
+<p>Lean on established convention by providing an underline, using either <code>text-decoration: underline</code> or a border. Where <code>text-decoration</code> is employed, you can increase legibility by preventing the line from intersecting the font's <a href="https://en.wikipedia.org/wiki/Descender">descenders</a>. Note that some browsers now support <code>text-decoration-skip: ink</code> by default.</p>
+<pre><code class="hljs language-css"><span class="hljs-selector-tag">p</span> <span class="hljs-selector-tag">a</span> {
+  <span class="hljs-attribute">text-decoration</span>: underline;
+  <span class="hljs-attribute">text-decoration-skip</span>: ink;
+}
+</code></pre>
+<p>Do not underline text of any other variety, lest it is mistaken for a link. Highlight <code>&#x3C;mark></code> text using a background color instead.</p>
+<h2 id="contrast">Contrast</h2>
+<p>It's imperative there is sufficient contrast between foreground text and backgrounds, in line with <a href="https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast">WCAG 1.4.3 Contrast</a>.</p>
+<p>There are a number of tools for calculating the contrast ratio, including the <a href="https://developer.paciellogroup.com/resources/contrastanalyser/">Color Contrast Analyzer</a> software maintained by The Paciello Group.</p>
+<p>Avoid placing text over complex images such as photographs. Even where the contrast is sufficient, the intersection of characters with complex background shapes and lines impedes legibility.</p>
+<h2 id="unicode-and-emoji">Unicode and emoji</h2>
+<p>The support for unicode differs wildly between platforms, with handheld devices tending to support smaller subsets of unicode points. Where a point is not supported, a square fallback symbol (with a confusing resemblance to a checkbox in some contexts) appears instead.</p>
+<p>
+  In general, avoid unicode symbols in favor of SVG-based icons. Icon fonts in particular should be avoided since they tend to map their icons to esoteric / undesignated unicode points. Where users, such as those with dyslexia, override the author's font settings with a user stylesheet, the icons give way to fallback 'missing glyph'
+  symbols.
+</p>
+<p>Note that screen readers will ignore some unicode points, and interpret others in unexpected ways. For example, the × symbol frequently used for close buttons can be announced as "times". If you <em>are</em> to use this relatively well supported unicode point, be sure to provide an overriding <code>aria-label</code> (1) or—where there is an accompanying text label—hide the symbol with <code>aria-hidden</code> (2).</p>
+<pre><code class="hljs language-html"><span class="hljs-comment">&#x3C;!-- (1) --></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">button</span> <span class="hljs-attr">aria-label</span>=<span class="hljs-string">"close"</span>></span>&#x26;times;<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span>
+
+<span class="hljs-comment">&#x3C;!-- (2) --></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">aria-hidden</span>=<span class="hljs-string">"true"</span>></span>&#x26;times;<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span>></span>Close<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span>
+</code></pre>
+<p>Emoji are rendered via unicode as well, but are more likely to be perceived as images. Some CMSs and social media platforms even replace the code point with their own image. Where the character is used, it's important to <a href="https://tink.uk/accessible-emoji/">present it <em>as</em> an image, with an accompanying text alternative</a>.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"img"</span> <span class="hljs-attr">aria-label</span>=<span class="hljs-string">"Snowman"</span>></span>&#x26;#9731;<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+</code></pre>
+<p>This exposes the character as an image in the accessibility tree, enabling screen readers to identify it as such.</p>
+
+
+        </div>
+    </div>
+</article>
+
+
+<div class="a11y-tuts__footerbanner">
+    <div class="gel-wrap">
+        <div class="gel-layout">
+            <div class="a11y-tuts__icon gel-layout__item gel-2/12@l gel-1/5@xl">
+                <image class="gel-icon gel-icon--large" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../static/images/gel-icon-help.svg" src="../static/images/gel-icon-help.svg" width="100%" height="100%" alt=""></image>
+            </div>
+            <div class="gel-layout__item gel-2/3@l gel-3/5@xl">
+                <h2 class="gel-contribution-banner__title">Could you improve this tutorial?</h2>
+                <p class="gel-contribution-banner-copy gel-great-primer">If you think you could make anything you see here a bit better then become one of <a href="../contributors/">our lovely contributors</a>!</p>
+            </div>
+            <div class="gel-layout__item gel-3/3@l gel-5/5@xl">
+            <p>
+            <small>
+                Copyright &copy; 2018 BBC. The BBC is not responsible for the content of external sites.<br>
+                <a href="http://www.bbc.co.uk/help/web/links/">Read about the BBC's approach to external linking.</a>
+            </small>
+            </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../static/vendor/highlight/highlight.pack.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+
+.card-interface {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+  }
+
+  .card-interface-img {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .card-interface-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .card-interface-icon {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 1rem;
+    background-color: rgba(255,255,255,0.5);
+    line-height: 1;
+  }
+
+  .card-interface-icon svg {
+    height: 1.5rem;
+    width: auto;
+  }
+
+  .card-interface-text {
+    padding: 1rem;
+    flex-grow: 1;
+  }
+
+  .card-interface-text > * + * {
+    margin: 0;
+    margin-top: 0.5rem;
+  }
+
+  .card-interface-title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .card-interface-title a:hover,
+  .card-interface-title a:focus {
+    outline: none;
+    text-decoration: underline;
+  }
+  
+  .card-interface > :last-child {
+    margin-top: auto;
+  }
+
+  .card-interface-toolbar {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.5rem;
+    background-color: #e5e5e5;
+  }
+
+  .card-interface-toolbar li + li {
+    margin-left: 0.5rem;
+  }
+
+  .card-interface-toolbar button {
+    background: none;
+    border: none;
+    font-size: inherit;
+    cursor: pointer;
+  }
+  
+  /* group styles */
+  .card-interface-group .card-interface {
+    width: 300px;
+    float: left;
+    margin-right: 1.5rem;
+  }
+
+  @supports (display: grid) {
+    .card-interface-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-column-gap: 1.5rem;
+      grid-row-gap:1.5rem;
+    }
+
+    .card-interface-group .card-interface {
+      width: auto;
+      float: none;
+      margin-right: 0;
+    }
+  }

@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+	<meta charset="utf-8" />
+	<title>Tutorial: Accessible Carousel | BBC Accessibility Tutorials</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+    <script src="../static/vendor/fontfaceobserver/font-face-observer.js"></script>
+    <script>
+        (function() {
+            (new FontFaceObserver('ReithSans')).load().then(function () {
+                document.body.className += ' b-reith-sans-font';
+            });
+            (new FontFaceObserver('ReithSerif')).load().then(function () {
+                document.body.className += ' b-reith-serif-font';
+            });
+        })();
+    </script>
+	
+	<link rel="stylesheet" href="../static/vendor/highlight/styles/github.css">
+    <link rel="stylesheet" href="../static/css/main.css?ver-1533303910" />
+</head>
+<body>
+
+<header role="banner" class="header">
+    <div class="a11y-tuts__banner a11y-tuts__headerbanner">
+        <div class="gel-wrap gs-u-clearfix">
+            <div class="a11y-tuts-header__brand">
+                <a class="a11y-tuts-header__brand-logo" href="http://www.bbc.co.uk/">
+                    <svg aria-label="BBC GEL Logo" width="100" height="24">
+                        <title>BBC</title>
+                        <image xlink:href="../static/images/bbc-blocks_grey.svg" src="../static/images/bbc-blocks_grey.png" width="100%" height="100%"></image>
+                    </svg>
+                </a>
+                <!--a class="button a11y-tuts__button" href="http://www.bbc.co.uk/gel">Go to BBC GEL</a-->
+            </div>
+        </div>
+    </div>
+    <div class="a11y-tuts__banner">
+        <div class="gel-wrap gs-u-clearfix">
+            <h1 class="a11y-tuts__sitetitle"><a href="../index.html">Accessibility Tutorials</a></h1>
+        </div>
+    </div>
+</header>
+
+<article class="gel-wrap gs-u-clearfix">
+    <div class="gel-layout">
+        
+        <div class="gel-layout__item gel-1/5@l gel-side-nav">
+            <h2 class="gel-pica gs-u-mb gs-u-mt0">Content</h2>
+            <nav role="navigation" id="side-nav">
+                <ol>
+                    
+                    
+                        <li class="heading-1"><a href="#accessible-carousel" class="gel-side-nav__link">Accessible Carousel</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#semantics" class="gel-side-nav__link">Semantics</a></li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#interaction" class="gel-side-nav__link">Interaction</a></li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#visual-design-requirements" class="gel-side-nav__link">Visual design requirements</a></li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#demonstration" class="gel-side-nav__link">Demonstration</a></li>
+                    
+                    
+                    
+                        <li class="heading-2"><a href="#variants-and-caveats" class="gel-side-nav__link">Variants and caveats</a></li>
+                    
+                    
+                </ol>
+            </nav>
+        </div>
+        
+    
+        <div class="a11y-tut-content gel-layout__item gel-4/5@l">      
+            
+
+<h1 id="accessible-carousel">Accessible Carousel</h1>
+<p>The following is intended to be read alongside the <a href="http://www.bbc.co.uk/gel/guidelines/tabs#orb-footer">GEL Carousel page</a>. In fact, you should probably read that one first. Here, we'll just cover the technical requirements to make carousels as accessible as possible.</p>
+<p>The implementation to come is:</p>
+<ul>
+  <li>Written with plain CSS and ES5 JavaScript (<em>no build process assumed</em>)</li>
+  <li>Lacking any dependencies (<em>for maximum portability and minimum payload</em>)</li>
+  <li>Based on progressive enhancement (<em>the HTML is fine without the JavaScript or the CSS</em>)</li>
+  <li>Is editor friendly (<em>can be easily dropped into HTML and/or markdown files</em>)</li>
+</ul>
+<h2 id="semantics">Semantics</h2>
+<h3 id="initial-html">Initial HTML</h3>
+<p>The foundation of any performant and accessible component is semantic markup. Where semantic markup is provided, we can defer to standard browser behaviors.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"carousel"</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">ul</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface"</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-img"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"1.jpg"</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">""</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-text"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-title"</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"[url]"</span>></span>Title Of Card<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>Description of the card<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">small</span>></span>Attribution<span class="hljs-tag">&#x3C;/<span class="hljs-name">small</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-toolbar"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Love<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Add<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Share<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">ul</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface"</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-img"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"2.jpg"</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">""</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-text"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-title"</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"[url]"</span>></span>Title Of Second Card<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>Description of the card that is longer than other descriptions in the set of cards.<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">small</span>></span>Attribution<span class="hljs-tag">&#x3C;/<span class="hljs-name">small</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-toolbar"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Love<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Add<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Share<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">ul</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface"</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-img"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"3.jpg"</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">""</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-text"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-title"</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"[url]"</span>></span>The Third Card's Title<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>Short description of the card<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">small</span>></span>Attribution<span class="hljs-tag">&#x3C;/<span class="hljs-name">small</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-toolbar"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Love<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Add<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Share<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">ul</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface"</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-img"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"4.jpg"</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">""</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-text"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-title"</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"[url]"</span>></span>The Fourth Card<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>Long description of the card because that adds variety in terms of vertical space.<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">small</span>></span>Attribution<span class="hljs-tag">&#x3C;/<span class="hljs-name">small</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-toolbar"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Love<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Add<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Share<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">ul</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-img"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"5.jpg"</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">""</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-text"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-title"</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"[url]"</span>></span>The Fifth Card Is Here<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>Short description here.<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">small</span>></span>Attribution<span class="hljs-tag">&#x3C;/<span class="hljs-name">small</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-toolbar"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Love<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Add<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Share<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">ul</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-img"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"6.jpg"</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">""</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-text"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-title"</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"[url]"</span>></span>The Sixth Card For You<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>Short description here.<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">small</span>></span>Attribution<span class="hljs-tag">&#x3C;/<span class="hljs-name">small</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-toolbar"</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Love<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Add<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Share<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">ul</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">ul</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+</code></pre>
+<p>Note that each 'card' within the carousel is created according to the <a href="https://www.bbc.co.uk/gel/guidelines/cards">GEL Cards page</a> and accompanying <a href="../card">Accessible Cards</a> document. Details on card design is not repeated here.</p>
+<table>
+  <caption>Semantic elements</caption>
+  <tbody>
+    <tr>
+      <th scope="row"><code>&#x3C;ul> and &#x3C;li></code></th>
+      <td>
+        <p>Any sets of related/equivalent content should be marked up as lists. Our set of carousel cards is no different. The practical upshot of using list semantics for screen reader users is twofold:</p>
+        <ul>
+          <li>The list is identified and the number of items is enumerated.</li>
+          <li>Screen readers list keyboard shortcuts are activated, allowing navigation between items.</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row"><code>&#x3C;h2></code></th>
+      <td>
+        <p>Although the headings are part of the <a href="../card">card component</a>, it's worth noting here that headings provide navigation cues to screen reader users, and that each item's principle heading within a list needs to be of the same level.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="enhanced-html">Enhanced HTML</h3>
+<p>The <a href="#demonstration">demonstration script</a> provided enhances this basic semantic HTML in a number of ways pertaining to semantics and interactive behavior. Here is how the enhanced HTML of the <a href="assets/demo1.html">demo</a> looks (some slides have been removed for brevity):</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"carousel carousel-interface"</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"region"</span> <span class="hljs-attr">aria-label</span>=<span class="hljs-string">"Selected videos"</span>></span>
+   <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"carousel-interface-scrollable"</span> <span class="hljs-attr">tabindex</span>=<span class="hljs-string">"0"</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"group"</span> <span class="hljs-attr">aria-label</span>=<span class="hljs-string">"scroll for more"</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"carousel-interface-list"</span>></span>
+         <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface"</span> <span class="hljs-attr">style</span>=<span class="hljs-string">"width: 300px;"</span>></span>
+            <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-img"</span> <span class="hljs-attr">style</span>=<span class="hljs-string">"height: 200px; cursor: pointer;"</span>></span>
+               <span class="hljs-tag">&#x3C;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"1.jpg"</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">""</span>></span>
+               <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-icon"</span>></span>
+                  <span class="hljs-tag">&#x3C;<span class="hljs-name">svg</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">"currentColor"</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">"0 0 20 20"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"20"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"20"</span> <span class="hljs-attr">focusable</span>=<span class="hljs-string">"false"</span>></span>
+                     <span class="hljs-tag">&#x3C;<span class="hljs-name">polyline</span> <span class="hljs-attr">points</span>=<span class="hljs-string">"2 2, 18 10, 2 18"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">polyline</span>></span>
+                  <span class="hljs-tag">&#x3C;/<span class="hljs-name">svg</span>></span>
+               <span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+            <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+            <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-text"</span>></span>
+               <span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-title"</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"[url]"</span>></span>Title Of Card<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+               <span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>Description of the card<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+               <span class="hljs-tag">&#x3C;<span class="hljs-name">small</span>></span>Attribution<span class="hljs-tag">&#x3C;/<span class="hljs-name">small</span>></span>
+            <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+            <span class="hljs-tag">&#x3C;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-toolbar"</span>></span>
+               <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Love<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+               <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Add<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+               <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Share<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+            <span class="hljs-tag">&#x3C;/<span class="hljs-name">ul</span>></span>
+         <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+         <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface"</span> <span class="hljs-attr">style</span>=<span class="hljs-string">"width: 300px; margin-left: 16px;"</span>></span>
+            <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-img"</span> <span class="hljs-attr">style</span>=<span class="hljs-string">"height: 200px; cursor: pointer;"</span>></span>
+               <span class="hljs-tag">&#x3C;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"2.jpg"</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">""</span>></span>
+               <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-icon"</span>></span>
+                  <span class="hljs-tag">&#x3C;<span class="hljs-name">svg</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">"currentColor"</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">"0 0 20 20"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"20"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"20"</span> <span class="hljs-attr">focusable</span>=<span class="hljs-string">"false"</span>></span>
+                     <span class="hljs-tag">&#x3C;<span class="hljs-name">polyline</span> <span class="hljs-attr">points</span>=<span class="hljs-string">"2 2, 18 10, 2 18"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">polyline</span>></span>
+                  <span class="hljs-tag">&#x3C;/<span class="hljs-name">svg</span>></span>
+               <span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+            <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+            <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-text"</span>></span>
+               <span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-title"</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"[url]"</span>></span>Title Of Second Card<span class="hljs-tag">&#x3C;/<span class="hljs-name">a</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+               <span class="hljs-tag">&#x3C;<span class="hljs-name">p</span>></span>Description of the card that is longer than other descriptions in the set of cards.<span class="hljs-tag">&#x3C;/<span class="hljs-name">p</span>></span>
+               <span class="hljs-tag">&#x3C;<span class="hljs-name">small</span>></span>Attribution<span class="hljs-tag">&#x3C;/<span class="hljs-name">small</span>></span>
+            <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+            <span class="hljs-tag">&#x3C;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card-interface-toolbar"</span>></span>
+               <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Love<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+               <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Add<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+               <span class="hljs-tag">&#x3C;<span class="hljs-name">li</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">button</span>></span>Share<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+            <span class="hljs-tag">&#x3C;/<span class="hljs-name">ul</span>></span>
+         <span class="hljs-tag">&#x3C;/<span class="hljs-name">li</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">ul</span>></span>
+   <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+   <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"carousel-interface-buttons"</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">button</span> <span class="hljs-attr">aria-label</span>=<span class="hljs-string">"previous"</span> <span class="hljs-attr">disabled</span>=<span class="hljs-string">""</span>></span>
+         <span class="hljs-tag">&#x3C;<span class="hljs-name">svg</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">"0 0 20 20"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"20"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"20"</span>></span>
+            <span class="hljs-tag">&#x3C;<span class="hljs-name">polyline</span> <span class="hljs-attr">points</span>=<span class="hljs-string">"14 6, 6 10, 14 14"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">polyline</span>></span>
+         <span class="hljs-tag">&#x3C;/<span class="hljs-name">svg</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">button</span> <span class="hljs-attr">aria-label</span>=<span class="hljs-string">"next"</span>></span>
+         <span class="hljs-tag">&#x3C;<span class="hljs-name">svg</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">"0 0 20 20"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"20"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"20"</span>></span>
+            <span class="hljs-tag">&#x3C;<span class="hljs-name">polyline</span> <span class="hljs-attr">points</span>=<span class="hljs-string">"6 6, 14 10, 6 14"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">polyline</span>></span>
+         <span class="hljs-tag">&#x3C;/<span class="hljs-name">svg</span>></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span>
+   <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+</code></pre>
+<p>There's plenty to unpack here, so let's look at each important addition in turn:</p>
+<table>
+  <caption>Semantic elements</caption>
+  <tbody>
+    <tr>
+      <th scope="row">The <code>.carousel-interface</code> wrapper with <code>role="region"</code> and <code>aria-label</code></th>
+      <td>The carousel represents a large amount of content, so is thematically grouped together as a region. Many screen readers provide shortcuts for regions, and encountering one while browsing will announce its role and label, provided here using <code>aria-label</code>. This can be changed from the default 'Selected videos' in the options object upon initialization in the demonstration to follow. The scrollable group and button controls represent the two components of this larger region.</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>.carousel-interface-scrollable</code> with <code>role="group"</code> and <code>tabindex="0"</code></th>
+      <td>The list is wrapped in a container that is made scrollable horizontally using CSS's <code>overflow-x: auto</code>. To ensure this scrolling behavior is accessible by keyboard, the element is made focusable with <code>tabindex="0"</code>. The <code>group</code> role combined with <code>aria-label="scroll for more"</code> ensure screen reader users are aware of the focusable element's purpose too.</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>.carousel-interface-buttons</code></th>
+      <td>A pair of buttons are provided to scroll the region forwards and backwards. The ability to scroll the cards group directly, and incrementally via these buttons, makes the carousel <a href="https://en.wikipedia.org/wiki/Multimodal_interaction">multimodal</a>. That is, users have a choice as to how they operate it, settling for whatever suits them best.</td>
+    </tr>
+  </tbody>
+</table>
+<h2 id="interaction">Interaction</h2>
+<h3 id="general-behavior">General behavior</h3>
+<p>Whether by mouse or keyboard, the user is able to scroll the list of cards left and right. Should the ability to scroll the region not be obvious to them, the button controls achieve the same goal via regular card-width increments.</p>
+<p>The mouse user can scroll by dragging the scrollbar handle, and the trackpad user can use gestures (on a Macbook, it's a two-finger swipe). A custom scrollbar style is employed to give added affordance where supported (see the <a href="#visual-design-requirements">Visual design requirements</a> section).</p>
+<h3 id="keyboard-behavior">Keyboard behavior</h3>
+<p>Let's go over keyboard behavior chronologically, from the user first focusing the the carousel</p>
+<ol>
+  <li>The first <kbd>Tab</kbd> stop reached is the scrollable wrapper element. With this focused, the user can scroll cards into view with the left and right arrow keys.</li>
+  <li>When the user tabs away from this wrapper, the first item they focus is the first <em>visible</em> card's title's link. Cards that are not visible are removed from the focus order so that the experience for a keyboard user is the same as that of a mouse user, with only the visible cards being interactive.</li>
+  <li>When the user tabs from the last visible card, they focus the first of the button controls. They are then able to scroll the cards in increments. When a card appears that they wish to click, they can move back into the card area with <kbd>Shift + Tab</kbd>.</li>
+</ol>
+<p>The focusability (and availability to assistive technologies) of card items is managed using <code>IntersectionObserver</code> where supported. Where it is not supported the keyboard user has a slightly degraded experience, finding that each item is in focus order at all times. Since native scrolling behavior is used, invisible items focused in this scenario are brought into view. No invisible items receive focus, avoiding a <a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/navigation-mechanisms-focus-order.html">2.4.3 Focus Order</a> WCAG 2.0 failure.</p>
+<p>The script adds/removes <code>tabindex="-1"</code> to each interactive element of a card as it goes in or out of view, removing or adding those interactive elements from focus order as appropriate.</p>
+<pre><code class="hljs language-js">  <span class="hljs-comment">// Manage focus order with intersectionObserver</span>
+  <span class="hljs-keyword">if</span> (<span class="hljs-string">'IntersectionObserver'</span> <span class="hljs-keyword">in</span> <span class="hljs-built_in">window</span>) {
+    <span class="hljs-keyword">var</span> observerSettings = {
+      <span class="hljs-attr">root</span>: scrollable
+    }
+
+    <span class="hljs-comment">// The callback function for the observer</span>
+    <span class="hljs-keyword">var</span> callback = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">items, observer</span>) </span>{
+      <span class="hljs-built_in">Array</span>.prototype.forEach.call(items, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">item</span>) </span>{
+        <span class="hljs-comment">// `item.target` is needed to get the node</span>
+        <span class="hljs-keyword">var</span> controls = item.target.querySelectorAll(<span class="hljs-string">'a, button'</span>);
+        <span class="hljs-keyword">if</span> (item.intersectionRatio > <span class="hljs-number">0</span>) {
+          <span class="hljs-built_in">Array</span>.prototype.forEach.call(controls, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">control</span>) </span>{
+            control.removeAttribute(<span class="hljs-string">'tabindex'</span>);
+          });
+          item.target.removeAttribute(<span class="hljs-string">'aria-hidden'</span>);
+        } <span class="hljs-keyword">else</span> {
+          <span class="hljs-built_in">Array</span>.prototype.forEach.call(controls, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">control</span>) </span>{
+            control.setAttribute(<span class="hljs-string">'tabindex'</span>, <span class="hljs-string">'-1'</span>);
+          });
+          item.target.setAttribute(<span class="hljs-string">'aria-hidden'</span>, <span class="hljs-string">'true'</span>);
+        }
+      });
+    }
+
+    <span class="hljs-comment">// Initialize the observer</span>
+    <span class="hljs-keyword">var</span> observer = <span class="hljs-keyword">new</span> IntersectionObserver(callback, observerSettings);
+    <span class="hljs-built_in">Array</span>.prototype.forEach.call(items, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">item</span>) </span>{
+      observer.observe(item);
+    });
+  }
+</code></pre>
+<h4 id="disabled-buttons">Disabled buttons</h4>
+<p>The back and forward buttons can be disabled when they have run out of distance to cover. Accordingly, the back button is disabled at the time of initialization. From this point we need to manage the disabled state of each button in accordance with the scrollable container's <code>scroll</code> event.</p>
+<p>Famously, the <code>scroll</code> event is triggered extremely frequently without intervention. Therefore, for performance's sake, we <a href="https://davidwalsh.name/javascript-debounce-function">debounce</a> the disabling/enabling function:</p>
+<pre><code class="hljs language-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">disableEnable</span>(<span class="hljs-params"></span>) </span>{
+  prev.disabled = scrollable.scrollLeft &#x3C; <span class="hljs-number">1</span>;
+  next.disabled = scrollable.scrollLeft === list.scrollWidth - list.offsetWidth;
+}
+
+<span class="hljs-comment">// Debounce the button disabling function on scroll</span>
+<span class="hljs-keyword">var</span> debounced;
+scrollable.addEventListener(<span class="hljs-string">'scroll'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+  <span class="hljs-built_in">window</span>.clearTimeout(debounced);
+  debounced = setTimeout(disableEnable, <span class="hljs-number">100</span>);
+});
+</code></pre>
+<h3 id="screen-reader-behavior">Screen reader behavior</h3>
+<p>Screen reader interaction is much the same where the user is operating by the <kbd>Tab</kbd> key. In addition, the user can navigate using their list item shortcut (<kbd>i</kbd> in NVDA). Items that are not visible are set to <code>aria-hidden="true"</code>, meaning only visible items can be interacted with.</p>
+<p>Note that disabled buttons (see the <strong>Disabled buttons</strong> section above) are not focusable. However, screen reader users can still browse to these buttons, which will be announced as "dimmed" or "disabled" to them.</p>
+<h3 id="snap-points">Snap points</h3>
+<p>Where supported (currently only in webkit browsers such as iOS and OSX Safari) CSS scroll snap points are implemented. As users with these devices scroll, the child cards snap into alignment along the left edge of the container.</p>
+<pre><code class="hljs language-css"><span class="hljs-selector-class">.carousel-interface-scrollable</span> {
+  <span class="hljs-attribute">scroll-snap-type</span>: mandatory;
+}
+
+<span class="hljs-selector-class">.carousel-interface-list</span> > <span class="hljs-selector-tag">li</span> {
+  <span class="hljs-attribute">scroll-snap-align</span>: start;
+}
+</code></pre>
+<h2 id="visual-design-requirements">Visual design requirements</h2>
+<p>The visual design must meet a number of requirements in terms of usability and tolerance of dynamic content.</p>
+<h3 id="slide-card-design">Slide card design</h3>
+<p>See the <a href="https://www.bbc.co.uk/gel/guidelines/cards">GEL Cards page</a> and accompanying <a href="../card">Accessible Cards</a> document.</p>
+<h3 id="the-scrollbar">The scrollbar</h3>
+<p>The scroll bar gives the carousel interface perceived affordance, as well as showing the user their position within the scrollable area. In many browsers and operating systems, a scrollbar is always shown by default for scrollable regions. On OSX this is not the case, so custom scrollbar styles are provided in supporting (webkit) browsers:</p>
+<pre><code class="hljs language-css"><span class="hljs-selector-class">.carousel-interface-scrollable</span><span class="hljs-selector-pseudo">::-webkit-scrollbar</span> {
+  <span class="hljs-attribute">height</span>: <span class="hljs-number">0.5rem</span>;
+}
+
+<span class="hljs-selector-class">.carousel-interface-scrollable</span><span class="hljs-selector-pseudo">::-webkit-scrollbar-track</span> {
+  <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#ccc</span>;
+}
+
+<span class="hljs-selector-class">.carousel-interface-scrollable</span><span class="hljs-selector-pseudo">::-webkit-scrollbar-thumb</span> {
+  <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#404040</span>;
+}
+</code></pre>
+<p>Note that exposing, and styling, the real scrollbar is much more efficient and reliable than replacing it with a custom JavaScript implementation.</p>
+<h2 id="demonstration">Demonstration</h2>
+<p>A <a href="assets/demo1.html">working demonstration</a> of the discussed implementation is available for you to explore.</p>
+<p>Note the initialization which accepts two arguments:</p>
+<ol>
+  <li>The node you wish to transform into a carousel</li>
+  <li>
+    <p>An options object</p>
+    <ul>
+      <li><code>label</code>: The label for the outer carousel region, included as the value of an <code>aria-label</code> (string; default is 'Selected videos')</li>
+      <li><code>itemWidth</code>: The width in pixels of each slide item (integer; default is <code>300</code>)</li>
+      <li><code>itemMargin</code>: The width in pixels of the margin between items (integer; default is <code>16</code>)</li>
+    </ul>
+  </li>
+</ol>
+<h2 id="variants-and-caveats">Variants and caveats</h2>
+<ul>
+  <li>Some of the features, including the button controls and snap point CSS are enhancements and could be removed for brevity.</li>
+  <li>The <code>IntersectionObserver</code> section of the script could be harnessed to support lazy loading of the images by switching from <code>data-src</code> to a true <code>src</code> when the slide intersects. The fixed image height area means a placeholder image of the same dimensions is not needed in this case, simplifying the implementation detail.</li>
+</ul>
+
+
+        </div>
+    </div>
+</article>
+
+
+<div class="a11y-tuts__footerbanner">
+    <div class="gel-wrap">
+        <div class="gel-layout">
+            <div class="a11y-tuts__icon gel-layout__item gel-2/12@l gel-1/5@xl">
+                <image class="gel-icon gel-icon--large" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../static/images/gel-icon-help.svg" src="../static/images/gel-icon-help.svg" width="100%" height="100%" alt=""></image>
+            </div>
+            <div class="gel-layout__item gel-2/3@l gel-3/5@xl">
+                <h2 class="gel-contribution-banner__title">Could you improve this tutorial?</h2>
+                <p class="gel-contribution-banner-copy gel-great-primer">If you think you could make anything you see here a bit better then become one of <a href="../contributors/">our lovely contributors</a>!</p>
+            </div>
+            <div class="gel-layout__item gel-3/3@l gel-5/5@xl">
+            <p>
+            <small>
+                Copyright &copy; 2018 BBC. The BBC is not responsible for the content of external sites.<br>
+                <a href="http://www.bbc.co.uk/help/web/links/">Read about the BBC's approach to external linking.</a>
+            </small>
+            </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../static/vendor/highlight/highlight.pack.js"></script>
+</body>
+</html>

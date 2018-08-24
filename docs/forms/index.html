@@ -2,7 +2,7 @@
 <html lang="en" class="">
 <head>
 	<meta charset="utf-8" />
-	<title>Tutorial: Building Accessible Forms: Getting Started | BBC Accessibility Tutorials</title>
+	<title>Tutorial: Accessible Form Fields | BBC Accessibility Tutorials</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
     <script src="../static/vendor/fontfaceobserver/font-face-observer.js"></script>
     <script>
@@ -17,7 +17,7 @@
     </script>
 	
 	<link rel="stylesheet" href="../static/vendor/highlight/styles/github.css">
-    <link rel="stylesheet" href="../static/css/main.css?ver-1524149142" />
+    <link rel="stylesheet" href="../static/css/main.css?ver-1533303910" />
 </head>
 <body>
 
@@ -51,15 +51,11 @@
                 <ol>
                     
                     
-                        <li class="heading-1"><a href="#building-accessible-forms-getting-started" class="gel-side-nav__link">Building Accessible Forms: Getting Started</a></li>
+                        <li class="heading-1"><a href="#accessible-form-fields" class="gel-side-nav__link">Accessible Form Fields</a></li>
                     
                     
                     
-                        <li class="heading-2"><a href="#our-old-workhorse-the-form" class="gel-side-nav__link">Our Old Workhorse, the Form</a></li>
-                    
-                    
-                    
-                        <li class="heading-2"><a href="#start-with-standards" class="gel-side-nav__link">Start With Standards</a></li>
+                        <li class="heading-2"><a href="#native-form-elements" class="gel-side-nav__link">Native form elements</a></li>
                     
                     
                     
@@ -67,31 +63,7 @@
                     
                     
                     
-                    
-                    
-                    
-                    
-                    
-                    
-                        <li class="heading-2"><a href="#aria" class="gel-side-nav__link">ARIA</a></li>
-                    
-                    
-                    
-                    
-                    
-                        <li class="heading-2"><a href="#be-clear-be-concise" class="gel-side-nav__link">Be Clear, Be Concise</a></li>
-                    
-                    
-                    
-                        <li class="heading-2"><a href="#dont-surprise" class="gel-side-nav__link">Don&#39;t Surprise</a></li>
-                    
-                    
-                    
-                        <li class="heading-2"><a href="#autocomplete-and-autosuggest" class="gel-side-nav__link">AutoComplete and AutoSuggest</a></li>
-                    
-                    
-                    
-                        <li class="heading-2"><a href="#custom-controls" class="gel-side-nav__link">Custom Controls</a></li>
+                        <li class="heading-2"><a href="#labels" class="gel-side-nav__link">Labels</a></li>
                     
                     
                     
@@ -99,23 +71,9 @@
                     
                     
                     
-                        <li class="heading-2"><a href="#validation" class="gel-side-nav__link">Validation</a></li>
                     
                     
                     
-                    
-                    
-                    
-                    
-                        <li class="heading-2"><a href="#complex-and-multi-page-forms" class="gel-side-nav__link">Complex and Multi-Page Forms</a></li>
-                    
-                    
-                    
-                        <li class="heading-2"><a href="#captcha" class="gel-side-nav__link">CAPTCHA</a></li>
-                    
-                    
-                    
-                        <li class="heading-2"><a href="#notes" class="gel-side-nav__link">Notes</a></li>
                     
                     
                 </ol>
@@ -126,134 +84,156 @@
         <div class="a11y-tut-content gel-layout__item gel-4/5@l">      
             
 
-<h1 id="building-accessible-forms-getting-started">Building Accessible Forms: Getting Started</h1>
-<p><strong>Attention</strong>: This tutorial is a <em>work-in-progress draft</em>. We believe in developing in the open as strongly as we believe you should not reference or link to this document in its current form.</p>
-<p>In this tutorial we walk through a variety of examples of forms that follow the BBC GEL and BBC Accessibility Guidelines.</p>
-<h2 id="our-old-workhorse-the-form">Our Old Workhorse, the Form</h2>
-<p>The humble web form has been quietly toiling away on our web pages for nearly as long as there has been a Web. In fact, forms are so common that we might even be forgiven for taking them for granted, but that would be a mistake. The interactive power that forms unlock: to register and respond, to question and query, can make a huge difference to our users. And for users with disabilities, forms can be even more important, opening up services and utilities that would otherwise be inaccessible.</p>
-<p>With such a long history, not to mention near-universal browser support, it should be a straightforward job to deliver accessible web forms, but it is surprisingly easy to go off track with forms. Let's look at some ways we can keep forms working for everyone.</p>
-<h2 id="start-with-standards">Start With Standards</h2>
-<p>Most accessibility problems can be avoided from the start by applying a few fundamental rules from HTML standards. First among these is that input controls must be properly labelled.</p>
-<h3 id="love-your-labels">Love Your Labels</h3>
-<p>As a form creator, you obviously want the user to provide you with complete and valid information; labels can go a long way to making that happen.</p>
-<p>The HTML <code>label</code> element should generally be your starting point when asking the user for input. This one tag will provide a wide array of built-in usability and accessibility features to your form, automatically and for free.</p>
-<blockquote>
-  <p>"All form controls, such as text inputs, check boxes, select lists, or buttons, must each have a unique label." -- <a href="http://www.bbc.co.uk/guidelines/futuremedia/accessibility/mobile/forms/labelling-form-controls">BBC MAG: Labelling form controls</a></p>
-</blockquote>
-<h3 id="a-simple-example">A Simple Example</h3>
-<figure>
-  <pre><code class="hljs language-stata">&#x3C;<span class="hljs-keyword">label</span> <mark><span class="hljs-keyword">for</span>=<span class="hljs-string">"username"</span></mark>>User Name&#x3C;/<span class="hljs-keyword">label</span>>
-&#x3C;<span class="hljs-keyword">input</span> <span class="hljs-keyword">type</span>=<span class="hljs-string">"text"</span> <mark>id=<span class="hljs-string">"username"</span></mark> name=<span class="hljs-string">"username"</span>>
+<h1 id="accessible-form-fields">Accessible Form Fields</h1>
+<p>This guide sets out the accessible implementation of form fields, covering text inputs, radio buttons, checkboxes, and <code>&#x3C;select></code> elements. For further guidance specific to mobile/native applications, please consult the <a href="http://www.bbc.co.uk/guidelines/futuremedia/accessibility/mobile/forms/labelling-form-controls">BBC Mobile Accessibility Guidelines</a>. For field validation advice, see <a href="/validation">Accessible Form Validation</a>.</p>
+<h2 id="native-form-elements">Native form elements</h2>
+<p>The most efficient and robust way to implement accessible form fields is to use the native <code>&#x3C;input></code>, <code>&#x3C;textarea></code>, and <code>&#x3C;select></code> elements. These elements have predefined and expected behaviors, and automatically communicate their roles, values, and states to assistive technologies.</p>
+<p>
+  It is <em>possible</em> to emulate native form element behavior with WAI-ARIA attribution and JavaScript, but it
+  is rarely a good idea. Implementations tend towards complexity, and are necessarily more likely
+  to break because they depend on JavaScript in order to function.
+</p>
+<pre><code class="hljs language-html"><span class="hljs-comment">&#x3C;!-- native --></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"checkbox"</span>></span>
+
+<span class="hljs-comment">&#x3C;!-- WAI-ARIA (requiring JavaScript to switch the checked state) --></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"checkbox"</span> <span class="hljs-attr">aria-checked</span>=<span class="hljs-string">"false"</span> <span class="hljs-attr">tabindex</span>=<span class="hljs-string">"0"</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
 </code></pre>
-  <figcaption>Use the <code>for</code> attribute to associate a label with its input control.</figcaption>
-</figure>
-<p>The <a href="https://html.spec.whatwg.org/multipage/forms.html#the-label-element">HTML Specification for labels</a> provides us with a list of all the types of elements that can have labels, the so-called "labelable elements". The most common labelable elements are shown below:</p>
+<p>It is also not possible to access and serialize non-native form elements using methods like <code>FormData()</code> because the elements cannot be identified to their parent form. This is because they do not support the <code>name</code> attribute.</p>
+<pre><code class="hljs language-js"><span class="hljs-keyword">var</span> form = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"form"</span>);
+<span class="hljs-keyword">var</span> data = <span class="hljs-keyword">new</span> FormData(form); <span class="hljs-comment">// Would be empty</span>
+</code></pre>
+<h3 id="input-types">Input types</h3>
+<p>Where specialist HTML5 input types are well supported, it is advised they are used in place of the generic (and default) <code>type="text"</code>. The <code>number</code> <code>type</code>, for example, helpfully restricts input to numerals, allows incrementation—typically by providing up and down buttons—and elicits the display of a numerical virtual keyboard.</p>
+<h3 id="visual-design">Visual design</h3>
+<p>It's imperative form elements are easily recognizable, so the authored visual design should not stray far from operating system and user agent conventions.</p>
 <ul>
-  <li>button</li>
-  <li>input (if type is not "hidden")</li>
-  <li>select</li>
-  <li>textarea</li>
+  <li>Radio buttons should be round</li>
+  <li>Checkboxes should be square</li>
+  <li>Select elements should include a downwards pointing arrow</li>
+  <li>Text fields should appear as a bordered box that a user enters text into</li>
 </ul>
-<h3 id="more-label-examples">More Label Examples</h3>
-<figure>
-  <pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"rating"</span>></span>Rating (between 1 and 5):<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
-<span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"range"</span> <span class="hljs-attr">min</span>=<span class="hljs-string">"1"</span> <span class="hljs-attr">max</span>=<span class="hljs-string">"5"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"3"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"rating"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"rating"</span>></span>
+<p>Styling some form elements directly is difficult, but you can 'defer' styles from a visually hidden input to a proxy element. Consider the following markup:</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">label</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"checkbox"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"visually-hidden"</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"fake-checkbox"</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"fake-check"</span> <span class="hljs-attr">aria-hidden</span>=<span class="hljs-string">"true"</span>></span>✓<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text"</span>></span>The label<span class="hljs-tag">&#x3C;/<span class="hljs-name">span</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
 </code></pre>
-  <figcaption>You can use labels for a range of input controls, including the <code>range</code> control!</figcaption>
-</figure>
-<hr>
-<figure>
-  <pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">fieldset</span>></span>
-  <span class="hljs-tag">&#x3C;<span class="hljs-name">legend</span>></span>Will you be attending?<span class="hljs-tag">&#x3C;/<span class="hljs-name">legend</span>></span>
-  
-  <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"attending"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"radio"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"attending_yes"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"yes"</span>></span>
-  <span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"attending_yes"</span>></span>Yes, I plan to attend<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
-  
-  <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"attending"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"radio"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"attending_no"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"no"</span>></span>
-  <span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"attending_no"</span>></span>No, I will not attend<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
+<p>We can style the <code>fake-checkbox</code> element's <code>:focus</code> and <code>:checked</code> states, like so:</p>
+<pre><code class="hljs language-css"><span class="hljs-selector-class">.fake-check</span> {
+  <span class="hljs-attribute">display</span>: none; <span class="hljs-comment">/* hide to begin with */</span>
+}
+
+<span class="hljs-selector-attr">[type="checkbox"]</span><span class="hljs-selector-pseudo">:focus</span> + <span class="hljs-selector-class">.fake-checkbox</span> {
+  <span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0.125rem</span> blue;
+}
+
+<span class="hljs-selector-attr">[type="checkbox"]</span><span class="hljs-selector-pseudo">:checked</span> + <span class="hljs-selector-class">.fake-checkbox</span> <span class="hljs-selector-class">.fake-check</span> {
+  <span class="hljs-attribute">display</span>: inline-block;
+}
+</code></pre>
+<p><strong>Note:</strong> A unicode point (as in the example) can be used, but should be hidden using <code>aria-hidden="true"</code> so that the value is not interpreted in screen readers. A custom SVG would be preferable. Do not use a <code>background-image</code> because it is liable to be eliminated in high contrast themes.</p>
+<h2 id="labels">Labels</h2>
+<p>All controls within a web application need labels to identify them. Typically, <code>&#x3C;button></code>s and links are labeled by their text content. Form elements are conventionally labeled <em>by association</em> to a <code>&#x3C;label></code> element. This associative relationship is created by making the form element's <code>id</code> and the <code>&#x3C;label></code>'s <code>for</code> attribute share the same value. In the following example, the shared value is <code>dog</code>.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"dog"</span>></span>Your dog's name<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"dog"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"dog"</span>></span>
+</code></pre>
+<p>In this example, a screen reader user would hear <em>"Your dog's name, text input"</em> (or similar) upon focusing the <code>&#x3C;input></code>. Since screen reader users tend to traverse forms by focus, from field to field, it is only by associating the label to the field directly that they would hear the label text. An unassociated label would simply be 'skipped over'.</p>
+<p><strong>Note:</strong> It is a common misconception that the <code>name</code> attribute is used in label calculation. Although it often takes the same value as the <code>id</code>, it is only the <code>id</code> that associates the label to the input.</p>
+<h3 id="group-labels">Group labels</h3>
+<p>Sometimes multiple form elements should be grouped together under a common label. The standard method for creating such a group is with the <code>&#x3C;fieldset></code> and <code>&#x3C;legend></code> elements. The <code>&#x3C;legend></code> must be the first child inside the <code>&#x3C;fieldset></code>.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">fieldset</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">legend</span>></span>Group label<span class="hljs-tag">&#x3C;/<span class="hljs-name">legend</span>></span>
+  <span class="hljs-comment">&#x3C;!-- individually labeled elements --></span>
 <span class="hljs-tag">&#x3C;/<span class="hljs-name">fieldset</span>></span>
 </code></pre>
-  <figcaption>You can group related input controls, along with their unique labels, together under a shared <code>legend</code>.<sup id="fnref-1"><a href="#fn-1" class="footnote-ref">1</a></sup></figcaption>
-</figure>
-<h3 id="invisible-labels">Invisible Labels</h3>
-<p>If labels are so useful, is there ever a case where you might want to hide them? Consider a fairly common case where a form is made up of only a single text input box and a button labelled "Search". In this case displaying the label "Search term" before the input box would be redundant, the information being requested is already made obvious by the text shown on the button.</p>
-<figure>
-  <pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">form</span>></span>
-  <span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"visuallyhidden"</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"search_term"</span>></span>Search Term<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
-  <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"search_term"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"search_term"</span>></span>
-  <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"submit"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"Search"</span>></span>
-<span class="hljs-tag">&#x3C;/<span class="hljs-name">form</span>></span>
+<p>This is most important when providing radio button controls: a group of radio buttons, sharing a common <code>name</code> attribute, constitute <em>a single</em> form field and the <code>&#x3C;legend></code> labels this field.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">fieldset</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">legend</span>></span>Your favorite pet<span class="hljs-tag">&#x3C;/<span class="hljs-name">legend</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">label</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"radio"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"favorite-pet"</span>></span>
+    Cat
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">label</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"radio"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"favorite-pet"</span>></span>
+    Dog
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">label</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"radio"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"favorite-pet"</span>></span>
+    Seahorse
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">fieldset</span>></span>
 </code></pre>
-  <figcaption>Making the label vissually hidden makes sense in certain cases.</figcaption>
-</figure>
-<p>Be careful not to take this technique too far however. For example, it would technically be possible to omit the submit button in the example above, relying on users to type <kbd>Enter</kbd> to submit the query, but doing so would also eliminate the only indication of what is expected to be entered in the input box.</p>
-<h3 id="non-text-labels">Non-text Labels</h3>
-<p>Some designs rely heavily on images and icons instead of text to communicate meaning; this is particularly true where the available screen-space is limited. However, this presents an obvious difficulty for low-vision and blind users.</p>
-<h2 id="aria">ARIA</h2>
-<p>The standard <code>label</code> element should always be preferred but there are edge cases where just a simple label might not be sufficient. In cases where visually-impaired user might not get sufficient context from the label alone, adding ARIA can be helpful.</p>
-<h3 id="multiple-labels-for-input">Multiple labels for input</h3>
-<p>In complex layouts, there may be several peices of information visible that combine to give the user information about a form input. For example, imagine a form input that is described by both a table column heading and a table row heading. While the meaning may be clear to a sighted user</p>
-<figure>
-  <pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">h3</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"sender"</span>></span>Sender<span class="hljs-tag">&#x3C;/<span class="hljs-name">h3</span>></span>
-
-<span class="hljs-tag">&#x3C;<span class="hljs-name">div</span>></span>
-    <span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"sender-name-lbl"</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"sender-name"</span>></span>Full Name<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
-    <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"sender-name"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"sender-name"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <mark><span class="hljs-attr">aria-labelledby</span>=<span class="hljs-string">"sender sender-name-lbl"</span></mark>></span>
-<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
-<span class="hljs-tag">&#x3C;<span class="hljs-name">div</span>></span>
-    <span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"sender-email-lbl"</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"sender-email"</span>></span>Email<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
-    <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"sender-email"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"sender-email"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">aria-labelledby</span>=<span class="hljs-string">"sender sender-email-lbl"</span>></span>
-<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
-
-<span class="hljs-tag">&#x3C;<span class="hljs-name">h3</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"recipient"</span>></span>Recipient<span class="hljs-tag">&#x3C;/<span class="hljs-name">h3</span>></span>
-
-<span class="hljs-tag">&#x3C;<span class="hljs-name">div</span>></span>
-    <span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"recipient-name-lbl"</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"recipient-name"</span>></span>Full Name<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
-    <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"recipient-name"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"recipient-name"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <mark><span class="hljs-attr">aria-labelledby</span>=<span class="hljs-string">"recipient recipient-name-lbl"</span></mark>></span>
-<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
-<span class="hljs-tag">&#x3C;<span class="hljs-name">div</span>></span>
-    <span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"recipient-email-lbl"</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"recipient-email"</span>></span>Email<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
-    <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"recipient"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"recipient"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"email"</span> <span class="hljs-attr">aria-labelledby</span>=<span class="hljs-string">"recipient recipient-email-lbl"</span>></span>
-<span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+<p>Note the use of labels <em>wrapping</em> inputs in the above example. Only when wrapping inputs in <code>&#x3C;label></code>s can you omit the <code>for</code> and <code>id</code> association. It is a common pattern for radios and checkboxes.</p>
+<p>It's quite legitimate to place headings inside <code>&#x3C;legend></code>s. In fact, this helps to give your form a semantic structure (navigable by screen reader users) without having to create separate and redundant labels.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">fieldset</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">legend</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span>></span>Group label<span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">legend</span>></span>
+  <span class="hljs-comment">&#x3C;!-- individually labeled elements --></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">fieldset</span>></span>
 </code></pre>
-  <figcaption>An exmple of using ARIA to associate multiple elements to label a single input field.</figcaption>
-</figure>
-<p>Note that if a control has both an associated <code>&#x3C;label></code> and an <code>aria-labelledby</code> attribute, the referenced <code>aria-labelledby</code> text will take precedence and be read out instead of the <code>&#x3C;label></code>.</p>
-<h2 id="be-clear-be-concise">Be Clear, Be Concise</h2>
-<blockquote>
-  <p>"Keep labels and legends succinct to minimise verbosity." -- <a href="http://www.bbc.co.uk/guidelines/futuremedia/accessibility/mobile/forms/grouping-form-elements">BBC Mobile Accessibility Guidelines: Grouping form elements</a></p>
-</blockquote>
-<p>Having clear and concise labels is helpful to everyone but it can be especially helpful to users with reading or comprehension difficulties. Finding the most effective wording is a job that can require careful consideration as well as user testing.</p>
-<figure>
-  <pre><code class="hljs language-html">Not enough information?
-<span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"username"</span>></span>Name<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
-
-Too much information?
-<span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"username"</span>></span>Type your user's name from your account in the box here<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
+<p>The usual rules regarding heading levels and nesting apply. That is, if you were to include a nested fieldset, the heading level should reflect the parent/child structure.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">fieldset</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">legend</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span>></span>Group label<span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">legend</span>></span>
+  <span class="hljs-comment">&#x3C;!-- individually labeled elements --></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">fieldset</span>></span>
+    <span class="hljs-tag">&#x3C;<span class="hljs-name">legend</span>></span><span class="hljs-tag">&#x3C;<span class="hljs-name">h3</span>></span>Nested group label<span class="hljs-tag">&#x3C;/<span class="hljs-name">h3</span>></span><span class="hljs-tag">&#x3C;/<span class="hljs-name">legend</span>></span>
+    <span class="hljs-comment">&#x3C;!-- individually labeled elements --></span>
+  <span class="hljs-tag">&#x3C;/<span class="hljs-name">fieldset</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">fieldset</span>></span>
 </code></pre>
-  <figcaption>Consider the wording of labels to maximise clarity.</figcaption>
-</figure>
-<h2 id="dont-surprise">Don't Surprise</h2>
-<p>You won't get famous for avant-garde page layouts by using the familiar and expected arrangement of label and input control, but you will lighten your user's cognitive-decoding work considerably by being a bit boring. The <a href="https://research.googleblog.com/2014/07/simple-is-better-making-your-web-forms.html">research into the subject of form readability</a> suggests that simple top-down scanning should be encouraged: Keep the label immediately adjacent to, and preferrably just above, its related input control.</p>
-<p>You want the user to complete your form fully and accurately, so make it easy for them to understand.</p>
-<h2 id="autocomplete-and-autosuggest">AutoComplete and AutoSuggest</h2>
-<p>To the extent that enhancements like autoComplete and autoSuggest can be helpful to most users, it's important that these features don't add an unwelcome obstacle to users with disabilities.</p>
-<h2 id="custom-controls">Custom Controls</h2>
-<h3 id="hidden-labels--hidden-controls">Hidden labels / hidden controls</h3>
-<h3 id="inputs-without-forms">Inputs Without Forms?</h3>
-<h2 id="validation">Validation</h2>
-<h3 id="error-messages">Error messages</h3>
-<h3 id="a-note-about-colour-and-error-indicators">A note about colour and error indicators</h3>
-<h2 id="complex-and-multi-page-forms">Complex and Multi-Page Forms</h2>
-<h2 id="captcha">CAPTCHA</h2>
-<h2 id="notes">Notes</h2>
-<div class="footnotes">
-  <hr>
-  <ol>
-    <li id="fn-1">
-      <p>See <a href="http://www.bbc.co.uk/guidelines/futuremedia/accessibility/mobile/forms/grouping-form-elements">BBC Mobile Accessibility Guidelines: Grouping form elements</a></p><a href="#fnref-1" class="footnote-backref">↩</a></li>
-  </ol>
-</div>
+<h3 id="placeholders">Placeholders</h3>
+<p>The <code>placeholder</code> attribute should not supplant the <code>&#x3C;label></code> element as a primary label for the following reasons:</p>
+<ul>
+  <li>Not all assistive technologies support placeholders</li>
+  <li>Some users perceive inputs displaying placeholders as already completed</li>
+  <li>When the placeholder is replaced with a value, no label is available for checking the value against the requirement</li>
+  <li>The default text color for placeholders fails WCAG contrast requirements in many browsers</li>
+</ul>
+<p>Use placeholders sparingly, and as intend, to provide hints. To help differentiate placeholder text from a real value, use an italic style and prefix the placeholder text with <em>"E.g."</em> or similar.</p>
+<h3 id="descriptions">Descriptions</h3>
+<p>Where space permits (and the visual design should allow for this), use descriptions in place of placeholders. Descriptions can simply be part of the <code>&#x3C;label></code> and will therefore be part of accessible label calculation.</p>
+<p>In the following example, the <code>&#x3C;small></code> element is used to demarcate the description visually. By default, it will display smaller text. You can place it on a new line by applying <code>display: block</code>. Note that <code>&#x3C;label></code> elements are inline level, so it is non-conforming to include block elements inside them.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"dog"</span>></span>
+  Your dog's name
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">small</span>></span>For example: 'Doggy McDog-Face'<span class="hljs-tag">&#x3C;/<span class="hljs-name">small</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"dog"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"dog"</span>></span>
+</code></pre>
+<h3 id="invisible-labels">Invisible labels</h3>
+<p>It is strongly recommended that form fields have visible and persistent labels; labels that do not disappear upon focus or input.</p>
+<p>However, in some specific circumstances an invisible but accessible label is acceptable. For example, a single input search form may have a submit button that reads "Search" — effectively providing a label for both the input and the button itself. In this case, you can hide the <code>&#x3C;label></code> visually, using a technique that keeps the label available to assistive technologies.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"search"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"visually-hidden"</span>></span>Your search term<span class="hljs-tag">&#x3C;/<span class="hljs-name">label</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"search"</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"submit"</span>></span>Search<span class="hljs-tag">&#x3C;/<span class="hljs-name">button</span>></span>
+</code></pre>
+<p>The <code>visually-hidden</code> utility class looks like the following. Incorrectly using <code>display: none</code> would hide the label <em>both</em> visually and from assistive technologies.</p>
+<pre><code class="hljs language-css"><span class="hljs-selector-class">.visually-hidden</span> {
+  <span class="hljs-attribute">clip-path</span>: <span class="hljs-built_in">inset</span>(100%);
+  <span class="hljs-attribute">clip</span>: <span class="hljs-built_in">rect</span>(1px, 1px, 1px, 1px);
+  <span class="hljs-attribute">height</span>: <span class="hljs-number">1px</span>;
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">1px</span>;
+  <span class="hljs-attribute">overflow</span>: hidden;
+  <span class="hljs-attribute">position</span>: absolute;
+  <span class="hljs-attribute">white-space</span>: nowrap;
+}
+</code></pre>
+<p>Invisible group labels can work in much the same way:</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">h2</span>></span>Group label<span class="hljs-tag">&#x3C;/<span class="hljs-name">h2</span>></span>
+<span class="hljs-tag">&#x3C;<span class="hljs-name">fieldset</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">legend</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"visually-hidden"</span>></span>Group label<span class="hljs-tag">&#x3C;/<span class="hljs-name">legend</span>></span>
+  <span class="hljs-comment">&#x3C;!-- individually labeled elements --></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">fieldset</span>></span>
+</code></pre>
+<p>In most circumstances group labels, like labels, should be visible. Hence, in the example, the group label is only hidden because a separate heading with the same information is already provided.</p>
+<h3 id="visual-design-1">Visual design</h3>
+<ul>
+  <li>Place labels <em>above</em> form elements. This is especially important on mobile platforms because the invoked virtual keyboard has a habit of obscuring labels to the side or below inputs.</li>
+  <li>As stated in the <a href="http://www.bbc.co.uk/guidelines/futuremedia/accessibility/mobile/forms/form-layout">BBC Mobile Accessibility Guidelines</a>, labels should be placed more closely to their associated form elements.</li>
+  <li>Descriptions should appear below the principle label text, in a smaller font size</li>
+</ul>
 
 
         </div>
