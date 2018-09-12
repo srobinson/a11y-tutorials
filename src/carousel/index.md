@@ -7,7 +7,6 @@ The implementation to come is:
 * Written with plain CSS and ES5 JavaScript (_no build process assumed_)
 * Lacking any dependencies (_for maximum portability and minimum payload_)
 * Based on progressive enhancement (_the HTML is fine without the JavaScript or the CSS_)
-* Is editor friendly (_can be easily dropped into HTML and/or markdown files_)
 
 ## Semantics
 
@@ -140,7 +139,7 @@ Note that each 'card' within the carousel is created according to the [GEL Cards
 
 ### Enhanced HTML
 
-The [demonstration script](#demonstration) provided enhances this basic semantic HTML in a number of ways pertaining to semantics and interactive behavior. Here is how the enhanced HTML of the [demo](assets/demo1.html) looks (some slides have been removed for brevity):
+The [demonstration script](#demonstration) enhances this basic semantic HTML in a number of ways pertaining to semantics and interactive behavior. Here is how the enhanced HTML of the [demo](assets/demo1.html) looks (some slides have been removed for brevity):
 
 ```html
 <div class="carousel carousel-interface" role="region" aria-label="Selected videos">
@@ -220,7 +219,7 @@ There's plenty to unpack here, so let's look at each important addition in turn:
       <code>.carousel-interface-scrollable</code> with <code>role="group"</code> and <code>tabindex="0"</code>
     </th>
     <td>
-      The list is wrapped in a container that is made scrollable horizontally using CSS's <code>overflow-x: auto</code>. To ensure this scrolling behavior is accessible by keyboard, the element is made focusable with <code>tabindex="0"</code>. The <code>group</code> role combined with <code>aria-label="scroll for more"</code> ensure screen reader users are aware of the focusable element's purpose too.
+      The list is wrapped in a container that is made scrollable horizontally using CSS's <code>overflow-x: auto</code>. To ensure this scrolling behavior is accessible by keyboard, the element is made focusable with <code>tabindex="0"</code>. The <code>group</code> role combined with <code>aria-label="scroll for more"</code> ensures screen reader users are aware of the focusable element's purpose too.
     </td>
   </tr>
   <tr>
@@ -228,7 +227,7 @@ There's plenty to unpack here, so let's look at each important addition in turn:
       <code>.carousel-interface-buttons</code>
     </th>
     <td>
-      A pair of buttons are provided to scroll the region forwards and backwards. The ability to scroll the cards group directly, and incrementally via these buttons, makes the carousel <a href="https://en.wikipedia.org/wiki/Multimodal_interaction">multimodal</a>. That is, users have a choice as to how they operate it, settling for whatever suits them best.
+      A pair of buttons are provided to scroll the region forwards and backwards. The ability to scroll the cards group directly, and incrementally via these buttons, makes the carousel <a href="https://en.wikipedia.org/wiki/Multimodal_interaction">multimodal</a>. That is, users have a choice as to how they operate it, and can settle for whatever suits them best.
     </td>
   </tr>
 </table>
@@ -237,61 +236,64 @@ There's plenty to unpack here, so let's look at each important addition in turn:
 
 ### General behavior
 
-Whether by mouse or keyboard, the user is able to scroll the list of cards left and right. Should the ability to scroll the region not be obvious to them, the button controls achieve the same goal via regular card-width increments.
+Whether by mouse or keyboard, the user is able to scroll the list of cards left and right. The buttons improve the experience in two ways:
+
+* They increase the affordance of the component, indicating that it can indeed be scrolled in either direction
+* They offer an alternative means to scoll, and in regular increments
 
 The mouse user can scroll by dragging the scrollbar handle, and the trackpad user can use gestures (on a Macbook, it's a two-finger swipe). A custom scrollbar style is employed to give added affordance where supported (see the [Visual design requirements](#visual-design-requirements) section).
 
 ### Keyboard behavior
 
-Let's go over keyboard behavior chronologically, from the user first focusing the the carousel
+Let's go over keyboard behavior chronologically, starting with the user first focusing the carousel
 
 1. The first <kbd>Tab</kbd> stop reached is the scrollable wrapper element. With this focused, the user can scroll cards into view with the left and right arrow keys.
-2. When the user tabs away from this wrapper, the first item they focus is the first _visible_ card's title's link. Cards that are not visible are removed from the focus order so that the experience for a keyboard user is the same as that of a mouse user, with only the visible cards being interactive.
+2. When the user tabs away from this wrapper, the first item they focus is the link of the first _visible_ card's title. Cards not visible are removed from the focus order so that the experience for a keyboard user is the same as that of a mouse user, with only the visible cards being interactive.
 3. When the user tabs from the last visible card, they focus the first of the button controls. They are then able to scroll the cards in increments. When a card appears that they wish to click, they can move back into the card area with <kbd>Shift + Tab</kbd>.
 
-The focusability (and availability to assistive technologies) of card items is managed using `IntersectionObserver` where supported. Where it is not supported the keyboard user has a slightly degraded experience, finding that each item is in focus order at all times. Since native scrolling behavior is used, invisible items focused in this scenario are brought into view. No invisible items receive focus, avoiding a [2.4.3 Focus Order](https://www.w3.org/TR/UNDERSTANDING-WCAG20/navigation-mechanisms-focus-order.html) WCAG 2.0 failure.
+The ability to focus (and availability to assistive technologies) of card items is managed using `IntersectionObserver` where supported. Where it is not supported the keyboard user has a slightly degraded experience, finding that each item is in focus order at all times. Since native scrolling behavior is used, invisible items focused in this scenario are brought into view. No invisible items receive focus, avoiding a [WCAG 2.4.3 Focus Order](https://www.w3.org/TR/UNDERSTANDING-WCAG20/navigation-mechanisms-focus-order.html) failure.
 
 The script adds/removes `tabindex="-1"` to each interactive element of a card as it goes in or out of view, removing or adding those interactive elements from focus order as appropriate.
 
 ```js
-  // Manage focus order with intersectionObserver
-  if ('IntersectionObserver' in window) {
-    var observerSettings = {
-      root: scrollable
-    }
+// Manage focus order with intersectionObserver
+if ('IntersectionObserver' in window) {
+  var observerSettings = {
+    root: scrollable
+  }
 
-    // The callback function for the observer
-    var callback = function(items, observer) {
-      Array.prototype.forEach.call(items, function(item) {
-        // `item.target` is needed to get the node
-        var controls = item.target.querySelectorAll('a, button');
-        if (item.intersectionRatio > 0) {
-          Array.prototype.forEach.call(controls, function(control) {
-            control.removeAttribute('tabindex');
-          });
-          item.target.removeAttribute('aria-hidden');
-        } else {
-          Array.prototype.forEach.call(controls, function(control) {
-            control.setAttribute('tabindex', '-1');
-          });
-          item.target.setAttribute('aria-hidden', 'true');
-        }
-      });
-    }
-
-    // Initialize the observer
-    var observer = new IntersectionObserver(callback, observerSettings);
+  // The callback function for the observer
+  var callback = function(items, observer) {
     Array.prototype.forEach.call(items, function(item) {
-      observer.observe(item);
+      // `item.target` is needed to get the node
+      var controls = item.target.querySelectorAll('a, button');
+      if (item.intersectionRatio > 0) {
+        Array.prototype.forEach.call(controls, function(control) {
+          control.removeAttribute('tabindex');
+        });
+        item.target.removeAttribute('aria-hidden');
+      } else {
+        Array.prototype.forEach.call(controls, function(control) {
+          control.setAttribute('tabindex', '-1');
+        });
+        item.target.setAttribute('aria-hidden', 'true');
+      }
     });
   }
+
+  // Initialize the observer
+  var observer = new IntersectionObserver(callback, observerSettings);
+  Array.prototype.forEach.call(items, function(item) {
+    observer.observe(item);
+  });
+}
 ```
 
 #### Disabled buttons
 
 The back and forward buttons can be disabled when they have run out of distance to cover. Accordingly, the back button is disabled at the time of initialization. From this point we need to manage the disabled state of each button in accordance with the scrollable container's `scroll` event.
 
-Famously, the `scroll` event is triggered extremely frequently without intervention. Therefore, for performance's sake, we [debounce](https://davidwalsh.name/javascript-debounce-function) the disabling/enabling function:
+The `scroll` event is triggered extremely frequently without intervention. Therefore, for performance's sake, we [debounce](https://davidwalsh.name/javascript-debounce-function) the disabling/enabling function:
 
 ```js
 function disableEnable() {

@@ -7,9 +7,9 @@ The most fundamental provision for accessible type is font size. The body `font-
 1.  Reasonably large by default
 2.  Adjustable by different means
 
-GEL [type sizes](https://www.bbc.co.uk/gel/guidelines/typography#type-sizes) for body text range between 15 and and 18 pixels, depending on the screen dimensions. Although these are prescribed in terms of pixels, they should always be _set_ in relative units such as `em`s and `rem`s.
+GEL [type sizes](https://www.bbc.co.uk/gel/guidelines/typography#type-sizes) for body text range between 15 and 18 pixels, depending on the screen dimensions. Although these are prescribed in terms of pixels, they should always be _set_ in relative units such as `em`s and `rem`s.
 
-The reason for this is that a not insignificant number of users ([about the same number as there are Microsoft Edge users](https://medium.com/@vamptvo/pixels-vs-ems-users-do-change-font-size-5cfb20831773)) adjust the default font size at a browser or operating system level. Text set in `px` _does not_ honor that setting.
+The reason for this is that a not insignificant number of users ([about the same number as there are Microsoft Edge users](https://medium.com/@vamptvo/pixels-vs-ems-users-do-change-font-size-5cfb20831773)) adjust the default font size at a browser or operating system level. Text set in `px` _does not_ honour that setting.
 
 Accordingly, the root `font-size` should be set as a percentage of the user's chosen size, and all other sizes should be relative to this one.
 
@@ -68,29 +68,29 @@ p {
 
 ## Leading and white space
 
-[WCAG 1.4.8 Visual Presentation](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-visual-presentation) recommends a leading (line height) for body text of no less than 1.5. However, this should be treated as a baseline since—as recommended by [The Elements Of Typographic Style](http://webtypography.net/2.2.1)—the leading should be chosen to suit the metrics of the font.
+[WCAG 1.4.8 Visual Presentation](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-visual-presentation) recommends a leading (line height) for body text of no less than 1.5 times the font size. However, this should be treated as a baseline since—as recommended by [The Elements Of Typographic Style](http://webtypography.net/2.2.1)—the leading should be chosen to suit the metrics of the font.
 
 It's most important that the `line-height` is not hard-coded using the `px` unit, since this restricts it from adjusting automatically in accordance with `font-size`. The following uses the unitless multiplier `1.5` meaning _"1.5 times the font size"_.
 
-```
+```css
 p {
   line-height: 1.5;
 }
 ```
 
-A value in `rem`s is also acceptable, as prescribed automatically when using the `gel-typography` mixin.
+A value set in `rem`s is also acceptable, as prescribed automatically when using the `gel-typography` mixin.
 
-The most efficient way to manage white space between successive blocks of text while maintaining a good [vertical rhythm](https://24ways.org/2006/compose-to-a-vertical-rhythm) is to make each space a multiple of the line height. Typically, paragraphs are spaced using one whole line. In the following example, successive paragraphs receive a margin of `1.5em` to separate them.
+The most efficient way to manage white space between successive blocks of text while maintaining a good [vertical rhythm](https://24ways.org/2006/compose-to-a-vertical-rhythm) is to make each space a multiple of the line height. Typically, paragraphs are spaced using one whole line. In the following example, successive paragraphs receive a margin of `1.5rem` to separate them.
 
-```
+```css
 p + p {
   margin-top: 1.5rem;
 }
 ```
 
-Cognition depends heavily on a sense of belonging, so ensure that related elements are separated with more white space than those that are unrelated. For example, the white space between a preceding section and a heading should be greater than the white space between the heading and the first paragraph of its own section.
+Cognition depends heavily on a sense of belonging, so ensure that related elements are separated with less white space than those that are unrelated. For example, the white space between a preceding section and a heading should be greater than the white space between the heading and the first paragraph of its own section.
 
-```
+```css
 h2 {
   margin-top: 3rem; /* two lines; maintains vertical rhythm */
   margin-bottom: 1.5rem;
@@ -99,7 +99,7 @@ h2 {
 
 ## All caps
 
-Text set in all caps (`text-transform: uppercase`) is harder to read because the characters become similarly 'square' in their occupation of space, and harder to differentiate. Many screen readers also have a habit of interpreting any all-caps text as acronyms, reading words out letter-by-letter. It should, therefore, be avoided in almost all cases.
+Text set in all caps (`text-transform: uppercase`) is harder to read because the characters become similarly 'square' in their occupation of space, making them harder to differentiate. Many screen readers also have a habit of interpreting any all-caps text as an acronym, reading words out letter-by-letter. It should, therefore, be avoided in almost all cases.
 
 Acronyms and initialisms must appear in all-caps. Improve their legibility by increasing their `letter-spacing` by something in the order of 10%, as suggested in [The Elements Of Typographic Style](http://webtypography.net/2.1.6):
 
@@ -124,34 +124,50 @@ p a {
 }
 ```
 
-Do not underline text of any other variety, lest it is mistaken for a link. Highlight `<mark>` text using a background color instead.
+Do not underline text of any other variety, lest it's mistaken for a link. Highlight `<mark>` text using a `background-color` instead.
 
 ## Contrast
 
-It's imperative there is sufficient contrast between foreground text and backgrounds, in line with [WCAG 1.4.3 Contrast](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast).
+It's imperative there is sufficient contrast between foreground text and backgrounds, in line with [WCAG 1.4.3 Contrast](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast). There are a number of tools for calculating the contrast ratio, including the [Color Contrast Analyzer](https://developer.paciellogroup.com/resources/contrastanalyser/) software maintained by The Paciello Group.
 
-There are a number of tools for calculating the contrast ratio, including the [Color Contrast Analyzer](https://developer.paciellogroup.com/resources/contrastanalyser/) software maintained by The Paciello Group.
-
-Avoid placing text over complex images such as photographs. Even where the contrast is sufficient, the intersection of characters with complex background shapes and lines impedes legibility.
+Avoid placing text over complex images such as photographs. Even where the contrast is sufficient, the intersection of characters with complex background shapes and lines diminishes legibility.
 
 ## Unicode and emoji
 
 The support for unicode differs wildly between platforms, with handheld devices tending to support smaller subsets of unicode points. Where a point is not supported, a square fallback symbol (with a confusing resemblance to a checkbox in some contexts) appears instead.
 
-In general, avoid unicode symbols in favor of SVG-based icons. Icon fonts in particular should be avoided since they tend to map their icons to esoteric / undesignated unicode points. Where users, such as those with dyslexia, override the author's font settings with a user stylesheet, the icons give way to fallback 'missing glyph'
-symbols.
+In general, avoid unicode symbols in favor of SVG-based icons. Icon fonts in particular should be avoided since they tend to map their icons to esoteric / undesignated unicode points. Where users, such as those with dyslexia, override the author's font settings with a user stylesheet, the icons give way to the aforementioned fallback 'missing glyph' symbol.
 
-Note that screen readers will ignore some unicode points, and interpret others in unexpected ways. For example, the × symbol frequently used for close buttons can be announced as "times". If you _are_ to use this relatively well supported unicode point, be sure to provide an overriding `aria-label` (1) or—where there is an accompanying text label—hide the symbol with `aria-hidden` (2).
+Note that screen readers will ignore some unicode points, and interpret others in unexpected ways. For example, the × symbol frequently used for close buttons can be announced as "times". If you _are_ to use this relatively well supported unicode point, be sure to hide it from assistive technologies with `aria-hidden="true"`.
 
 ```html
-<!-- (1) -->
-<button aria-label="close">&times;</button>
-
-<!-- (2) -->
 <button>
   <span aria-hidden="true">&times;</span>
   <span>Close</span>
 </button>
+```
+
+Note that the close button may not have a visible label as in the previous example. You can use a `visually-hidden` class to hide the text label visually while keeping it available to assistive technologies. The `aria-label` attribute should be avoided, since it is not translatable by translation services like Google's.
+
+```html
+<button>
+  <span aria-hidden="true">&times;</span>
+  <span class="visually-hidden">Close</span>
+</button>
+```
+
+The `visually-hidden` utility class looks like this:
+
+```css
+.visually-hidden {
+  clip-path: inset(100%);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
 ```
 
 Emoji are rendered via unicode as well, but are more likely to be perceived as images. Some CMSs and social media platforms even replace the code point with their own image. Where the character is used, it's important to [present it _as_ an image, with an accompanying text alternative](https://tink.uk/accessible-emoji/).

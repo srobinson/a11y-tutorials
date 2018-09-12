@@ -18,10 +18,10 @@ to break because they depend on JavaScript in order to function.
 <div role="checkbox" aria-checked="false" tabindex="0"></div>
 ```
 
-It is also not possible to access and serialize non-native form elements using methods like `FormData()` because the elements cannot be identified to their parent form. This is because they do not support the `name` attribute.
+It is also not possible to access and serialize non-native form elements using methods like `FormData()` because the elements cannot be identified to their parent form (they do not support the `name` attribute/property).
 
 ```js
-var form = document.querySelector("form");
+var form = document.querySelector('form');
 var data = new FormData(form); // Would be empty
 ```
 
@@ -36,7 +36,7 @@ It's imperative form elements are easily recognizable, so the authored visual de
 - Radio buttons should be round
 - Checkboxes should be square
 - Select elements should include a downwards pointing arrow
-- Text fields should appear as a bordered box that a user enters text into
+- Text fields should appear as a bordered box
 
 Styling some form elements directly is difficult, but you can 'defer' styles from a visually hidden input to a proxy element. Consider the following markup:
 
@@ -92,7 +92,7 @@ Sometimes multiple form elements should be grouped together under a common label
 </fieldset>
 ```
 
-This is most important when providing radio button controls: a group of radio buttons, sharing a common `name` attribute, constitute _a single_ form field and the `<legend>` labels this field.
+This is most important when providing radio button controls: a group of radio buttons, sharing a common `name` attribute, constitute a _single_ form field and the `<legend>` labels this field.
 
 ```html
 <fieldset>
@@ -145,11 +145,11 @@ The `placeholder` attribute should not supplant the `<label>` element as a prima
 - When the placeholder is replaced with a value, no label is available for checking the value against the requirement
 - The default text color for placeholders fails WCAG contrast requirements in many browsers
 
-Use placeholders sparingly, and as intend, to provide hints. To help differentiate placeholder text from a real value, use an italic style and prefix the placeholder text with _"E.g."_ or similar.
+Use placeholders sparingly, and as intended, to provide hints. To help differentiate placeholder text from a real value, use an italic style and prefix the placeholder text with _"E.g."_ or similar.
 
 ### Descriptions
 
-Where space permits (and the visual design should allow for this), use descriptions in place of placeholders. Descriptions can simply be part of the `<label>` and will therefore be part of accessible label calculation.
+Where space permits—and the visual design should allow for this—use descriptions in place of placeholders. Descriptions can simply be part of the `<label>` and will therefore be part of accessible label calculation.
 
 In the following example, the `<small>` element is used to demarcate the description visually. By default, it will display smaller text. You can place it on a new line by applying `display: block`. Note that `<label>` elements are inline level, so it is non-conforming to include block elements inside them.
 

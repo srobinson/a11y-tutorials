@@ -28,11 +28,9 @@ In some cases, the items will have independent semantics to express. In which ca
 
 ### Grids as lists
 
-If items belong thematically to a set, the standard is to mark them up as a list. Doing so fulfills [WCAG 1.3.1 Info and Relationships](https://www.w3.org/TR/WCAG20/#content-structure-separation).
+If items belong thematically to a set, the standard is to mark them up as a list. Doing so fulfills [WCAG 1.3.1 Info and Relationships](https://www.w3.org/TR/WCAG20/#content-structure-separation). Lists are identified by assistive technologies, and their items are enumerated. Many screen readers also provide shortcuts to traverse list items, such as [the <kbd>i</kbd> key in NVDA](https://webaim.org/resources/shortcuts/nvda).
 
-Lists are identified by assistive technologies, and their items are enumerated. Many screen readers also provide shortcuts to traverse list items, such as [the <kbd>i</kbd> key in NVDA](https://webaim.org/resources/shortcuts/nvda).
-
-A grid of scheduled programmes can be considered a thematic set, because each item is of the class "programme".
+A grid of scheduled programmes can be considered a thematic set, because each item is of the class 'programme'.
 
 ```html
 <ul class="gel-layout">
@@ -70,7 +68,7 @@ In the example, the grid is defined using `role="list"`. Children are explicitly
 
 Headings, together with lists, create a perceivable structure non-visually, and provide navigational cues. A page should make liberal but appropriate use of headings, whether the layout is divided into a grid or exists as a single column of text.
 
-It's quite legitimate to place headings within list items, and beneficial where they represent grid items that contain a lot of structured content. But be aware that a list represents a _flat_ hierarchical structure, so each heading should be of the same level, to reflect this. This level is determined by the level of the heading that introduces the list itself.
+It's quite legitimate to place headings within list items, and beneficial where they represent grid items that contain a lot of structured content. But be aware that a list represents a _flat_ hierarchical structure, so each principle item heading should be of the same level, to reflect this. This level is determined by the level of the heading that introduces the list itself.
 
 ```html
 <h2>Upcoming programmes</h2>
@@ -94,7 +92,7 @@ The nesting structure for the above example creates the following outline, with 
 
 * Upcoming programmes
     * Doctor Who
-    *  Miranda
+    * Miranda
     * Holby City
 
 ## Order
@@ -110,7 +108,7 @@ Since the [GEL grid system](https://github.com/bbc/gel-grid) uses Flexbox, it is
 
 <div class="gel-layout">
     <div class="gel-layout__item gel-1/3">First item</div>
-    <div class="gel-layout__item gel-1/3" class="promote">Second</div>
+    <div class="gel-layout__item gel-1/3 promote">Second</div>
     <div class="gel-layout__item gel-1/3">Third</div>
 </div>
 ```
@@ -121,7 +119,7 @@ In this example, the `class="promote"` item is "promoted" from the second positi
 * **Partially sighted users:** If the user is running a screen reader, there is a disparity between the visual order they can partially perceive, and the order that content is announced by the screen reader. This can cause a failure under [WCAG 1.3.2 Meaningful Sequence](https://www.w3.org/TR/WCAG20/#content-structure-separation-sequence)
 * **Keyboard users:** Any interactive/focusable elements will receive focus in an order that contradicts the order in which they appear. This is a failure according to [WCAG 2.4.3 Focus Order](https://www.w3.org/TR/WCAG20/#navigation-mechanisms-focus-order).
  
-For these reasons, in most cases a different visual order should be achieved by editing the source order — not by employing the `order` property.
+For these reasons, in most cases a different visual order should be achieved by editing the source order—not by employing the `order` property.
 
 ## RTL languages
 
@@ -139,7 +137,7 @@ Depending on the content of the grid items, and their relationship to one anothe
 
 ## Tables
 
-Data tables are read from top to bottom and left to right, with headers along the top and (sometimes) down the lefthand side. It is imperative the visual structure matches the semantic structure in all viewports: table elements must not be allowed to wrap and find themselves falling under different headers.
+Data tables are read from top to bottom and left to right, with headers along the top and (sometimes) down the left hand side. It is imperative the visual structure matches the semantic structure in all viewports: table elements must not be allowed to wrap and find themselves falling under different headers.
 
 The [GEL grid system](https://github.com/bbc/gel-grid) is not applicable to data tables, which should be marked up using `<table>`, `<th>` (table header) and `<td>` elements, eliciting the basic, desired layout via user agent styling.
 
@@ -149,7 +147,7 @@ Since wrapping is not permissible, creating a responsive table is a matter of le
 2. Make this element focusable with `tabindex="0"`, so it can be scrolled using the keyboard
 3. Label this focusable element for screen reader users, preferably using a table caption
 
-[Inclusive components: Data tables](https://inclusive-components.design/data-tables/) has an example. Note the `group` role, which elicits the the announcement of the role along with the element's associated label.
+[Inclusive components: Data tables](https://inclusive-components.design/data-tables/) has an example. Note the `group` role, which elicits the announcement of the role along with the element's associated label.
 
 ```html
 <div class="table-container" tabindex="0" role="group" aria-labelledby="caption">  

@@ -48,7 +48,7 @@ The validation script is designed to work with well-formed and accessible HTML. 
       <code>for</code> and <code>id</code>
     </th>
     <td>
-      Any input needs to be associated programmatically with a label. This is achieved by making the label's <code>for</code> attribute and the input's <code>id</code> attribute share the same value. Note that, for text inputs, the <code>id</code> and <code>name</code> values are conventionally the same. However, associated <code>radio</code> inputs <em>share</em> a <code>name</code> attribute to make them a set.
+      <p>Any input needs to be associated programmatically with a label. This is achieved by making the label's <code>for</code> attribute and the input's <code>id</code> attribute share the same value. Note that, for text inputs, the <code>id</code> and <code>name</code> values are conventionally the same. However, associated <code>radio</code> inputs <em>share</em> a <code>name</code> attribute to make them a set.</p>
     </td>
   </tr>
   <tr>
@@ -56,7 +56,7 @@ The validation script is designed to work with well-formed and accessible HTML. 
       <code>&lt;small></code> description
     </th>
     <td>
-      Some inputs, like the example discount code input may benefit from additional direction, to help users avoid errors or know where to find the information they need to submit. The description must go <em>inside</em> the label element so that it becomes part of the associated label. In this case, it is demarcated with parentheses. SOme screen reader users will hear something similar to <em>"open parenthesis, the five digit number you received by email, close parenthesis"</em>.
+      <p>Some inputs, like the example discount code input may benefit from additional direction, to help users avoid errors or know where to find the information they need to submit. The description must go <em>inside</em> the label element so that it becomes part of the associated label. In this case, it is demarcated with parentheses. Some screen reader users will hear something similar to <em>"open parenthesis, the five digit number you received by email, close parenthesis"</em>.</p>
     </td>
   </tr>
   <tr>
@@ -64,7 +64,7 @@ The validation script is designed to work with well-formed and accessible HTML. 
       <code>&lt;small></code> description
     </th>
     <td>
-      Wherever suitable, we make use of the HTML5 input types. For example, by using <code>type="number"</code>, the user experience is improved for users of certain browsers and devices. They may find they are prohibited from typing letters — making it harder to mess up the input format — or that their phone presents them with the numeric keypad by default.
+      <p>Wherever suitable, we make use of the HTML5 input types. For example, by using <code>type="number"</code>, the user experience is improved for users of certain browsers and devices. They may find they are prohibited from typing letters — making it harder to mess up the input format — or that their phone presents them with the numeric keypad by default.</p>
     </td>
   </tr>
   <tr>
@@ -72,14 +72,14 @@ The validation script is designed to work with well-formed and accessible HTML. 
       <code>required</code> and <code>aria-required</code>
     </th>
     <td>
-      Note that the demo, quite inconsistently, uses <code>required</code> on one input and <code>aria-required</code> on another. Because <code>aria-required="true"</code> is better and more consistently supported by assistive technologies, the [demonstration](#demonstration) script forces its use by applying it wherever <code>required</code> is found, during initialization. Beware that WAI-ARIA properties and states like <code>aria-required</code> need an explicit value of <code>true</code> or <code>false</code>, unlike <code>required</code> and similar.
+      <p>Note that the <a href="#demonstration">demonstration</a>, quite inconsistently, uses <code>required</code> on one input and <code>aria-required</code> on another. Because <code>aria-required="true"</code> is better and more consistently supported by assistive technologies, the <a href="#demonstration">demonstration</a> script forces its use by applying it wherever <code>required</code> is found, during initialization. Beware that WAI-ARIA properties and states like <code>aria-required</code> need an explicit value of <code>true</code> or <code>false</code>, unlike <code>required</code> and similar, which can simply be applied as Booleans like <code>required</code>.</p>
     </td>
   </tr>
 </table>
 
 ### Enhanced HTML
 
-The [demonstration](#demonstration) script is initialized with a "rules" object. This identifies which fields need to be validated (and how) by their `name`s. For the demo, it looks like this:
+The [demonstration](#demonstration) script is initialized with a "rules" object. This identifies which fields need to be validated (and how) by their `name` properties. For the demo, it looks like this:
 
 ```js
 var rules = [
@@ -153,7 +153,7 @@ After initialization, the demo form is enhanced to look like this:
       <code>novalidate</code>
     </th>
     <td>
-      We want the form to validate, but on our terms. The <code>novalidate</code> attribute (on the <code>&lt;form></code> element) ensures that native HTML5 validation — which is inconsistently implemented, especially in terms of assistive technology compatibility — is suppressed.
+      <p>We want the form to validate, but on our terms. The <code>novalidate</code> attribute (on the <code>&lt;form></code> element) ensures that native HTML5 validation — which is inconsistently implemented, especially in terms of assistive technology compatibility — is suppressed.</p>
     </td>
   </tr>
   <tr>
@@ -161,7 +161,7 @@ After initialization, the demo form is enhanced to look like this:
       <code>.field-error</code> elements and <code>aria-describedby</code>
     </th>
     <td>
-      Accessible descriptions complement accessible labels where they are appropriate. Here, we are using the accessible description to provide an error message to each invalid field. The <code>aria-describedby</code> attribute associates the message to the field. Conventionally, the description / error message will be read after all of the other information (label, type, value, state) the field offers. These elements are empty at the outset, and therefore do not provide a description.
+      <p>Accessible descriptions complement accessible labels where they are appropriate. Here, we are using the accessible description to provide an error message to each invalid field. The <code>aria-describedby</code> attribute associates the message to the field. Conventionally, the description / error message will be read after all of the other information (label, type, value, state) for the field. These elements are empty at the outset, and therefore do not provide a description.</p>
     </td>
   </tr>
   <tr>
@@ -169,8 +169,8 @@ After initialization, the demo form is enhanced to look like this:
       <code>aria-live="assertive"</code>
     </th>
     <td>
-      <p>As we shall explore, each field is validated as the user types (subject to debouncing). However, it's still possible for the user to reach the submit button and press it with invalid data still present. We will not be trapping users' focus within fields until they are valid, because that violates [WCAG 2.1.2 No Keyboard Trap](https://www.w3.org/TR/UNDERSTANDING-WCAG20/keyboard-operation-trapping.html).</p>
-      <p>Instead, we use a message that doubles as a live region, to warn users that the form is still not valid upon attempted submission. The advantage of a live region is that the screen reader user hears the warning without their focus being unexpectedly moved. This message is placed directly above the submit button so that it is visible to sighted users without the necessity of scrolling. Users who have zoomed the page would have been worst affected by this general error message appearing above the form.</p>
+      <p>As we shall explore, each field is validated as the user types (subject to <a href="https://css-tricks.com/debouncing-throttling-explained-examples/">debouncing</a>). However, it's still possible for the user to reach the submit button and press it with invalid data still present. We will not be trapping users' focus within fields until they are valid, because that violates [WCAG 2.1.2 No Keyboard Trap](https://www.w3.org/TR/UNDERSTANDING-WCAG20/keyboard-operation-trapping.html).</p>
+      <p>Instead, we use a message that doubles as a live region, to warn users that the form is still not valid upon attempted submission. The advantage of a live region is that the screen reader user hears the warning without their focus being unexpectedly moved. This message is placed directly above the submit button so that it is visible to sighted users without the necessity of scrolling. Users who have zoomed the page are especially unlikely to see this message if placed at the top of the form.</p>
     </td>
   </tr>  
 </table>
@@ -205,7 +205,7 @@ field.addEventListener('keyup', function(e) {
 });
 ```
 
-Note that validation is not run on `keyup` events for the <kbd>Tab</kbd> and <kbd>Shift</kbd> keys, since these keys are used to move focus between fields. A user _may_ press the <kbd>Shift</kbd> during input (for capitalization) but this is unlikely to be detrimental. Input that should be lowercase can be made lowercase before validation and, where capitalization _is_ pertinent, validation can be performed on subsequent strokes or after attempted submission.
+Note that validation is not run on `keyup` events for the <kbd>Tab</kbd> and <kbd>Shift</kbd> keys, since these keys are used to move focus between fields. A user _may_ press the <kbd>Shift</kbd> key during input (for capitalization) but this is unlikely to be detrimental. Input that should be lowercase can be made lowercase before validation and, where capitalization _is_ pertinent, validation can be performed on subsequent strokes or after attempted submission.
 
 #### Screen reader behavior
 
@@ -227,7 +227,7 @@ Let's compare the normal/initial and invalid states for one field:
 </div>
 ```
 
-Screen readers typically identify any fields that either have `aria-invalid="true"`, or `aria-required="true"` but are empty, as "invalid" or "invalid data". When `aria-invalid="true"` is applied to the focused field, most screen readers will (re)announce the field, including it's newly invalid state and newly populated error message (associated to the field with `aria-describedby`).
+Screen readers typically identify any fields that either have `aria-invalid="true"`, or `aria-required="true"` but are empty, as "invalid" or "invalid data". When `aria-invalid="true"` is applied to the focused field, most screen readers will (re)announce the field, including its newly invalid state and newly populated error message (associated to the field with `aria-describedby`).
 
 ### Submission
 
@@ -235,7 +235,7 @@ The [demonstration](#demonstration) script keeps track of errors by populating a
 
 ```html
 <div aria-live="assertive" class="form-warn">
-  <strong>Error:</strong> Oops! Oops! Your form has some errors that need fixing
+  <strong>Error:</strong> Oops! Your form has some errors that need fixing
 </div>
 ```
 
@@ -245,7 +245,7 @@ After the general error message has been triggered, the user is expected to go b
 
 ### Input design
 
-Despite certain visual styles that have been adopted previously, it is recommended that a conventional input design, with the label above the input at all times and boxed input shape (with a border on all sides) is adopted. This shape makes it easy to see where input is expected. Unconventional design produces cognitive challenges. Where animated 'floating' labels are adopted, confusion is likely to be exacerbated. It also means the ability to use the `placeholder` attribute conventionally (to provide a hint to the suggested input format) is no longer possible.
+It is recommended that a conventional input design, with the label above the input at all times and a boxed input shape (with a border on all sides) is adopted. This shape makes it easy to see where input is expected. Unconventional design produces cognitive challenges. Where animated 'floating' labels are adopted, confusion is likely to be exacerbated. It also means the ability to use the `placeholder` attribute conventionally (to provide a hint to the suggested input format) is no longer possible.
 
 ### Focus styles
 
@@ -253,8 +253,16 @@ The important thing is that there _are_ focus styles. A `box-shadow` style is re
 
 ```css
 input:focus, button:focus {
-  outline: none;
   box-shadow: 0 0 0 0.125rem CornflowerBlue;
+}
+```
+
+However, `box-shadow` styling can disappear in [Windows High Contrast Mode](https://support.microsoft.com/en-gb/help/13862/windows-use-high-contrast-mode). Accordingly, also include a transparent outline style. This will become opaque when High Contrast Mode is switched on.
+
+```css
+input:focus, button:focus {
+  box-shadow: 0 0 0 0.125rem CornflowerBlue;
+  outline: 0.125rem solid transparent;
 }
 ```
 
@@ -286,14 +294,14 @@ The `visually-hidden` class uses a specific set of properties to ensure the span
 
 The [demo script](assets/Validation.js) integrates everything discussed by enhancing the initial HTML, and managing validation for individual inputs and the form as a whole.
 
-Note the initialization which accepts three arguments:
+Note the initialization, which accepts three arguments:
 
 * The (`<form>`) element for which you wish to provide validation (*DOM node*)
-* The rules object, which must be in the form shown above in the **Enhanced HTML** section (*object*)
+* The rules object, which must be in the form shown in the **Enhanced HTML** section, above (*object*)
 * An options object with these properties:
     * `warning`: the text for the general warning message (*string*, default: `'Oops! Your form has some errors that need fixing'`)
     * `required`: the error message for required fields (*string*, default: `'This field is required'`)
-    * `deboune`: the delay in milliseconds for the debouncing of "as you type" validation, which may need adjusting based on usability testing (*integer*, default: `500`)
+    * `debounce`: the delay in milliseconds for the debouncing of "as you type" validation, which may need adjusting based on usability testing (*integer*, default: `500`)
     * `prefix`: The text/imagery prefixed to errors, which may include HTML (*string*, default: `'<strong>Error:</strong>'`)
 
 ## Variants and caveats

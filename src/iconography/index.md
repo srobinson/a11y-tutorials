@@ -4,7 +4,7 @@ The following is a set of accessibility best practices for working with [BBC ico
 
 ## When to use icons
 
-Text is the primary form of communication on the web, and is highly interoperable. Only use icons where additional clarity is sought. Icons may help those with cognitive impairments, and others who find themselves on a page that isn't in their first language.
+Text is the primary form of communication on the web, and is highly interoperable. Text is interpreted by all kinds of devices, parsers and assistive technologies. Only use icons where additional clarity is sought. Icons may help those with cognitive impairments, and others who find themselves on a page that isn't in their first language.
 
 In most cases, icons should accompany text. Only where icons are extremely well-established—such as the play and stop buttons of a media player—is it reliable to use them without supplementary text.
 
@@ -16,7 +16,7 @@ A [comprehensive and standardized set](http://bbc.github.io/gel-iconography/) of
 
 The [BBC icons](http://bbc.github.io/gel-iconography/) are intended for implementation using inline SVG. Like icon fonts, SVG icons are infinitely scalable without degradation.
 
-Unlike SVG, icon fonts icons are mapped to unicode points and interpreted as text. This can have accessibility issues. Most icon font sets map their icons to the unicode [Private Use Areas](https://en.wikipedia.org/wiki/Private_Use_Areas) in order to avoid overriding established, meaningful characters and symbols. A problem occurs when users set their own fonts, using an extension or user stylesheet: the icons are replaced with 'missing character' symbols. Dyslexic users sometimes set their own fonts for improved legibility.
+Unlike SVG, icon font icons are mapped to unicode points and interpreted as text. This can have accessibility issues. Most icon font sets map their icons to the unicode [Private Use Areas](https://en.wikipedia.org/wiki/Private_Use_Areas) in order to avoid overriding established, meaningful characters and symbols. A problem occurs when users set their own fonts, using an extension or user stylesheet: the icons are replaced with 'missing character' symbols. Dyslexic users sometimes set their own fonts for improved legibility.
 
 Icon font icons mapped to established characters are equally problematic. A close icon mapped to an 'A' would reveal itself as an 'A' when the font is overridden. Also, screen readers would interpret and announce the icon as 'A'.
 
@@ -53,7 +53,7 @@ In the following incorrect example, the SVG takes the `img` role and an `aria-la
 
 ### Standalone icon
 
-Where only an icon is provided in the visual design, a supplementary invisible label is needed. The method from the previous section, using `role="img"` and `aria-label` is one method. However, `aria-label` is [not a string automatically translated by translation services](http://www.heydonworks.com/article/aria-label-is-a-xenophobe). Instead, hide the `<span>` visually, but leave it available to assistive technologies. Note `class="visually-hidden"` below:
+Where only an icon is provided in the visual design, a supplementary invisible label is needed. The method from the previous section, using `role="img"` and `aria-label` is one method. However, `aria-label` is [not a string automatically translated by translation services](http://www.heydonworks.com/article/aria-label-is-a-xenophobe). Instead, hide the `<span>` visually, but leave it available to assistive technologies. Note `class="visually-hidden"`:
 
 ```html
 <a href="link/to/download" download>
