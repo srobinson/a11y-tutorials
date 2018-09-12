@@ -15,13 +15,13 @@ Upon page load a screen reader will announce the `<title>`, and you should make 
 A typical structure is as follows.
 
 ```html
-<title>[Label for page] - [Name for site]</title>
+<title>[Label for page] | [Name for site]</title>
 ```
 
 In single-page applications there is only one page and, therefore, only one `<title>` element. Accordingly, as users traverse 'routes' and load synthetic pages, you will need to update the `<title>`'s text node. This is achievable via `document.title`
 
 ```js
-document.title = 'UK Politics - BBC News';
+document.title = 'UK Politics | BBC News';
 ```
 
 ## Heading structure
@@ -31,7 +31,7 @@ The principle `<h1>` heading shares responsibility with the `<title>` in describ
 Example:
 
 ```html
-<title>UK Politics - BBC News</title>
+<title>UK Politics | BBC News</title>
 ...
 <h1>UK Politics</h1>
 ```
@@ -106,6 +106,63 @@ With the exception of `<main>`, landmarks used across multiple pages (such as th
 ```
 
 Ensure that all content exists within one landmark or another. Any 'orphaned' content can be missed when a screen reader user is navigating by landmark.
+
+### Regions
+
+The `region` role, applied explicitly with `role="region"` or implicitly as a `<section>` element, is often associated with landmarks. Like `<nav>` and `<aside>` (but unlike `<footer>` and `<header>`) `<section>`s are "sectioning elements". 
+
+The intended purpose of sectioning elements is to automate heading level calculation based on nesting depth. That is, an `<h1>` nested in a `<section>` would communicate itself to assistive technologies as an `<h2>`, or an `<h3>` if it is two `<section>`s deep. However, no vendors have properly implemented the Document Outline Algorithm that would make this so. 
+
+In which case, it's still necessary to author document structure using `<h1>` to `<h6>` — making `<section>`s largely redundant. Identified as simply "region" in some screen reader software, and with no specific expectations of content, they are too generic to be considered true landmarks. 
+
+The region role can be somewhat useful if used in combination with `aria-labelledby` to create a group label for a section of content. 
+
+```html
+<div role="region" aria-labelledby="photos-taj">
+  <h2 id="photos-taj">Photos of the Taj Mahal</h2>
+  <ul>
+    <!-- list of linked Taj Mahal Photos -->
+  </ul>
+</div>
+<div role="region" aria-labelledby="photos-reef">
+  <h2 id="photos-reef">Photos of the Barrier Reef</h2>
+  <ul>
+    <!-- list of linked Barrier Reef Photos -->
+  </ul>
+</div>
+```
+
+In the above example, if the screen reader user is navigating by link (<kbd>Tab</kbd> key), passing from one region to the next will trigger the group label's announcement, identifying the new context. That is, tabbing from the last link in the first section to the first link in the second section will announce something similar to _"Photos of the Barrier Reef, region, list of [x] items, item one, link, image, [image alternative text]"_. 
+
+This minor enhancement may improve the user experience for some screen reader users.
+
+## Semantic HTML
+
+The benefit of semantic HTML is that it combines form, function, and behavior in expected ways. 
+
+Interactive elements are some of the most important semantic HTML to use appropriately. A `<div>` with a JavaScript click handler does not make for a true button: it is not focusable by keyboard, is not identified as a button in screen reader software, and does not automatically implement properties like `disabled`. 
+
+A native `<button>` element can be emulated, but requires the button ARIA role, `tabindex="0"` for focus, custom key event handlers for activation, `aria-disabled`, and a host of other provisions. Using `<button>` is less verbose, more robust, and more performant.
+
+Choosing when to use semantic elements, and which kinds, is a question of context. If the interactive element moves the user to a different location, such as a web page or section within a web page, a link (`<a>`) is most appropriate. If the interactive element is for changing state in the _current_ location, a `<button>` is the conventional choice.
+
+A common mistake is to attach an event handler to an `<a>` element and forego the `href` attribute. Not only is the announced role of _"link"_ misleading given the behavior, but the omitted `href` means the element is not focusable in the first place. In other cases, the `href` is given a dummy JavaScript value. In each case, a `<button>` is the correct alternative.
+
+```html
+<!-- Not a button but an unfocusable link -->
+<a class="button">Do something</a>
+
+<!-- Not a button but a link which does not behave as such -->
+<a href="javascript:void(0)">Do something</a>
+```
+
+**Note:** A `<button>`s used in a form that is _not_ intended as a submit button should take `type="button"`. Otherwise, some user agents will consider the button of `type="submit"` and trigger the submit event when the button is pressed.
+
+### Unsemantic HTML
+
+Unsemantic elements like `<div>` and `<span>` are not identified in assistive technologies. Use these elements where you want to affect visual layout without communicating thematic information. Using a `<table>` just for visual layout is a classic error, because it identifies itself as a data table and invokes `<table>`-related behaviors in screen reader software.
+
+While `<div>`s do not create 'noise' in screen reader output, they should be used sparingly. Bloated DOMs, depending heavily on `<div>`-based scaffolding can cause performance issues. Latency in parsing and updating the DOM can affect screen reader users in particular: their software may fail to announce changes to the UI as they navigate and operate it.
 
 ## Skip links
 
