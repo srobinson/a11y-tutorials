@@ -20,7 +20,7 @@ This version includes exposed share links, followed by a menu button to reveal e
   <ul role="list">
     <li role="listitem">
       <a href="#" class="share-tools--item">
-        <svg viewBox="0 0 15 15" focusable="false">
+        <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
           <polygon points="0,15 3,8 5,10 8,4 13,15" />
           <circle cx="12" cy="3" r="1.5" />
         </svg>
@@ -29,7 +29,7 @@ This version includes exposed share links, followed by a menu button to reveal e
     </li>
     <li role="listitem">
       <a href="#" class="share-tools--item">
-        <svg viewBox="0 0 15 15" focusable="false">
+        <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
           <polygon points="0,15 3,8 5,10 8,4 13,15" />
           <circle cx="12" cy="3" r="1.5" />
         </svg>
@@ -48,7 +48,7 @@ This version includes exposed share links, followed by a menu button to reveal e
         <ul class="share-tools--social" role="list">
           <li role="listitem">
             <a href="#">
-              <svg viewBox="0 0 15 15" focusable="false">
+              <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
                 <polygon points="0,15 3,8 5,10 8,4 13,15" />
                 <circle cx="12" cy="3" r="1.5" />
               </svg>
@@ -57,7 +57,7 @@ This version includes exposed share links, followed by a menu button to reveal e
           </li>
           <li role="listitem">
             <a href="#">
-              <svg viewBox="0 0 15 15" focusable="false">
+              <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
                 <polygon points="0,15 3,8 5,10 8,4 13,15" />
                 <circle cx="12" cy="3" r="1.5" />
               </svg>
@@ -72,7 +72,7 @@ This version includes exposed share links, followed by a menu button to reveal e
         </div>
         <a href="#" class="share-tools--read-more">About sharing</a>
         <button class="share-tools--close">
-          <svg viewBox="0 0 10 10" width="20" height="20" focusable="false">
+          <svg viewBox="0 0 10 10" width="20" height="20" focusable="false" aria-hidden="true">
             <path d="M1,1 9,9 M9,1 1,9" stroke="#969696" />
           </svg>
           <span class="visually-hidden">Close more share options</span>
@@ -162,7 +162,7 @@ Where only the "Share" button is required, the container element should be a `<d
     <ul class="share-tools--social" role="list">
       <li role="listitem">
         <a href="#">
-          <svg viewBox="0 0 15 15" focusable="false">
+          <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
             <polygon points="0,15 3,8 5,10 8,4 13,15" />
             <circle cx="12" cy="3" r="1.5" />
           </svg>
@@ -171,7 +171,7 @@ Where only the "Share" button is required, the container element should be a `<d
       </li>
       <li role="listitem">
         <a href="#">
-          <svg viewBox="0 0 15 15" focusable="false">
+          <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
             <polygon points="0,15 3,8 5,10 8,4 13,15" />
             <circle cx="12" cy="3" r="1.5" />
           </svg>
@@ -186,7 +186,7 @@ Where only the "Share" button is required, the container element should be a `<d
     </div>
     <a href="#" class="share-tools--read-more">About sharing</a>
     <button class="share-tools--close">
-      <svg viewBox="0 0 10 10" width="20" height="20" focusable="false">
+      <svg viewBox="0 0 10 10" width="20" height="20" focusable="false" aria-hidden="true">
         <path d="M1,1 9,9 M9,1 1,9" stroke="#969696" />
       </svg>
       <span class="visually-hidden">Close share this article</span>
