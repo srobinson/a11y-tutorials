@@ -26,6 +26,7 @@
 .share-tools ul,
 .share-tools--more ul {
   margin: -0.125rem;
+  list-style-type: none;
 }
 
 .share-tools li,

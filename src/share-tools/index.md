@@ -16,74 +16,77 @@ This version includes exposed share links, followed by a menu button to reveal e
 
 ```html
 <div class="share-tools">
-  <a href="#end" class="share-tools--skip">skip sharing tools</a>
-  <ul>
-    <li>
+  <a href="#end-of-share-this-article" class="share-tools--skip">Skip share this article</a>
+  <ul role="list">
+    <li role="listitem">
       <a href="#" class="share-tools--item">
-        <span class="visually-hidden">Facebook, share this article, external</span>
-        <svg viewBox="0 0 15 15" focusable="false">
+        <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
           <polygon points="0,15 3,8 5,10 8,4 13,15" />
           <circle cx="12" cy="3" r="1.5" />
         </svg>
+        <span class="visually-hidden">Facebook, share this article, external</span>
       </a>
     </li>
-    <li>
+    <li role="listitem">
       <a href="#" class="share-tools--item">
-        <span class="visually-hidden">Twitter, share this article, external</span>
-        <svg viewBox="0 0 15 15" focusable="false">
+        <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
           <polygon points="0,15 3,8 5,10 8,4 13,15" />
           <circle cx="12" cy="3" r="1.5" />
         </svg>
+        <span class="visually-hidden">Twitter, share this article, external</span>
       </a>
     </li>
     <!-- more share tools -->
-    <li class="share-tools--more">
+    <li class="share-tools--more" role="listitem">
       <button class="share-tools--button" aria-haspopup="true" aria-expanded="false">
         <span class="visually-hidden">More</span>
         Share
-        <span class="visually-hidden">tools</span>
+        <span class="visually-hidden">options</span>
         &hellip;
       </button>
       <div class="share-tools--menu" role="menu">
-        <ul class="share-tools--social" role="list">
-          <li role="listitem">
+        <ul class="share-tools--social">
+          <li>
             <a href="#">
-              <svg viewBox="0 0 15 15" focusable="false">
+              <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
                 <polygon points="0,15 3,8 5,10 8,4 13,15" />
                 <circle cx="12" cy="3" r="1.5" />
               </svg>
-              <span class="visually-hidden">Twitter, share this article, external</span>
+              <span class="visually-hidden">LinkedIn, share this article, external</span>
             </a>
           </li>
-          <li role="listitem">
+          <li>
             <a href="#">
-              <svg viewBox="0 0 15 15" focusable="false">
+              <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
                 <polygon points="0,15 3,8 5,10 8,4 13,15" />
                 <circle cx="12" cy="3" r="1.5" />
               </svg>
-              <span class="visually-hidden">Twitter, share this article, external</span>
+              <span class="visually-hidden">Pinterest, share this article, external</span>
             </a>
           </li>
           <!-- more share options -->
         </ul>
         <div class="share-tools--copy">
           <label for="copy">Copy this link</label>
-          <input id="copy" readonly class="share-tools--link" value="http://bbc.in/3x4mp1e" />
+          <input id="copy" type="text" readonly class="share-tools--link" value="http://bbc.in/3x4mp1e" />
         </div>
         <a href="#" class="share-tools--read-more">About sharing</a>
         <button class="share-tools--close">
-          <svg viewBox="0 0 10 10" width="20" height="20">
+          <svg viewBox="0 0 10 10" width="20" height="20" focusable="false" aria-hidden="true">
             <path d="M1,1 9,9 M9,1 1,9" stroke="#969696" />
           </svg>
-          <span class="visually-hidden">Close sharing tools</span>
+          <span class="visually-hidden">Close more share options</span>
         </button>
       </div>
     </li>
   </ul>
-  <div id="end" tabindex="-1" class="share-tools--end">End of sharing tools</div>
+  <div id="end-of-share-this-article" tabindex="-1" class="share-tools--end">End of share this article.</div>
+</div>
 ```
 
-Let's break down what we have here:
+Note that the format for the share options visually hidden text such as, "Facebook, share this article, external", is to aid quick navigation for screen reader users e.g. the platform name is given first. The commas create a pause when the screen reader reads this, and external is added to inform users that this is an external link.
+
+Let's break down what else we have here:
 
 <table>
   <caption>Semantic elements</caption>
@@ -92,7 +95,7 @@ Let's break down what we have here:
       <code>.share-tools--skip</code> and <code>.share-tools--end</code>
     </th>
     <td>
-      <p>Although per-component skip links are unconventional, research showed that keyboard users benefited from the ability to skip past the many tab stops of share tools when encountered in the body of an article. The <code>.share-tools--end</code> target is invisible to sighted keyboard users but offers assurance to screen reader users with its "End of sharing tools" text.</p>
+      <p>Although per-component skip links are unconventional, keyboard users can benefit from the ability to skip past the many tab stops of share tools when encountered in the body of an article. The <code>.share-tools--end</code> target is invisible to sighted keyboard users but offers assurance to screen reader users with its "End of share this article." text.</p>
     </td>
   </tr>
   <tr>
@@ -101,7 +104,7 @@ Let's break down what we have here:
     </th>
     <td>
       <p>A visually hidden (but screen reader perceivable) <code>&lt;span></code> is preferred to an <code>aria-label</code> because it is translatable by in-browser translation services.</p>
-      <p>In the case of the "Share" button, this technique is used to expand the accessible label to "More sharing tools". In research, users were not found to be confused that a button reading "Share" appears next to a set of extant sharing tools, so the shorter visual label suffices.</p>
+      <p>In the case of the "Share" button, this technique is used to expand the accessible label to "More share options". In research, sighted users were not found to be confused that a button reading "Share" appears next to a set of extant sharing tools, so the shorter visual label suffices for these users.</p>
     </td>
   </tr>
   <tr>
@@ -151,46 +154,48 @@ Where only the "Share" button is required, the container element should be a `<d
 ```html
 <div class="share-tools--more">
   <button class="share-tools--button" aria-haspopup="true" aria-expanded="false">
-    Share&hellip;
+    Share 
+    <span class="visually-hidden">this article</span>
+    &hellip;
   </button>
   <div class="share-tools--menu" role="menu">
-    <ul class="share-tools--social" role="list">
-      <li role="listitem">
+    <ul class="share-tools--social">
+      <li>
         <a href="#">
-          <svg viewBox="0 0 15 15" focusable="false">
+          <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
             <polygon points="0,15 3,8 5,10 8,4 13,15" />
             <circle cx="12" cy="3" r="1.5" />
           </svg>
-          <span class="visually-hidden">Share on Twitter (external)</span>
+          <span class="visually-hidden">Facebook, share this article, external</span>
         </a>
       </li>
-      <li role="listitem">
+      <li>
         <a href="#">
-          <svg viewBox="0 0 15 15" focusable="false">
+          <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
             <polygon points="0,15 3,8 5,10 8,4 13,15" />
             <circle cx="12" cy="3" r="1.5" />
           </svg>
-          <span class="visually-hidden">Share on Facebook (external)</span>
+          <span class="visually-hidden">Twitter, share this article, external</span>
         </a>
       </li>
       <!-- more share options -->
     </ul>
     <div class="share-tools--copy">
       <label for="copy">Copy this link</label>
-      <input id="copy" readonly class="share-tools--link" value="http://bbc.in/3x4mp1e" />
+      <input id="copy" type="text" readonly class="share-tools--link" value="http://bbc.in/3x4mp1e" />
     </div>
     <a href="#" class="share-tools--read-more">About sharing</a>
     <button class="share-tools--close">
-      <svg viewBox="0 0 10 10" width="20" height="20">
+      <svg viewBox="0 0 10 10" width="20" height="20" focusable="false" aria-hidden="true">
         <path d="M1,1 9,9 M9,1 1,9" stroke="#969696" />
       </svg>
-      <span class="visually-hidden">Close sharing tools</span>
+      <span class="visually-hidden">Close share this article</span>
     </button>
   </div>
 </div>
 ```
 
-Note that the clarified _"More sharing tools"_ accessible label is not needed when the menu button is not accompanied by preceding exposed share tools.
+Note that the clarified _"Share"_ button's accessible label is not needed when the menu button is not accompanied by preceding exposed share tools unless you wish to be explicit about what you are going to share, as in this case _"Share this article"_.
 
 ## Interaction
 
@@ -218,7 +223,7 @@ var tools = new ShareMenu(toolsElem, {
 
 #### Skip functionality
 
-As the user moves to the share tools component, their first tab stop is the "skip sharing tools" link, which is revealed on focus by resetting its `0` height value.
+As the user moves to the share tools component, their first tab stop is the "skip share this article" link, which is revealed on focus by resetting its `0` height value.
 
 ```css
 .share-tools--skip:focus {
@@ -227,6 +232,10 @@ As the user moves to the share tools component, their first tab stop is the "ski
 ```
 
 Should the skip link not be invoked, each of the exposed share buttons receives focus in order.
+
+Depending on context it maybe more appropriate to provide a heading rather than a skip link. For example a skip link may be appropriate if the share tools are within the body of an article, otherwise a heading may be more appropriate, the heading could be visually hidden if it’s not needed visually to help screen reader users navigate this content.
+
+Note, even when the context is within the body of an article, it’s only recommended to use a skip link if there are 3 or more exposed icons, as the skip link itself will create an extra tab stop and only be worth it if there are a number of items to skip past. 
 
 #### Share button
 
@@ -262,7 +271,7 @@ Many of the keyboard behaviors of the share tools "Share" button should match th
 
 ### Screen reader behavior
 
-The exposed share tools and "Share" button are members of an unordered list. When the user enters that list and focuses the first item, the list is identified and the number of items is enumerated. If JavaScript is not run, the list item in the expanded configuration remains hidden (with `display: none`) and is not counted in enumeration.
+The exposed share tools and "Share" button are members of an unordered list. When the user enters that list and focuses the first item, the list is identified and the number of items is enumerated. If JavaScript is not run, the Share button list item is hidden with display:none, which removes it from screen reader output.
 
 Screen readers tend to identify the "Share" menu button as a "popup button" and will communicate the state as _"expanded/collapsed"_ or _"opened/closed"_. When the button is activated, focus is moved to the first focusable item in the menu, which triggers its announcement, along with contextual link information and (in some screen readers) the ancestor menu role.
 
