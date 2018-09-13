@@ -68,7 +68,7 @@ This version includes exposed share links, followed by a menu button to reveal e
         </ul>
         <div class="share-tools--copy">
           <label for="copy">Copy this link</label>
-          <input id="copy" readonly class="share-tools--link" value="http://bbc.in/3x4mp1e" />
+          <input id="copy" type="text" readonly class="share-tools--link" value="http://bbc.in/3x4mp1e" />
         </div>
         <a href="#" class="share-tools--read-more">About sharing</a>
         <button class="share-tools--close">
@@ -182,7 +182,7 @@ Where only the "Share" button is required, the container element should be a `<d
     </ul>
     <div class="share-tools--copy">
       <label for="copy">Copy this link</label>
-      <input id="copy" readonly class="share-tools--link" value="http://bbc.in/3x4mp1e" />
+      <input id="copy" type="text" readonly class="share-tools--link" value="http://bbc.in/3x4mp1e" />
     </div>
     <a href="#" class="share-tools--read-more">About sharing</a>
     <button class="share-tools--close">
@@ -271,7 +271,7 @@ Many of the keyboard behaviors of the share tools "Share" button should match th
 
 ### Screen reader behavior
 
-The exposed share tools and "Share" button are members of an unordered list. When the user enters that list and focuses the first item, the list is identified and the number of items is enumerated. If JavaScript is not run, the list item in the expanded configuration remains hidden (with `display: none`) and is not counted in enumeration.
+The exposed share tools and "Share" button are members of an unordered list. When the user enters that list and focuses the first item, the list is identified and the number of items is enumerated. If JavaScript is not run, the Share button list item is hidden with display:none, which removes it from screen reader output.
 
 Screen readers tend to identify the "Share" menu button as a "popup button" and will communicate the state as _"expanded/collapsed"_ or _"opened/closed"_. When the button is activated, focus is moved to the first focusable item in the menu, which triggers its announcement, along with contextual link information and (in some screen readers) the ancestor menu role.
 
