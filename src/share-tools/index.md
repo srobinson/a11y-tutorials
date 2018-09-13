@@ -45,8 +45,8 @@ This version includes exposed share links, followed by a menu button to reveal e
         &hellip;
       </button>
       <div class="share-tools--menu" role="menu">
-        <ul class="share-tools--social" role="list">
-          <li role="listitem">
+        <ul class="share-tools--social">
+          <li>
             <a href="#">
               <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
                 <polygon points="0,15 3,8 5,10 8,4 13,15" />
@@ -55,7 +55,7 @@ This version includes exposed share links, followed by a menu button to reveal e
               <span class="visually-hidden">LinkedIn, share this article, external</span>
             </a>
           </li>
-          <li role="listitem">
+          <li>
             <a href="#">
               <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
                 <polygon points="0,15 3,8 5,10 8,4 13,15" />
@@ -159,8 +159,8 @@ Where only the "Share" button is required, the container element should be a `<d
     &hellip;
   </button>
   <div class="share-tools--menu" role="menu">
-    <ul class="share-tools--social" role="list">
-      <li role="listitem">
+    <ul class="share-tools--social">
+      <li>
         <a href="#">
           <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
             <polygon points="0,15 3,8 5,10 8,4 13,15" />
@@ -169,7 +169,7 @@ Where only the "Share" button is required, the container element should be a `<d
           <span class="visually-hidden">Facebook, share this article, external</span>
         </a>
       </li>
-      <li role="listitem">
+      <li>
         <a href="#">
           <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
             <polygon points="0,15 3,8 5,10 8,4 13,15" />
