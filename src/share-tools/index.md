@@ -44,18 +44,10 @@ This version includes exposed share links, followed by a menu button to reveal e
         <span class="visually-hidden">options</span>
         &hellip;
       </button>
-      <div class="share-tools--menu" role="menu">
-        <ul class="share-tools--social">
-          <li>
-            <a href="#">
-              <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
-                <polygon points="0,15 3,8 5,10 8,4 13,15" />
-                <circle cx="12" cy="3" r="1.5" />
-              </svg>
-              <span class="visually-hidden">LinkedIn, share this article, external</span>
-            </a>
-          </li>
-          <li>
+      <div class="share-tools--menu" role="group" aria-labelledby="menu-label-1">
+        <span class="share-tools--label" id="menu-label-1" hidden>menu</span>
+        <ul class="share-tools--social" role="list">
+          <li role="listitem">
             <a href="#">
               <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
                 <polygon points="0,15 3,8 5,10 8,4 13,15" />
@@ -64,7 +56,33 @@ This version includes exposed share links, followed by a menu button to reveal e
               <span class="visually-hidden">Pinterest, share this article, external</span>
             </a>
           </li>
-          <!-- more share options -->
+          <li role="listitem">
+            <a href="#">
+              <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
+                <polygon points="0,15 3,8 5,10 8,4 13,15" />
+                <circle cx="12" cy="3" r="1.5" />
+              </svg>
+              <span class="visually-hidden">Google Plus, share this article, external</span>
+            </a>
+          </li>
+          <li role="listitem">
+            <a href="#">
+              <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
+                <polygon points="0,15 3,8 5,10 8,4 13,15" />
+                <circle cx="12" cy="3" r="1.5" />
+              </svg>
+              <span class="visually-hidden">Reddit, share this article, external</span>
+            </a>
+          </li>
+          <li role="listitem">
+            <a href="#">
+              <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
+                <polygon points="0,15 3,8 5,10 8,4 13,15" />
+                <circle cx="12" cy="3" r="1.5" />
+              </svg>
+              <span class="visually-hidden">StumbleUpon, share this article, external</span>
+            </a>
+          </li>
         </ul>
         <div class="share-tools--copy">
           <label for="copy">Copy this link</label>
@@ -113,6 +131,15 @@ Let's break down what else we have here:
     </th>
     <td>
       <p>This behaves as an [ARIA menu button](https://www.w3.org/TR/wai-aria-practices-1.1/#menubutton). It has <code>aria-haspopup="true"</code> to warn the user pressing it they will open (and move their focus to) a menu. <code>aria-expanded</code> indicates the open/closed state.</p>
+    </td>
+  </tr>
+  <tr>
+    <th scope="row">
+      <code>aria-labelledby</code> and <code>&lt;span class="share-tools--label" id="menu-label-1" hidden>menu&lt;/span></code>
+    </th>
+    <td>
+      <p>A standard menu button / menu component is attributed with the <code>menu</code> and (child) <code>menuitem</code> ARIA roles. However, this is a custom menu design and the <code>menuitem</code> roles are not applicable, since the 'menu' contains diverse interactive content. Instead, and to avoid errors relating to <code>role="menu"</code> not being associated with <code>role="menuitem"</code> children, the group role and a group label are provided.</p>
+      <p>The outcome is that 'menu' is announced in screen readers as focus is moved into the menu. The <code>aria-labelledby</code> association is preferred to <code>aria-label="menu"</code> for translation support. The <a href="#demonstration">demonstration</a> script ensures the <code>id</code> and <code>aria-labelledby</code> strings are unique by overwriting them using a randomized string.</p>
     </td>
   </tr>
   <tr>

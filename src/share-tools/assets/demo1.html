@@ -98,9 +98,10 @@
             <span class="visually-hidden">options</span>
             &hellip;
           </button>
-          <div class="share-tools--menu" role="menu">
-            <ul class="share-tools--social">
-              <li>
+          <div class="share-tools--menu" role="group" aria-labelledby="menu-label-1">
+            <span class="share-tools--label" id="menu-label-1" hidden>menu</span>
+            <ul class="share-tools--social" role="list">
+              <li role="listitem">
                 <a href="#">
                   <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
                     <polygon points="0,15 3,8 5,10 8,4 13,15" />
@@ -109,7 +110,7 @@
                   <span class="visually-hidden">Pinterest, share this article, external</span>
                 </a>
               </li>
-              <li>
+              <li role="listitem">
                 <a href="#">
                   <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
                     <polygon points="0,15 3,8 5,10 8,4 13,15" />
@@ -118,7 +119,7 @@
                   <span class="visually-hidden">Google Plus, share this article, external</span>
                 </a>
               </li>
-              <li>
+              <li role="listitem">
                 <a href="#">
                   <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
                     <polygon points="0,15 3,8 5,10 8,4 13,15" />
@@ -127,7 +128,7 @@
                   <span class="visually-hidden">Reddit, share this article, external</span>
                 </a>
               </li>
-              <li>
+              <li role="listitem">
                 <a href="#">
                   <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
                     <polygon points="0,15 3,8 5,10 8,4 13,15" />
@@ -156,13 +157,14 @@
     <h2>Without exposed options</h2>
     <div class="share-tools--more unexposed">
       <button class="share-tools--button" aria-haspopup="true" aria-expanded="false">
-        Share 
+        Share
         <span class="visually-hidden">this article</span>
         &hellip;
       </button>
-      <div class="share-tools--menu" role="menu">
-        <ul class="share-tools--social">
-          <li>
+      <div class="share-tools--menu" role="group" aria-label="menu-label-2">
+        <span class="share-tools--label" id="menu-label-2" hidden>menu</span>
+        <ul class="share-tools--social" role="list">
+          <li role="listitem">
             <a href="#">
               <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
                 <polygon points="0,15 3,8 5,10 8,4 13,15" />
@@ -171,7 +173,7 @@
               <span class="visually-hidden">Twitter, share this article, external</span>
             </a>
           </li>
-          <li>
+          <li role="listitem">
             <a href="#">
               <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
                 <polygon points="0,15 3,8 5,10 8,4 13,15" />
@@ -180,7 +182,7 @@
               <span class="visually-hidden">Facebook, share this article, external</span>
             </a>
           </li>
-          <li>
+          <li role="listitem">
             <a href="#">
               <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
                 <polygon points="0,15 3,8 5,10 8,4 13,15" />
@@ -189,7 +191,7 @@
               <span class="visually-hidden">LinkedIn, share this article, external</span>
             </a>
           </li>
-          <li>
+          <li role="listitem">
             <a href="#">
               <svg viewBox="0 0 15 15" focusable="false" aria-hidden="true">
                 <polygon points="0,15 3,8 5,10 8,4 13,15" />

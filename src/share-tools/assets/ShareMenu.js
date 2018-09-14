@@ -15,6 +15,7 @@ function ShareMenu(elem, options) {
 
   // Get key elements
   var menu = elem.querySelector('.share-tools--menu');
+  var labelElem = elem.querySelector('.share-tools--label');
   var button = elem.querySelector('.share-tools--button');
   var firstFocusable = menu.querySelector('a, button, input');
   var closeButton = menu.querySelector('.share-tools--close');
@@ -34,7 +35,10 @@ function ShareMenu(elem, options) {
   menu.hidden = true;
 
   // A unique string for creating relationships
-  var uniq = +Date.now();
+  var uniq = Math.random().toString(36).substr(2, 9);
+
+  menu.setAttribute('aria-labelledby', 'menu-label-' + uniq);
+  labelElem.setAttribute('id', 'menu-label-' + uniq);
 
   // Set up label/input relationship
   inputLabel.setAttribute('for', 'copy-' + uniq);
@@ -64,21 +68,21 @@ function ShareMenu(elem, options) {
     document.execCommand('copy');
   }
 
-  button.addEventListener('click', function() {
+  button.addEventListener('click', function () {
     menu.hidden ? open() : close();
   });
 
-  button.addEventListener('keydown', function(e) {
+  button.addEventListener('keydown', function (e) {
     if (e.which === 40) {
       open();
     }
   });
 
-  closeButton.addEventListener('click', function() {
+  closeButton.addEventListener('click', function () {
     close();
   });
 
-  menu.addEventListener('keydown', function(e) {
+  menu.addEventListener('keydown', function (e) {
     if (e.which === 27) {
       close();
     }
