@@ -185,7 +185,8 @@ Where only the "Share" button is required, the container element should be a `<d
     <span class="visually-hidden">this article</span>
     &hellip;
   </button>
-  <div class="share-tools--menu" role="menu">
+  <div class="share-tools--menu" role="group" aria-labelledby="menu-label-1">
+    <span class="share-tools--label" id="menu-label-1" hidden>menu</span>
     <ul class="share-tools--social">
       <li>
         <a href="#">
